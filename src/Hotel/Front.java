@@ -1,7 +1,8 @@
 package Hotel;
 //change
 //second change
-import java.awt.BorderLayout;
+//third change
+//fourth change
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -10,8 +11,6 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -19,13 +18,9 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import javax.print.attribute.AttributeSet;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,26 +31,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.JTextComponent;
-
 import com.toedter.calendar.JDateChooser;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Color;
-import java.awt.GridLayout;
-
-import javax.swing.JToolBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JMenuBar;
 
 
 public class Front extends JFrame {
@@ -86,6 +67,7 @@ public class Front extends JFrame {
 	static JScrollPane scrollPane;
 	static ResultPanel resultpanel; 
 	static Front frame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -96,21 +78,16 @@ public class Front extends JFrame {
 
 					frame = new Front();
 					frame.setVisible(true);
-					// make the frame half the height and width
-					
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 					screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					height = screenSize.height;
 					width = screenSize.width;
-					//frame.setSize((int) (width/1.5),(int) (height/1.5));
 					frame.setLocationRelativeTo(null);
 					System.out.println((int) (width/1.5) + " : " + (height/1.5));
 					
 					Date date = new Date();
 					date.getTime();
-					String dates = convertStringToDate(date);
-					//sqlWorkBench.updateRoomBookings(dates);
-					//System.out.println(e);
+			
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -147,7 +124,6 @@ public class Front extends JFrame {
 		SearchTextArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				int i = arg0.getKeyCode();
 				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
 					search();
 				}
@@ -171,8 +147,7 @@ public class Front extends JFrame {
 		SearchTextArea.setColumns(10);
 		cardLayout.show(contentPane, "1");
 		
-		SpinnerModel spinnerModelDay = new SpinnerNumberModel(1,1,31,1);
-		SpinnerModel spinnerModelDay2 = new SpinnerNumberModel(1,1,31,1);
+	
 		
 		JLabel lblNewLabel = new JLabel("Check in date");
 		lblNewLabel.setBounds(197, 234, 103, 23);
@@ -290,19 +265,7 @@ public class Front extends JFrame {
 	
 		MainPanel.setFocusable(true);
 		MainPanel.requestFocusInWindow();
-		
-		Object[] a = sqlWorkBench.object(true,""); 
-		SearchSuggestion = new JComboBox(a);
-		SearchSuggestion.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				String state = (String) e.getItem();
-				SearchTextArea.setFont(new Font("Tahoma", Font.ITALIC, 14));
-				SearchTextArea.setText(word);
-				//state="";
-				
-				somethingWritten=true;
-			}
-		});
+	
 		
 		
 		
