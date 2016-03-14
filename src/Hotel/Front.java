@@ -73,7 +73,7 @@ public class Front extends JFrame {
 	static JScrollPane scrollPane;
 	static ResultPanel resultpanel; 
 	static Front frame;
-	
+	final JDateChooser DateChooserOut;
 	/**
 	 * Launch the application.
 	 */
@@ -262,6 +262,7 @@ public class Front extends JFrame {
 				datein = DateChooserIn.getDate();
 				dateInString = convertStringToDate(datein);
 				System.out.println(dateInString);
+				DateChooserOut.getJCalendar().setMinSelectableDate(datein);
 				
 				     
 			}
@@ -273,7 +274,7 @@ public class Front extends JFrame {
 		DateChooserIn.setBounds(195, 260, 139, 20);
 		MainPanel.add(DateChooserIn);
 		
-		final JDateChooser DateChooserOut = new JDateChooser();
+		DateChooserOut = new JDateChooser();
 		DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
 		DateChooserOut.addPropertyChangeListener(new PropertyChangeListener() {
 			private Date dateout;
