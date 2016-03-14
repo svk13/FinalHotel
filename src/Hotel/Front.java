@@ -1,6 +1,6 @@
 package Hotel;
 //change
-
+//second change
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
