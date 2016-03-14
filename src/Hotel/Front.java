@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,7 +38,11 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import com.toedter.calendar.JDateChooser;
+
+import javax.swing.JMenuBar;
+import javax.swing.JCheckBoxMenuItem;
 
 
 public class Front extends JFrame {
@@ -105,10 +111,28 @@ public class Front extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 891, 530);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JButton btnNewButton = new JButton("Back");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int i = 1;
+				String s = Integer.toString(i);
+				cardLayout.show(contentPane, s);
+				
+			}
+		});
+		menuBar.add(btnNewButton);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(cardLayout);
+		Icon warnIcon = new ImageIcon("Myndir/backward.png");
+		
+		JButton btnNewButton_1 = new JButton("Forward");
+		menuBar.add(btnNewButton_1);
 		
 		JPanel MainPanel = new JPanel();
 		MainPanel.setBackground(SystemColor.desktop);
