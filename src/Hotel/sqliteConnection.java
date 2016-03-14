@@ -16,8 +16,8 @@ public class sqliteConnection {
 		try{
 			
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:/C:/sqlite/Hotel.db");
-			JOptionPane.showMessageDialog(null, "Tengingin tÃ³kst");
+			conn = DriverManager.getConnection("jdbc:sqlite:src/Database/Hotel.db");
+			JOptionPane.showMessageDialog(null, "Tengingin tókst");
 			
 			return conn;
 		}catch(Exception e){
