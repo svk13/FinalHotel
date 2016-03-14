@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextArea;
@@ -21,6 +20,10 @@ import java.awt.event.ActionEvent;
 
 public class ClientLogin extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private static String id;
 	private static String reservationID;
