@@ -2,46 +2,24 @@ package Hotel;
 
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.util.*;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-
 import javax.swing.JCheckBox;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-import javax.swing.SwingConstants;
-
 import java.awt.Component;
 import java.awt.BorderLayout;
-
-import net.miginfocom.swing.MigLayout;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
-import java.awt.FlowLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComboBox;
-
-
 
 public class ResultPanel extends JPanel {
 	 	/**
