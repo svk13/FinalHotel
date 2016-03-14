@@ -1,11 +1,6 @@
 package Hotel;
 
 import java.beans.Statement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Calendar;
-import java.util.Formatter;
 
 public class Hotel {
 	
