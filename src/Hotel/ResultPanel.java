@@ -378,17 +378,18 @@ public class ResultPanel extends JPanel {
 	}
 
 	class MyComparator implements Comparator<Hotel> {
-		@Override
-		public int compare(Hotel o1, Hotel o2) {
-			int[] a = o1.getPrice();
-			int[] b = o2.getPrice();
-		    if (a[2] > b[2]) {
-		        return -1;
-		    } else if (a[2]<b[2]) {
-		        return 1;
-		    }
-		    return 0;
-		}}
+			@Override
+			public int compare(Hotel o1, Hotel o2) {
+				int[] a = o1.getPrice();
+				int[] b = o2.getPrice();
+			    if (a[2] > b[2]) {
+			        return -1;
+			    } else if (a[2]<b[2]) {
+			        return 1;
+			    }
+			    return 0;
+			    }
+			}
 	private void internetURL(String urlid) {
 		String tmp = urlid.substring(0,urlid.length());
 		try {
