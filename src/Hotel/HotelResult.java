@@ -21,11 +21,13 @@ import java.awt.SystemColor;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Dimension;
-import java.awt.Component;
-import javax.swing.Box;
 
 
 public class HotelResult extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Date DateIn;
     private Date DateOut;
     private String DateInS;
@@ -41,7 +43,7 @@ public class HotelResult extends JPanel {
 		setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		String name = hotel.getName();
 		String city = hotel.getCity();
-		String url = hotel.getURL();
+
 		int wifi = hotel.getWifi();
 		int FreeWifi = hotel.getFreeWifi();
 		int smoke = hotel.getSmoke();
