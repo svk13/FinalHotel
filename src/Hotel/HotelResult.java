@@ -65,7 +65,7 @@ public class HotelResult extends JPanel {
 		int tmp3 = (tmp%10)+1;
 		String tmp2= ""+tmp3;
 		
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\workspace\\ThrounHugbunadar\\src\\Myndir\\"+tmp2+".jpg"));
+		lblNewLabel.setIcon(new ImageIcon("src/Myndir/"+tmp2+".jpg"));
 		lblNewLabel.setBounds(10, 11, 259, 174);
 		add(lblNewLabel);
 		

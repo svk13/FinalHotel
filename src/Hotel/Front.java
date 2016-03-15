@@ -43,6 +43,7 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.JMenuBar;
 import javax.swing.JCheckBoxMenuItem;
+import java.awt.Color;
 
 
 public class Front extends JFrame {
@@ -135,7 +136,7 @@ public class Front extends JFrame {
 		menuBar.add(btnNewButton_1);
 		
 		JPanel MainPanel = new JPanel();
-		MainPanel.setBackground(SystemColor.desktop);
+		MainPanel.setBackground(Color.BLUE);
 		contentPane.add(MainPanel, "1");
 
 		MainPanel.setLayout(null);
@@ -163,7 +164,7 @@ public class Front extends JFrame {
 				//System.out.println("Leitabox clickd");
 				word="";
 			
-				SearchSuggestion.removeAllItems();
+			
 			}
 		});
 		
@@ -246,7 +247,7 @@ public class Front extends JFrame {
 		});
 		   
 		  
-		ExecuteSearch.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Search.png"));
+		ExecuteSearch.setIcon(new ImageIcon("src/Myndir/img.png"));
 		ExecuteSearch.setBounds(616, 176, 46, 47);
 		MainPanel.add(ExecuteSearch);
 		
