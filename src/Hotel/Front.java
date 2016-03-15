@@ -246,7 +246,7 @@ public class Front extends JFrame {
 		});
 		   
 		  
-		ExecuteSearch.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Search.png"));
+		ExecuteSearch.setIcon(new ImageIcon("src/Myndir/Search.png"));
 		ExecuteSearch.setBounds(616, 176, 46, 47);
 		MainPanel.add(ExecuteSearch);
 		
