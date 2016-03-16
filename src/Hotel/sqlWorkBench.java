@@ -18,6 +18,10 @@ public class sqlWorkBench {
 	static String qry = "";
 	static String qry2="";
 	
+	
+	/*
+	 * Fall til þess að búa til random tölur. Notaði það til að henda inn í databaseinn. 
+	 */
 	 private static int showRandomInteger(int aStart, int aEnd, Random aRandom){
 		    if (aStart > aEnd) {
 		      throw new IllegalArgumentException("Start cannot exceed End.");
@@ -31,6 +35,7 @@ public class sqlWorkBench {
 		   
 		  }
 	
+	//Fall til að bæta inn í Facilities töfluna í databasenum. 
 	public static void insertIntoFacilities(){
 		Random randomGenerator = new Random();
 	    for (int idx = 1; idx <= 10; ++idx){
@@ -38,8 +43,6 @@ public class sqlWorkBench {
 	     
 	    }
 		try{
-			
-			
 			
 			for(int count=1; count<=31;count++){
 				
@@ -65,26 +68,21 @@ public class sqlWorkBench {
 			   int one4 = showRandomInteger(15,35,random4);
 			   Random random5 = new Random();
 			   int one5 = showRandomInteger(15,60,random5);
-			    
-			    
-			//qry = "INSERT INTO HotelFacilities Values("+count+","+rnd[0]+","+rnd[1]+","+rnd[2]+","+rnd[3]+","+rnd[4]+","+rnd[5]+");";
-			qry = "INSERT INTO room_price Values("+count+","+one+","+one1+","+one2+","+
-					one3+","+one4+","+one5+");";
-			//System.out.println(qry);
 			
-			Statement stmt = Front.connection.createStatement();
-			stmt.setQueryTimeout(30);
-			stmt.executeUpdate(qry);
-
+			   qry = "INSERT INTO room_price Values("+count+","+one+","+one1+","+one2+","+
+					one3+","+one4+","+one5+");";
+			   Statement stmt = Front.connection.createStatement();
+			   stmt.setQueryTimeout(30);
+			   stmt.executeUpdate(qry);
 			}
 				
-					//sqliteConnection.closeConnection(rs, statement, Front.connection);
-			
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
 	}
 	
+	// Fall sem hlustar á textaboxið í Front klasanum. Hægt er að gera jcombobox sem eins konar autocorrect 
+	// með þessu falli.
 	public static Object[] object(Boolean breyta, String word){
 
 		Object[] myObjects=null;
@@ -127,6 +125,7 @@ public class sqlWorkBench {
 	return myObjects;
 	}
 	
+	//Fall til þess að eyða viðskiptavinum út úr database.
 	public static void clientDelete(String resID){
 
 
@@ -144,7 +143,7 @@ public class sqlWorkBench {
 		}
 	}	
 	
-	
+	//Þegar pantað er þá uppfærist fjöldi lausra herbergja.
 	public static void updateRoomBookings(String date){
 
 		helpDelete(date);
@@ -162,6 +161,7 @@ public class sqlWorkBench {
 			System.out.println(e2);
 		}
 	}
+	//Hjálpar fall fyrir updateRoombooking
 	public static void helpDelete(String date){
 		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
@@ -184,6 +184,8 @@ public class sqlWorkBench {
 			System.out.println("virkaði ekki");
 		}		
 	}
+	
+	// Uppfærir töfluna eftir að það er búið að deleta.
 	public static void updateTableAfterDelete(int id){
 		try{
 					//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
@@ -200,7 +202,7 @@ public class sqlWorkBench {
 			}
 	
 	public static void updateTable(int id){
-try{
+		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			qry = "Update room_price SET counttype3 = counttype3-1 WHERE hotelID ="+id+";";
 			
@@ -215,7 +217,7 @@ try{
 	}
 	
 	public static void login(JTextField textField,  JPasswordField p){
-try{
+		try{
 			String id = null,reservationID = null,datein = null,dateout = null,finishedstring = null;
 			qry = "select * from room_bookings where client_id=? AND client_passw = ?;";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
@@ -251,6 +253,7 @@ try{
 		}
 	}
 	
+	//Fall sem skilar fjölda viðskiptavina.
 	public static int NrOfClients(){
 		try{
 			qry = "select count(client_id) as pi from room_bookings;";
@@ -271,6 +274,8 @@ try{
 		}
 		return 0;
 	}
+	
+	//Fall sem skilar nafni Hótels.
 	public static String HotelName(String id){
 		try{
 			qry = "select Hotel.name as pi from room_bookings, Hotel where Hotel.id = '"+ id+"';";
@@ -292,6 +297,7 @@ try{
 		return "Unknown Hotel";
 	}
 	
+	//Fall sem leitar að verði eftir hótelherbergi.
 	public static String priceSearch(){
 		
 		String returnedString="";
@@ -306,6 +312,7 @@ try{
 	
 		return returnedString;
 	}
+	
 	
 	public static ArrayList<Hotel> detailedSearch(ArrayList<Hotel> hotelList, int var){
 	
