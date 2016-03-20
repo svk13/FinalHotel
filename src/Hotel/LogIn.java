@@ -39,6 +39,7 @@ public class LogIn extends JDialog {
     int count = 0;
     static int numberOfLabels1;
 	private JPasswordField passwordField;
+	static LogIn dialog; 
 
 
 	/**
@@ -46,7 +47,7 @@ public class LogIn extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			LogIn dialog = new LogIn();
+			dialog = new LogIn();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -104,7 +105,7 @@ public class LogIn extends JDialog {
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						System.exit(0);
+						dispose();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

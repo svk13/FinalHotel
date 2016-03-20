@@ -2,10 +2,6 @@ package Hotel;
 
 import java.util.Date;
 
-
-
-
-
 public class BookingInfo {
 
 	public Date DateIn;

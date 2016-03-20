@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 import java.awt.BorderLayout;
+import javax.swing.JComboBox;
 
 public class ResultPanel extends JPanel {
 	 	/**
@@ -78,12 +79,12 @@ public class ResultPanel extends JPanel {
 		
 		final JPanel panel_2 = new JPanel();
 		panel_2.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panel_2.setMaximumSize(new Dimension(100, 32767));
+		panel_2.setMaximumSize(new Dimension(120, 32767));
 		panel_2.setBackground(Color.DARK_GRAY);
 		add(panel_2, BorderLayout.WEST);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
-		gbl_panel_2.columnWidths = new int[]{95, 0};
-		gbl_panel_2.rowHeights = new int[] {15, 15, 15, 15, 15, 15, 0, 0, 0};
+		gbl_panel_2.columnWidths = new int[]{115, 0};
+		gbl_panel_2.rowHeights = new int[] {15, 15, 15, 15, 15, 15, 50, 50, 0};
 		gbl_panel_2.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_2.setLayout(gbl_panel_2);
@@ -358,6 +359,15 @@ public class ResultPanel extends JPanel {
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 6;
 		panel_2.add(btnNewButton, gbc_btnNewButton);
+		
+		String labels[] = { "A-Z", "Z-A", "Prices from", "Prices To"};
+		JComboBox comboBox = new JComboBox(labels);
+		comboBox.setVisible(true);
+		GridBagConstraints gbc_comboBox = new GridBagConstraints();
+		gbc_comboBox.anchor = GridBagConstraints.NORTH;
+		gbc_comboBox.gridx = 0;
+		gbc_comboBox.gridy = 7;
+		panel_2.add(comboBox, gbc_comboBox);
 		int numberOfLabels = Front.resultHotel.size();
 		updateUIid(hotelList);
 		setVisible(true);
