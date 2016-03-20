@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Component;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ResultPanel extends JPanel {
 	 	/**
@@ -339,29 +341,36 @@ public class ResultPanel extends JPanel {
 		gbc_chckbxSmokingArea.gridy = 5;
 		panel_2.add(chckbxSmokingArea, gbc_chckbxSmokingArea);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				panel_1.removeAll();
-				Collections.sort(hotelList, new MyComparator());
-				for(int i =0; i<hotelList.size();i++){
-					int[] a = hotelList.get(i).getPrice();
-				System.out.println(a[2]);
-				}
-				updateUIid(hotelList);
-				repaint();
-				updateUI();
+		String labels[] = { "A-Z", "Z-A", "Prices from", "Prices to"};
+		final JComboBox comboBox = new JComboBox(labels);
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent evt) {
+				System.out.println(comboBox.getSelectedItem());
+				Object item = evt.getItem();
+				hotelList=newList;
+			    if (item.toString().equals("Prices from")) {
+			    	panel_1.removeAll();
+					Collections.sort(hotelList, new MyComparator2());
+					for(int i =0; i<hotelList.size();i++){
+						int[] a = hotelList.get(i).getPrice();
+					System.out.println(a[2]);
+					}
+					updateUIid(hotelList);
+					repaint();
+					updateUI();
+			    } else if(item.toString().equals("Prices to")) {
+			    	panel_1.removeAll();
+					Collections.sort(hotelList, new MyComparator());
+					for(int i =0; i<hotelList.size();i++){
+						int[] a = hotelList.get(i).getPrice();
+					System.out.println(a[2]);
+					}
+					updateUIid(hotelList);
+					repaint();
+					updateUI();
+			    }
 			}
 		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 6;
-		panel_2.add(btnNewButton, gbc_btnNewButton);
-		
-		String labels[] = { "A-Z", "Z-A", "Prices from", "Prices To"};
-		JComboBox comboBox = new JComboBox(labels);
 		comboBox.setVisible(true);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.anchor = GridBagConstraints.NORTH;
@@ -400,6 +409,19 @@ public class ResultPanel extends JPanel {
 			    return 0;
 			    }
 			}
+	class MyComparator2 implements Comparator<Hotel> {
+		@Override
+		public int compare(Hotel o1, Hotel o2) {
+			int[] a = o1.getPrice();
+			int[] b = o2.getPrice();
+		    if (a[2] < b[2]) {
+		        return -1;
+		    } else if (a[2]>b[2]) {
+		        return 1;
+		    }
+		    return 0;
+		    }
+		}
 	private void internetURL(String urlid) {
 		String tmp = urlid.substring(0,urlid.length());
 		try {
