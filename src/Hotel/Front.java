@@ -72,6 +72,7 @@ public class Front extends JFrame {
 	static ResultPanel resultpanel; 
 	static Front frame;
 	final JDateChooser DateChooserOut;
+	int whatpage=1;
 	/**
 	 * Launch the application.
 	 */
@@ -116,10 +117,11 @@ public class Front extends JFrame {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int i = 1;
-				String s = Integer.toString(i);
-				cardLayout.show(contentPane, s);
 				
+				whatpage--;
+				String s = Integer.toString(whatpage);
+				cardLayout.show(contentPane, s);
+				System.out.println(whatpage);
 			}
 		});
 		menuBar.add(btnNewButton);
@@ -130,6 +132,14 @@ public class Front extends JFrame {
 		Icon warnIcon = new ImageIcon("Myndir/backward.png");
 		
 		JButton btnNewButton_1 = new JButton("Forward");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				whatpage++;
+				String s = Integer.toString(whatpage);
+				cardLayout.show(contentPane, s);
+				System.out.println(whatpage);
+			}
+		});
 		menuBar.add(btnNewButton_1);
 		
 		JPanel MainPanel = new JPanel();
@@ -148,6 +158,7 @@ public class Front extends JFrame {
 			public void keyPressed(KeyEvent arg0) {
 				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
 					search();
+					whatpage=2;
 				}
 			}
 		});
@@ -233,6 +244,7 @@ public class Front extends JFrame {
 				
 				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 				search();
+				whatpage=2;
 				setVisible(true);
 				
 				
@@ -327,8 +339,8 @@ public class Front extends JFrame {
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		getContentPane().add(scrollPane);
 		scrollPane.getVerticalScrollBar().setLocation(0, 0);
-		contentPane.add(scrollPane, "3");
-		cardLayout.show(contentPane, "3");
+		contentPane.add(scrollPane, "2");
+		cardLayout.show(contentPane, "2");
 		System.out.println(scrollPane.getLocation() + " Location");
 		System.out.println(scrollPane.getViewport().getViewPosition()+ " new location");
 		
