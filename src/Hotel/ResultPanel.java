@@ -341,7 +341,7 @@ public class ResultPanel extends JPanel {
 		gbc_chckbxSmokingArea.gridy = 5;
 		panel_2.add(chckbxSmokingArea, gbc_chckbxSmokingArea);
 		
-		String labels[] = { "A-Z", "Z-A", "Prices from", "Prices to"};
+		String labels[] = {"Raða eftir", "A-Z", "Z-A", "Prices from", "Prices to"};
 		final JComboBox comboBox = new JComboBox(labels);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
@@ -361,6 +361,28 @@ public class ResultPanel extends JPanel {
 			    } else if(item.toString().equals("Prices to")) {
 			    	panel_1.removeAll();
 					Collections.sort(hotelList, new MyComparator());
+					for(int i =0; i<hotelList.size();i++){
+						int[] a = hotelList.get(i).getPrice();
+					System.out.println(a[2]);
+					}
+					updateUIid(hotelList);
+					repaint();
+					updateUI();
+			    }
+			    else if(item.toString().equals("A-Z")) {
+			    	panel_1.removeAll();
+					Collections.sort(hotelList, new MyComparator3());
+					for(int i =0; i<hotelList.size();i++){
+						int[] a = hotelList.get(i).getPrice();
+					System.out.println(hotelList.get(i).getName());
+					}
+					updateUIid(hotelList);
+					repaint();
+					updateUI();
+			    }
+			    else if(item.toString().equals("Z-A")) {
+			    	panel_1.removeAll();
+					Collections.sort(hotelList, new MyComparator4());
 					for(int i =0; i<hotelList.size();i++){
 						int[] a = hotelList.get(i).getPrice();
 					System.out.println(a[2]);
@@ -417,6 +439,32 @@ public class ResultPanel extends JPanel {
 		    if (a[2] < b[2]) {
 		        return -1;
 		    } else if (a[2]>b[2]) {
+		        return 1;
+		    }
+		    return 0;
+		    }
+		}
+	class MyComparator3 implements Comparator<Hotel> {
+		@Override
+		public int compare(Hotel o1, Hotel o2) {
+			String a = o1.getName();
+			String b = o2.getName();
+		    if (a.compareTo(b) < 0) {
+		        return -1;
+		    } else if (a.compareTo(b)>0) {
+		        return 1;
+		    }
+		    return 0;
+		    }
+		}
+	class MyComparator4 implements Comparator<Hotel> {
+		@Override
+		public int compare(Hotel o1, Hotel o2) {
+			String a = o1.getName();
+			String b = o2.getName();
+		    if (a.compareTo(b) > 0) {
+		        return -1;
+		    } else if (a.compareTo(b)<0) {
 		        return 1;
 		    }
 		    return 0;
