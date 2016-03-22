@@ -279,7 +279,7 @@ public class sqlWorkBench {
 	public static String HotelName(String id){
 		try{
 			qry = "select Hotel.name as pi from room_bookings, Hotel where Hotel.id = '"+ id+"';";
-			
+			System.out.println(qry);
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			ResultSet rs = statement.executeQuery();;
