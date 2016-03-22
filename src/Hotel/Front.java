@@ -87,9 +87,7 @@ public class Front extends JFrame {
 					screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					height = screenSize.height;
 					width = screenSize.width;
-					frame.setLocationRelativeTo(null);
-					System.out.println((int) (width/1.5) + " : " + (height/1.5));
-					
+					frame.setLocationRelativeTo(null);;
 					Date date = new Date();
 					date.getTime();
 			
@@ -121,7 +119,6 @@ public class Front extends JFrame {
 				whatpage--;
 				String s = Integer.toString(whatpage);
 				cardLayout.show(contentPane, s);
-				System.out.println(whatpage);
 			}
 		});
 		menuBar.add(btnNewButton);
@@ -137,7 +134,6 @@ public class Front extends JFrame {
 				whatpage++;
 				String s = Integer.toString(whatpage);
 				cardLayout.show(contentPane, s);
-				System.out.println(whatpage);
 			}
 		});
 		menuBar.add(btnNewButton_1);
@@ -169,7 +165,6 @@ public class Front extends JFrame {
 				SearchTextArea.setText("");
 				SearchTextArea.setFont(new Font("Tahoma", Font.BOLD, 14));
 				somethingWritten=true;
-				//System.out.println("Leitabox clickd");
 				word="";
 			
 			}
@@ -271,7 +266,6 @@ public class Front extends JFrame {
 				
 				datein = DateChooserIn.getDate();
 				dateInString = convertStringToDate(datein);
-				System.out.println(dateInString);
 				DateChooserOut.getJCalendar().setMinSelectableDate(datein);
 				
 				     
@@ -292,7 +286,6 @@ public class Front extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 					dateout = DateChooserOut.getDate();
 					dateOutString = convertStringToDate(dateout);
-					System.out.println(dateOutString);
 			}
 		});
 		DateChooserOut.setBounds(394, 260, 133, 20);
@@ -341,8 +334,7 @@ public class Front extends JFrame {
 		scrollPane.getVerticalScrollBar().setLocation(0, 0);
 		contentPane.add(scrollPane, "2");
 		cardLayout.show(contentPane, "2");
-		System.out.println(scrollPane.getLocation() + " Location");
-		System.out.println(scrollPane.getViewport().getViewPosition()+ " new location");
+
 		
 	}
 
