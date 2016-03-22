@@ -51,7 +51,7 @@ public class Front extends JFrame {
 	private static final long serialVersionUID = 1L;
 	static JPanel contentPane;
 	static CardLayout cardLayout = new CardLayout();
-	static Connection connection = null;
+	public static Connection connection = null;
 	static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
 	static ArrayList<String> resultHotel2 = new ArrayList<String>();
 	private JTextField SearchTextArea;
