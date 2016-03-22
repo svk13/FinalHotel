@@ -345,7 +345,6 @@ public class ResultPanel extends JPanel {
 		final JComboBox comboBox = new JComboBox(labels);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
-				System.out.println(comboBox.getSelectedItem());
 				Object item = evt.getItem();
 				hotelList=newList;
 			    if (item.toString().equals("Prices from")) {
@@ -353,7 +352,6 @@ public class ResultPanel extends JPanel {
 					Collections.sort(hotelList, new MyComparator2());
 					for(int i =0; i<hotelList.size();i++){
 						int[] a = hotelList.get(i).getPrice();
-					System.out.println(a[2]);
 					}
 					updateUIid(hotelList);
 					repaint();
@@ -363,7 +361,6 @@ public class ResultPanel extends JPanel {
 					Collections.sort(hotelList, new MyComparator());
 					for(int i =0; i<hotelList.size();i++){
 						int[] a = hotelList.get(i).getPrice();
-					System.out.println(a[2]);
 					}
 					updateUIid(hotelList);
 					repaint();
@@ -374,7 +371,6 @@ public class ResultPanel extends JPanel {
 					Collections.sort(hotelList, new MyComparator3());
 					for(int i =0; i<hotelList.size();i++){
 						int[] a = hotelList.get(i).getPrice();
-					System.out.println(hotelList.get(i).getName());
 					}
 					updateUIid(hotelList);
 					repaint();
@@ -385,7 +381,6 @@ public class ResultPanel extends JPanel {
 					Collections.sort(hotelList, new MyComparator4());
 					for(int i =0; i<hotelList.size();i++){
 						int[] a = hotelList.get(i).getPrice();
-					System.out.println(a[2]);
 					}
 					updateUIid(hotelList);
 					repaint();
