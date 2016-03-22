@@ -55,7 +55,6 @@ CREATE TABLE Room_Bookings(
 	room_count int, /* fjöldi herbergja pr. kúnna*/
 	client_id String NOT NULL UNIQUE,
 	client_passw varchar(20)
-
 );
 CREATE TABLE HotelFacilities(
 	hotelID int references Hotel(id),
