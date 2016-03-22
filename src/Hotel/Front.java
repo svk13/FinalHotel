@@ -52,7 +52,7 @@ public class Front extends JFrame {
 	static JPanel contentPane;
 	static CardLayout cardLayout = new CardLayout();
 	public static Connection connection = null;
-	static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
+	public static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
 	static ArrayList<String> resultHotel2 = new ArrayList<String>();
 	private JTextField SearchTextArea;
 	static boolean somethingWritten=false;
