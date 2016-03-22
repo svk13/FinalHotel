@@ -1,18 +1,25 @@
 package Hotel;
 
 import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.border.TitledBorder;
+
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.util.Random;
+
 import javax.swing.JTextArea;
 
 public class BookingConfirmation extends JPanel {
@@ -115,15 +122,17 @@ public class BookingConfirmation extends JPanel {
 				String password = "sigosigo";
 				String recipientEmail = emailtxt.getText();
 				String title = "Your booking confirmation via HotelProjectIceland";
-				String message = "Thank you " + fname.getText() + " " + lname.getText() + ", \nfor booking your hotel using our services. \n \n \np.s. your hotel has been informed of your special request that is: " + special.getText();
 				String clientpassword = randomString();
 				int nrclients = sqlWorkBench.NrOfClients();
 				String ClientID = fname.getText()+nrclients;
+				
 				sqlWorkBench.updateTable(hotel.getID());
 				Bookings book = new Bookings(hotel.getID(), (int) (Math.random()*100000), DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
+				String message = "Thank you " + fname.getText() + " " + lname.getText() + ", \nfor booking your hotel using our services. \nYour username is: "+ ClientID + " and password: "+ clientpassword +"\n \np.s. your hotel has been informed of your special request that is: " + special.getText();
 				System.out.println(book);
 				try {
 					GoogleMail.send(username, password, recipientEmail, title, message);
+					JOptionPane.showMessageDialog(null, "Bókun staðfest");
 				} catch (MessagingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
