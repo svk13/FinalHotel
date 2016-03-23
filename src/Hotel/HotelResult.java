@@ -1,20 +1,13 @@
 package Hotel;
 
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-
 import java.awt.Desktop;
 import java.awt.Font;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 
@@ -22,10 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.SystemColor;
-
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-
 import java.awt.Dimension;
 
 
@@ -34,8 +25,6 @@ public class HotelResult extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Date DateIn;
-    private Date DateOut;
     private String DateInS;
     private String DateOutS;
     private BookingInfo bookinginfo1;
@@ -58,8 +47,6 @@ public class HotelResult extends JPanel {
 		int gym = hotel.getGym();
 		int tv = hotel.getTV();
 		int postcode = hotel.getPostcode();
-		DateIn = bookinginfo.getDateIn();
-		DateOut = bookinginfo.getDateout();
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
 		bookinginfo1 = bookinginfo;
