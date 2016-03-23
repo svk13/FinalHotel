@@ -40,5 +40,8 @@ public class BookingInfo {
 	int getNumberOfGuests(){
 		return NrGuests;
 	}
+	void setNumberOfRooms(int i){
+		NrGuests=i;
+	}
 
 }

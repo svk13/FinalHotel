@@ -56,6 +56,7 @@ public class ResultPanel extends JPanel {
 	public ResultPanel(final ArrayList<Hotel> hotelList1, BookingInfo bookinginfo1) {
 		//setMinimumSize(new Dimension(1000, 50000));
 		numberOfLabels1 = Front.resultHotel.size();
+		System.out.println(numberOfLabels1 + " STÆRÐIN MAÐUR");
 		//setSize(new Dimension(835, 700));
 		bookinginfo = bookinginfo1;
 		newList = hotelList1;
@@ -71,7 +72,7 @@ public class ResultPanel extends JPanel {
 		panel_1.setPreferredSize(new Dimension(1000,(hotelList1.size()*240)));
 		add(panel_1);
 		panel_1.setLayout(new GridLayout(numberOfLabels1, 1, 100, 0));
-		
+		System.out.println("SIBBIIIIIIII" + numberOfLabels1);
 		j = new JScrollPane(panel_1);
 		j.setBounds(0, 0, Front.width, Front.height);
 		j.getVerticalScrollBar().setUnitIncrement(16);
@@ -394,7 +395,8 @@ public class ResultPanel extends JPanel {
 		gbc_comboBox.gridx = 0;
 		gbc_comboBox.gridy = 7;
 		panel_2.add(comboBox, gbc_comboBox);
-		int numberOfLabels = Front.resultHotel.size();
+		//int numberOfLabels = Front.resultHotel.size();
+
 		updateUIid(hotelList);
 		setVisible(true);
 	}

@@ -38,6 +38,7 @@ public class HotelResult extends JPanel {
     private String DateInS;
     private String DateOutS;
     private BookingInfo bookinginfo1;
+    private int numberofrooms;
 	/**
 	 * Create the panel.
 	 */
@@ -48,7 +49,7 @@ public class HotelResult extends JPanel {
 		setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		String name = hotel.getName();
 		String city = hotel.getCity();
-
+		numberofrooms=bookinginfo.getNumberOfRooms();
 		int wifi = hotel.getWifi();
 		int FreeWifi = hotel.getFreeWifi();
 		int smoke = hotel.getSmoke();
@@ -122,18 +123,31 @@ public class HotelResult extends JPanel {
 		lblNewLabel_5.setBounds(279, 103, 135, 116);
 		add(lblNewLabel_5);
 		
-		JLabel label = new JLabel("" + (price[5]-sqlWorkBench.RoomsAvailable(hotel.getID(), DateInS,DateOutS)));
-		label.setForeground(Color.RED);
-		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		label.setBounds(576, 123, 46, 14);
-		add(label);
+
 		
 		JLabel lblNumberOfRooms = new JLabel("Number of rooms available");
 		lblNumberOfRooms.setForeground(Color.RED);
 		lblNumberOfRooms.setFont(new Font("Tahoma", Font.BOLD, 10));
 		lblNumberOfRooms.setBounds(429, 123, 137, 14);
 		add(lblNumberOfRooms);
-				
+
+		int roomsavailable = price[5]-sqlWorkBench.RoomsAvailable(hotel.getID(), DateInS,DateOutS);
+		JLabel label = new JLabel("" +roomsavailable);
+		if(roomsavailable<=0){
+			button.setEnabled(false);
+			lblNumberOfRooms.setText("Sorry, we're fully booked");
+			label.setText("");
+		}
+		else if(roomsavailable<numberofrooms){
+			System.out.println("YEEEEEHAAA");
+			lblNumberOfRooms.setBounds(429,123,300,14);
+			lblNumberOfRooms.setText("Sorry, we don't have enough rooms for your reservation");
+			label.setText("");
+		} 
+		label.setForeground(Color.RED);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label.setBounds(576, 123, 46, 14);
+		add(label);
 	}
 	
 

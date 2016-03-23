@@ -6,18 +6,25 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.border.TitledBorder;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.SystemColor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+
 import javax.swing.JTextArea;
 
 public class BookingConfirmation extends JPanel {
@@ -35,10 +42,11 @@ public class BookingConfirmation extends JPanel {
     private String DateOutS;
     private Hotel hotel;
     private BookingInfo bookinginfo;
-    private Date datein;
-    private Date dateout;
+ 
     private int resid;
-
+    private int numberofrooms;
+    private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
+    private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 	/**
 	 * Create the panel.
 	 */
@@ -48,9 +56,7 @@ public class BookingConfirmation extends JPanel {
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
 		hotel=hotel1;
-		datein = bookinginfo.getDateIn();
-		dateout = bookinginfo.getDateout();
-		
+		numberofrooms = bookinginfo1.getNumberOfRooms();
 		fname = new JTextField();
 		fname.setBounds(112, 86, 86, 20);
 		add(fname);
@@ -120,6 +126,7 @@ public class BookingConfirmation extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//System.out.println("Halló");
+				Front.frame.setCursor(waitCursor);
 				String username = "hotelprojecticeland";
 				String password = "sigosigo";
 				String recipientEmail = emailtxt.getText();
@@ -141,6 +148,7 @@ public class BookingConfirmation extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				Front.frame.setCursor(defaultCursor);
 				Front.cardLayout.show(Front.contentPane, "1");
 				
 			}
@@ -192,11 +200,15 @@ public class BookingConfirmation extends JPanel {
 			try {
 				myDate = format.parse(in);
 				myDate = addDays(myDate, 1);
-				
 				String newdate = format.format(myDate);
 				tmpin = newdate.substring(0, 2);
 				itmp = Integer.parseInt(tmpin);
+				
+				for(int i = 0; i<numberofrooms;i++){
 				sqlWorkBench.reservedroom(hotel.getID(),resid , newdate, 3);
+				System.out.println(i + " booking into reservedroom");
+				}
+				
 				in = newdate;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block

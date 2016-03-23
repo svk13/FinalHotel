@@ -264,18 +264,15 @@ public class sqlWorkBench {
 
 	//Fall sem skilar fjölda viðskiptavina.
 	public static int RoomsAvailable(int hotelid, String dateres, String dateout){
-		String theday;
 		String name = "0";
 		ArrayList<String> myDays= datevinnsla(dateres,dateout); 
 		for(int i = 0; i<myDays.size();i++){
 			try{
 				qry = "select datereserved, count(hotelid) as pi from roomreserved where hotelid='"+hotelid+"' and datereserved = '"+myDays.get(i)+"' group by datereserved;";
-				System.out.println(myDays.get(i) + " get i");
 				PreparedStatement statement = Front.connection.prepareStatement(qry);
 				statement.setQueryTimeout(30);
 				ResultSet rs = statement.executeQuery();;
 						while (rs.next()) {
-							theday = rs.getString("datereserved");
 							String tmp = rs.getString("pi");
 							if(Integer.parseInt(name)<Integer.parseInt(tmp)){
 								name = tmp;
@@ -286,13 +283,11 @@ public class sqlWorkBench {
 				System.out.println(e2);
 			}
 		}
-		System.out.println(name + "FinalDATE");
 		return Integer.parseInt(name);
 	}
 	
 
 	public static ArrayList<String> datevinnsla(String in, String out ){
-		System.out.println("DATEVINNSLA");
 		String tmpin = in.substring(0, 2);
 		String tmpout = out.substring(0, 2);
 		int itmp = Integer.parseInt(tmpin);
