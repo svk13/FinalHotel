@@ -142,7 +142,7 @@ public class HotelResult extends JPanel {
 		else if(roomsavailable<numberofrooms){
 			System.out.println("YEEEEEHAAA");
 			lblNumberOfRooms.setBounds(429,123,300,14);
-			lblNumberOfRooms.setText("Sorry, we don't have enough rooms for your reservation");
+			lblNumberOfRooms.setText("Sorry, we only have "+ roomsavailable+" rooms available");
 			label.setText("");
 			button.setEnabled(false);
 		} 
