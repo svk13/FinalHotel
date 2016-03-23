@@ -18,7 +18,12 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JTextArea;
 
@@ -37,6 +42,9 @@ public class BookingConfirmation extends JPanel {
     private String DateOutS;
     private Hotel hotel;
     private BookingInfo bookinginfo;
+    private Date datein;
+    private Date dateout;
+    private int resid;
 
 	/**
 	 * Create the panel.
@@ -47,7 +55,8 @@ public class BookingConfirmation extends JPanel {
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
 		hotel=hotel1;
-		
+		datein = bookinginfo.getDateIn();
+		dateout = bookinginfo.getDateout();
 		
 		fname = new JTextField();
 		fname.setBounds(112, 86, 86, 20);
@@ -125,9 +134,12 @@ public class BookingConfirmation extends JPanel {
 				String clientpassword = randomString();
 				int nrclients = sqlWorkBench.NrOfClients();
 				String ClientID = fname.getText()+nrclients;
+				resid = (int) (Math.random()*100000);
 				
 				sqlWorkBench.updateTable(hotel.getID());
-				Bookings book = new Bookings(hotel.getID(), (int) (Math.random()*100000), DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
+				datevinnsla(DateInS, DateOutS);
+				
+				Bookings book = new Bookings(hotel.getID(), resid, DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
 				String message = "Thank you " + fname.getText() + " " + lname.getText() + ", \nfor booking your hotel using our services. \nYour username is: "+ ClientID + " and password: "+ clientpassword +"\n \np.s. your hotel has been informed of your special request that is: " + special.getText();
 				System.out.println(book);
 				try {
@@ -172,6 +184,46 @@ public class BookingConfirmation extends JPanel {
 		
 
 	}
+	
+	public void datevinnsla(String in, String out ){
+	    
+		String tmpin = in.substring(0, 2);
+		String tmpout = out.substring(0, 2);
+		int itmp = Integer.parseInt(tmpin);
+		int itmpout = Integer.parseInt(tmpout);
+		sqlWorkBench.reservedroom(hotel.getID(),resid , in, 3);
+				
+		while(itmp!=itmpout){
+		
+			SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy"); 
+			Date myDate;
+			try {
+				myDate = format.parse(in);
+				myDate = addDays(myDate, 1);
+				
+				String newdate = format.format(myDate);
+				tmpin = newdate.substring(0, 2);
+				itmp = Integer.parseInt(tmpin);
+				sqlWorkBench.reservedroom(hotel.getID(),resid , newdate, 3);
+				in = newdate;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+			
+		
+	}
+	
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        //System.out.println("Nýjasta nýtt " + cal.getTime());
+        return cal.getTime();
+    }
 	
 	public String randomString(){
 		Random r = new Random(); // Intialize a Random Number Generator with SysTime as the seed

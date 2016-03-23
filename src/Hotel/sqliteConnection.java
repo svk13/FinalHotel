@@ -27,11 +27,7 @@ public class sqliteConnection {
 		}
 	}
 	
-	public static ArrayList<Hotel> detailedSearch(ArrayList<Hotel> theHotels){
-		
-		
-		return theHotels;
-	}
+
 	
 	public static void LeitaHotel(String tmp){
 		try{

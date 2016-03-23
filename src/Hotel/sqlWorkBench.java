@@ -141,7 +141,25 @@ public class sqlWorkBench {
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
-	}	
+		}
+	
+	public static void reservedroom(int hotelid, int reservationid, String date, int roomtype){
+
+
+		try{
+			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
+			qry = "Insert into RoomReserved VALUES ('"+hotelid+"','"+reservationid+"','"+date+"','"+roomtype+"');";
+			System.out.println("QRY = " + qry);
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			statement.setQueryTimeout(30);
+			statement.executeUpdate();
+			
+			System.out.println("Búið að uppfæra");
+			
+		}catch(Exception e2){
+			System.out.println(e2);
+		}
+	}
 	
 	//Þegar pantað er þá uppfærist fjöldi lausra herbergja.
 	public static void updateRoomBookings(String date){
