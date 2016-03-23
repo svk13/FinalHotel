@@ -88,9 +88,9 @@ public class Front extends JFrame {
 					height = screenSize.height;
 					width = screenSize.width;
 					frame.setLocationRelativeTo(null);;
-					Date date = new Date();
-					date.getTime();
-			
+					Date datein = new Date();
+					datein.getTime();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -325,8 +325,6 @@ public class Front extends JFrame {
 		scrollPane = new JScrollPane();
 		BookingInfo bookinginfo = new BookingInfo(datein, dateout, dateInString,dateOutString,nrGuests,nrRooms );
 		resultpanel = new ResultPanel(resultHotel,bookinginfo);
-		//resultpanel.setSize(new Dimension((int) (width/1.5)-50,500));
-		//scrollPane.setSize(new Dimension((int) (width/1.5),100));
 		frame.setLocationRelativeTo(null);
 		scrollPane.setViewportView(resultpanel);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);

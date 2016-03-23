@@ -4,7 +4,11 @@ package Hotel;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -194,7 +198,7 @@ public class sqlWorkBench {
 				System.out.println(hotelid+ " hotelid");
 				int del = Integer.parseInt(hotelid);
 				System.out.println(del+ "Hér í updatetableafterdelete");
-				updateTableAfterDelete(del);
+				//updateTableAfterDelete(del);
 			}
 			System.out.println("Búið að uppfæra hótelherbergjafjölda");
 			
@@ -219,20 +223,7 @@ public class sqlWorkBench {
 				}
 			}
 	
-	public static void updateTable(int id){
-		try{
-			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
-			qry = "Update room_price SET counttype3 = counttype3-1 WHERE hotelID ="+id+";";
-			
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
-			statement.setQueryTimeout(30);
-			statement.executeUpdate();;
-			System.out.println("Herbergjum hefur fækkað í hotelid: "+ id);
-			
-		}catch(Exception e2){
-			System.out.println(e2);
-		}
-	}
+	
 	
 	public static void login(JTextField textField,  JPasswordField p){
 		try{
@@ -270,6 +261,74 @@ public class sqlWorkBench {
 			System.out.println(e2);
 		}
 	}
+
+	//Fall sem skilar fjölda viðskiptavina.
+	public static int RoomsAvailable(int hotelid, String dateres, String dateout){
+		String theday;
+		String name = "0";
+		ArrayList<String> myDays= datevinnsla(dateres,dateout); 
+		for(int i = 0; i<myDays.size();i++){
+			try{
+				qry = "select datereserved, count(hotelid) as pi from roomreserved where hotelid='"+hotelid+"' and datereserved = '"+myDays.get(i)+"' group by datereserved;";
+				System.out.println(myDays.get(i) + " get i");
+				PreparedStatement statement = Front.connection.prepareStatement(qry);
+				statement.setQueryTimeout(30);
+				ResultSet rs = statement.executeQuery();;
+						while (rs.next()) {
+							theday = rs.getString("datereserved");
+							String tmp = rs.getString("pi");
+							if(Integer.parseInt(name)<Integer.parseInt(tmp)){
+								name = tmp;
+							}
+						}
+						
+			}catch(Exception e2){
+				System.out.println(e2);
+			}
+		}
+		System.out.println(name + "FinalDATE");
+		return Integer.parseInt(name);
+	}
+	
+
+	public static ArrayList<String> datevinnsla(String in, String out ){
+		System.out.println("DATEVINNSLA");
+		String tmpin = in.substring(0, 2);
+		String tmpout = out.substring(0, 2);
+		int itmp = Integer.parseInt(tmpin);
+		int itmpout = Integer.parseInt(tmpout);
+		ArrayList<String> dayList= new ArrayList<String>();
+		dayList.add(in);		
+		//System.out.println("in " + in + " out " + out);
+		while(itmp!=itmpout){
+		
+			SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy"); 
+			Date myDate;
+			
+			try {
+				myDate = format.parse(in);
+				myDate = addDays(myDate, 1);
+				String newdate = format.format(myDate);
+				tmpin = newdate.substring(0, 2);
+				itmp = Integer.parseInt(tmpin);	
+				dayList.add(newdate);
+				in = newdate;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+			return dayList;
+	}
+	
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        //System.out.println("Nýjasta nýtt " + cal.getTime());
+        return cal.getTime();
+    }
 	
 	//Fall sem skilar fjölda viðskiptavina.
 	public static int NrOfClients(){

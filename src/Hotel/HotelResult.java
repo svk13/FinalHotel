@@ -8,6 +8,10 @@ import javax.swing.JTextArea;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -20,6 +24,7 @@ import java.awt.SystemColor;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
+
 import java.awt.Dimension;
 
 
@@ -117,15 +122,17 @@ public class HotelResult extends JPanel {
 		lblNewLabel_5.setBounds(279, 103, 135, 116);
 		add(lblNewLabel_5);
 		
-		/*String[] words = {"Wifi", "FreeWifi","Smoking area","Swimming pool","Gym","TV"};
-		for(int i =0; i<price.length;i++){
-			if(price[i]==1){
-				JLabel lblNewLabel_3 = new JLabel(words[i]);
-				lblNewLabel_3.setBounds(279, 103+(24*i), 46, 14);
-				add(lblNewLabel_3);
-			}
-		}*/
+		JLabel label = new JLabel("" + (price[5]-sqlWorkBench.RoomsAvailable(hotel.getID(), DateInS,DateOutS)));
+		label.setForeground(Color.RED);
+		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		label.setBounds(576, 123, 46, 14);
+		add(label);
 		
+		JLabel lblNumberOfRooms = new JLabel("Number of rooms available");
+		lblNumberOfRooms.setForeground(Color.RED);
+		lblNumberOfRooms.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblNumberOfRooms.setBounds(429, 123, 137, 14);
+		add(lblNumberOfRooms);
 				
 	}
 	
@@ -141,6 +148,8 @@ public class HotelResult extends JPanel {
 		//System.out.println(string + " strengur");
 		return string;
 	}
+	
+
 	
 	private void internetURL(String urlid) {
 		String tmp = urlid.substring(0,urlid.length());

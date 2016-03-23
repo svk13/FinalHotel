@@ -6,16 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
 import java.awt.Font;
-
 import javax.swing.JButton;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import javax.swing.border.TitledBorder;
-
 import java.awt.Color;
 import java.awt.SystemColor;
 import java.text.ParseException;
@@ -23,8 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.JTextArea;
 
 public class BookingConfirmation extends JPanel {
@@ -136,7 +129,6 @@ public class BookingConfirmation extends JPanel {
 				String ClientID = fname.getText()+nrclients;
 				resid = (int) (Math.random()*100000);
 				
-				sqlWorkBench.updateTable(hotel.getID());
 				datevinnsla(DateInS, DateOutS);
 				
 				Bookings book = new Bookings(hotel.getID(), resid, DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
