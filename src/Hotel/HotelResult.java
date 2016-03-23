@@ -1,5 +1,6 @@
 package Hotel;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -143,6 +144,7 @@ public class HotelResult extends JPanel {
 			lblNumberOfRooms.setBounds(429,123,300,14);
 			lblNumberOfRooms.setText("Sorry, we don't have enough rooms for your reservation");
 			label.setText("");
+			button.setEnabled(false);
 		} 
 		label.setForeground(Color.RED);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));

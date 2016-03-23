@@ -40,7 +40,7 @@ public class ResultPanel extends JPanel {
 	    static String price;
 	    static JScrollPane j; 
 
-	    BookingInfo bookinginfo;
+	    static BookingInfo bookinginfo;
 	    static JPanel panel_1;
 	    int numberOfLabels = Front.resultHotel.size();
 	    //final JScrollPane scrollPane;
@@ -403,7 +403,7 @@ public class ResultPanel extends JPanel {
 	
 
 	
-	private void updateUIid(ArrayList<Hotel> hotelListtmp){
+	public static void updateUIid(ArrayList<Hotel> hotelListtmp){
 		int numberOfLabels = hotelListtmp.size();
 
 		for (int index=0; index<numberOfLabels; index++) {
