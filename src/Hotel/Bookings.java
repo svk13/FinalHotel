@@ -2,7 +2,11 @@ package Hotel;
 
 import java.sql.Statement;
 
-
+/* Bookings is a class that takes in information
+ * about a reservation, and executes a method that 
+ * executes a sql query and creates a booking in the 
+ * database.
+ */
 public class Bookings {
 	private int hotelID;
 	private int reservationID;
