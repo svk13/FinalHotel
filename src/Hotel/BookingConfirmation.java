@@ -28,8 +28,13 @@ import java.util.Random;
 import javax.swing.JTextArea;
 
 public class BookingConfirmation extends JPanel {
-	/**
-	 * 
+	/** BookingConfirmation is a Jpanel that lets the user
+	 *  confirm his bookings. He adds into the textfields
+	 *  his information. hotel is a Hotel that the client
+	 *  has chosen. bookinginfo contains the information, days,
+	 *  number of room etc. that the booking needs. 
+	 *  resid is the reservation id, numberofrooms is the number
+	 *  of rooms.
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField fname;
@@ -50,13 +55,14 @@ public class BookingConfirmation extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public BookingConfirmation(String a, BookingInfo bookinginfo1, Hotel hotel1 ){
+	public BookingConfirmation(String a, final BookingInfo bookinginfo, final Hotel hotel ){
 		setLayout(null);
-		bookinginfo=bookinginfo1;
+		
+		this.bookinginfo=bookinginfo;
+		this.hotel=hotel;
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
-		hotel=hotel1;
-		numberofrooms = bookinginfo1.getNumberOfRooms();
+		numberofrooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
 		fname.setBounds(112, 86, 86, 20);
 		add(fname);
@@ -122,11 +128,16 @@ public class BookingConfirmation extends JPanel {
 		lblBookingConfirmation.setBounds(112, 11, 237, 47);
 		add(lblBookingConfirmation);
 		
+		/* Usage: actionperformed button
+		 * Pre: 
+		 * Post: This button confirms the booking for the 
+		 * 		 client. 
+		 */ 
 		JButton btnNewButton = new JButton("Confirm");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//System.out.println("Halló");
 				Front.frame.setCursor(waitCursor);
+				
 				String username = "hotelprojecticeland";
 				String password = "sigosigo";
 				String recipientEmail = emailtxt.getText();
@@ -140,7 +151,6 @@ public class BookingConfirmation extends JPanel {
 				
 				Bookings book = new Bookings(hotel.getID(), resid, DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
 				String message = "Thank you " + fname.getText() + " " + lname.getText() + ", \nfor booking your hotel using our services. \nYour username is: "+ ClientID + " and password: "+ clientpassword +"\n \np.s. your hotel has been informed of your special request that is: " + special.getText();
-				System.out.println(book);
 				try {
 					GoogleMail.send(username, password, recipientEmail, title, message);
 					JOptionPane.showMessageDialog(null, "Bókun staðfest");
@@ -150,7 +160,6 @@ public class BookingConfirmation extends JPanel {
 				}
 				Front.frame.setCursor(defaultCursor);
 				Front.cardLayout.show(Front.contentPane, "1");
-				
 			}
 		});
 		
@@ -171,11 +180,13 @@ public class BookingConfirmation extends JPanel {
 		int totalprice = r*p[2];
 		String bill = "Number of guests: \nNumber of Rooms: \nTotal price:\t";
 		
+		// 
 		JTextArea textArea = new JTextArea(bill);
 		textArea.setBackground(SystemColor.controlHighlight);
 		textArea.setBounds(37, 240, 155, 62);
 		add(textArea);
 		
+		// prices shows the price of the room for a specific Hotel
 		String prices=  bookinginfo.getNumberOfGuests()+"\n"+ bookinginfo.getNumberOfRooms()+"\n"+totalprice;
 		JTextArea textArea_1 = new JTextArea(prices);
 		textArea_1.setBackground(SystemColor.controlHighlight);
@@ -185,6 +196,11 @@ public class BookingConfirmation extends JPanel {
 
 	}
 	
+	/* Usage: datevinnsla(in,out);
+	 * Pre: in is a specific date in String form and so is out.
+	 * Post: The method has added the dates of the reservation
+	 * 		 that the client has chosen in his booking.  
+	 */ 
 	public void datevinnsla(String in, String out ){
 	    
 		String tmpin = in.substring(0, 2);
@@ -219,7 +235,12 @@ public class BookingConfirmation extends JPanel {
 			
 		
 	}
-	
+	/* Usage: addDays(date, days);
+	 * Pre: date is a Date and days is the number 
+	 *  	of days that you want to add to your new date.
+	 * Post: New date is returned that is 'days' many days later
+	 *  	 than the original date. 
+	 */ 
     public static Date addDays(Date date, int days)
     {
         Calendar cal = Calendar.getInstance();
@@ -229,6 +250,11 @@ public class BookingConfirmation extends JPanel {
         return cal.getTime();
     }
 	
+	/* Usage: randomString();
+	 * Pre: 
+	 * Post: The method returns a random String that 
+	 * 		 is used to create passwords.
+	 */ 
 	public String randomString(){
 		Random r = new Random(); // Intialize a Random Number Generator with SysTime as the seed
 		int wordLength = r.nextInt(8)+3;
