@@ -115,16 +115,47 @@ public class sqlWorkBench {
 			System.out.println(e2);
 		}
 	}
+
+	public static void updateDB(String date){
+		SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy"); 
+		Date myDate;
+		try {
+			myDate = format.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			if (format.parse(date).before(new Date())) {
+				System.out.println("prump");
+			    }
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		}
+	}
 	
 	//Þegar pantað er þá uppfærist fjöldi lausra herbergja.
 	public static void updateRoomBookings(String date){
+
 
 		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			System.out.println(date+ " Hér er date-ið");
 			qry = "Delete from room_bookings where date_out<'" + date +"';";
+			qry2 = "Select * from room_bookings whete date_out='" + date +"';"; 
 			Connection conn = sqliteConnection.dbConnector();
 			PreparedStatement statement = conn.prepareStatement(qry);
+			PreparedStatement statement2 = conn.prepareStatement(qry2);
+			
+			ResultSet rs =statement2.executeQuery();
+			while(rs.next()){
+				String id = rs.getString("hotelID");
+				String dateout = rs.getString("date_out");
+				
+			}
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
 			
@@ -200,16 +231,7 @@ public class sqlWorkBench {
 	}
 	
 
-	// A method that adds a certain amount of days to a date. 
-	// The method adds 'days' days to the date.
-    public static Date addDays(Date date, int days)
-    {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
-        //System.out.println("Nýjasta nýtt " + cal.getTime());
-        return cal.getTime();
-    }
+
 	
 	//Fall sem skilar fjölda viðskiptavina.
 	public static int NrOfClients(){

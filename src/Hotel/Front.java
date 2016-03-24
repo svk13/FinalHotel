@@ -230,6 +230,7 @@ public class Front extends JFrame {
 				search();
 				whatpage = 2;
 				setVisible(true);
+				
 			}
 		});
 
@@ -248,7 +249,7 @@ public class Front extends JFrame {
 
 				datein = DateChooserIn.getDate();
 				dateInString = convertStringToDate(datein);
-				Date dateplus1 = sqlWorkBench.addDays(datein, 1);
+				Date dateplus1 = Methods.addDays(datein, 1);
 				DateChooserOut.setDate(dateplus1);
 				DateChooserOut.getJCalendar().setMinSelectableDate(dateplus1);
 			}
@@ -299,16 +300,17 @@ public class Front extends JFrame {
 					"We're sorry, there were no results");
 			return;
 		}
-		scrollPane = new JScrollPane();
+		//scrollPane = new JScrollPane();
 		BookingInfo bookinginfo = new BookingInfo(datein, dateout,
 				dateInString, dateOutString, nrGuests, nrRooms);
 		resultpanel = new ResultPanel(resultHotel, bookinginfo);
 		frame.setLocationRelativeTo(null);
-		scrollPane.setViewportView(resultpanel);
-		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		getContentPane().add(scrollPane);
-		scrollPane.getVerticalScrollBar().setLocation(0, 0);
-		contentPane.add(scrollPane, "2");
+		//scrollPane.setViewportView(resultpanel);
+		//scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		//getContentPane().add(scrollPane);
+		//scrollPane.getVerticalScrollBar().setLocation(0, 0);
+		//contentPane.add(scrollPane, "2");
+		contentPane.add(resultpanel,"2");
 		cardLayout.show(contentPane, "2");
 
 	}
@@ -344,8 +346,8 @@ public class Front extends JFrame {
 					frame.setLocationRelativeTo(null);
 					Date datein = new Date();
 					datein.getTime();
-					String dates = convertStringToDate(datein);
-					sqlWorkBench.updateRoomBookings(dates);
+					//String dates = convertStringToDate(datein);
+					//sqlWorkBench.updateRoomBookings(dates);
 
 				} catch (Exception e) {
 					e.printStackTrace();

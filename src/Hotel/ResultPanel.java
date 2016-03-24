@@ -4,6 +4,7 @@ package Hotel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
+
 import java.util.*;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -11,16 +12,21 @@ import java.awt.Dimension;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+
 import javax.swing.JCheckBox;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 import java.awt.BorderLayout;
+
 import javax.swing.JComboBox;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -97,6 +103,7 @@ public class ResultPanel extends JPanel {
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
+				
 				if(chckbxNewCheckBox.isSelected()){
 					
 					newList = sqlWorkBench.detailedSearch(newList,0);
@@ -345,6 +352,7 @@ public class ResultPanel extends JPanel {
 		final JComboBox comboBox = new JComboBox(labels);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
+				
 				Object item = evt.getItem();
 				hotelList=newList;
 			    if (item.toString().equals("Prices from")) {
@@ -386,6 +394,7 @@ public class ResultPanel extends JPanel {
 
 		updateUIid(hotelList);
 		setVisible(true);
+		
 	}
 	
 

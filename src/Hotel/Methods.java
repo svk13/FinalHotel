@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -98,7 +99,7 @@ public class Methods {
 			
 			try {
 				myDate = format.parse(in);
-				myDate = sqlWorkBench.addDays(myDate, 1);
+				myDate = addDays(myDate, 1);
 				String newdate = format.format(myDate);
 				tmpin = newdate.substring(0, 2);
 				itmp = Integer.parseInt(tmpin);	
@@ -112,5 +113,14 @@ public class Methods {
 			return dayList;
 	}
 
-	
+	// A method that adds a certain amount of days to a date. 
+	// The method adds 'days' days to the date.
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        //System.out.println("Nýjasta nýtt " + cal.getTime());
+        return cal.getTime();
+    }
 }
