@@ -102,16 +102,13 @@ public class HotelResult extends JPanel {
 		lblNewLabel_4.setBounds(368, 63, 46, 29);
 		add(lblNewLabel_4);
 		
-		String info = info(wifi, FreeWifi, smoke, swim, gym,tv);
-		//System.out.println(info+ " info");
+		String info = Methods.info(wifi, FreeWifi, smoke, swim, gym,tv);
 		JTextArea lblNewLabel_5 = new JTextArea(info);
 		lblNewLabel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Facilities", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 255, 0)));
 		lblNewLabel_5.setBackground(SystemColor.control);
 		lblNewLabel_5.setEditable(false);
 		lblNewLabel_5.setBounds(279, 103, 135, 116);
 		add(lblNewLabel_5);
-		
-
 		
 		JLabel lblNumberOfRooms = new JLabel("Number of rooms available");
 		lblNumberOfRooms.setForeground(Color.RED);
@@ -137,31 +134,5 @@ public class HotelResult extends JPanel {
 		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		label.setBounds(576, 123, 46, 14);
 		add(label);
-	}
-	
-
-	private String info(int a, int b, int c, int d, int e, int f){
-		String string="";
-		if(a==1) string+="Wifi \n";
-		if(a==1) string+="Free Wifi \n";
-		if(c==1) string+="Smoking Area \n";
-		if(d==1) string+="Swimming pool \n";
-		if(e==1) string+="Gym \n";
-		if(f==1) string+="TV";
-		//System.out.println(string + " strengur");
-		return string;
-	}
-	
-
-	
-	private void internetURL(String urlid) {
-		String tmp = urlid.substring(0,urlid.length());
-		
-		
-		try {
-		    Desktop.getDesktop().browse(new URL("http://"+tmp).toURI());
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 	}
 }

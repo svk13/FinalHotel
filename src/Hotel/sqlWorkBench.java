@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -21,6 +21,45 @@ public class sqlWorkBench {
 
 	static String qry = "";
 	static String qry2="";
+	static ResultSet rs;
+
+	// A method that searches for a hotel with the information in the textarea in the Front class.
+	public static void LeitaHotel(String tmp){
+		try{
+			
+			if(Front.somethingWritten==false) { 
+				qry = "Select * from Hotel, hotelfacilities where hotel.id=hotelfacilities.hotelid;";
+			}else{
+				qry = "Select * from Hotel,hotelfacilities where Hotel.id=Hotelfacilities.hotelid AND ( Hotel.name LIKE'%"+tmp+"%' OR Hotel.city LIKE'"+tmp+"%' OR Hotel.postcode LIKE'"+tmp+"%' OR Hotel.address LIKE'"+tmp+"%');";
+			}
+			
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			statement.setQueryTimeout(30);
+			rs = statement.executeQuery();
+			
+			while (rs.next()) {
+				int id = Integer.parseInt(rs.getString("id"));
+				String name = rs.getString("name");
+				String address = rs.getString("address");
+				int postcode = Integer.parseInt(rs.getString("postcode"));
+				String city = rs.getString("city");
+				String URL = rs.getString("URL");
+				int wifi = Integer.parseInt(rs.getString("Wifi"));
+				int FreeWifi = Integer.parseInt(rs.getString("FreeWifi"));
+				int Smokearea = Integer.parseInt(rs.getString("SmokingArea"));
+				int SPool = Integer.parseInt(rs.getString("Swimmingpool"));
+				int Gym = Integer.parseInt(rs.getString("Gym"));
+				int TV = Integer.parseInt(rs.getString("TV"));
+				Hotel hotelTmp = new Hotel(id, name, address, postcode, city, URL,wifi,FreeWifi,Smokearea,SPool,Gym,TV);
+				Front.resultHotel.add(hotelTmp);
+		
+			}
+			
+		}catch(Exception e2){
+			System.out.println(e2);
+		}
+		
+	}
 	
 	/* Usage:
  	 * Pre:
@@ -44,116 +83,9 @@ public class sqlWorkBench {
 		}
 	}
 	
-	/*
-	 * Fall til þess að búa til random tölur. Notaði það til að henda inn í databaseinn. 
-	 */
-	 private static int showRandomInteger(int aStart, int aEnd, Random aRandom){
-		    if (aStart > aEnd) {
-		      throw new IllegalArgumentException("Start cannot exceed End.");
-		    }
-		    //get the range, casting to long to avoid overflow problems
-		    long range = (long)aEnd - (long)aStart + 1;
-		    // compute a fraction of the range, 0 <= frac < range
-		    long fraction = (long)(range * aRandom.nextDouble());
-		    int randomNumber =  (int)(fraction + aStart);    
-		    return randomNumber;
-		   
-		  }
-	
-	//Fall til að bæta inn í Facilities töfluna í databasenum. 
-	public static void insertIntoFacilities(){
-		Random randomGenerator = new Random();
-	    for (int idx = 1; idx <= 10; ++idx){
-	      int randomInt = randomGenerator.nextInt(100);
-	     
-	    }
-		try{
-			
-			for(int count=1; count<=31;count++){
-				
-				int r1=0;
-				int[] rnd = new int[6];
-				for(int i=0;i<6;i++){
-				
-					if(Math.random()<0.5) r1=0;
-					else r1=1;
-				rnd[i]=r1;
-					
-				}
-				
-				Random random = new Random();
-			   int one = showRandomInteger(35000,55000,random);
-			   Random random1 = new Random();
-			   int one1 = showRandomInteger(18000,35000,random1);
-			   Random random2 = new Random();
-			   int one2 = showRandomInteger(4000,18000,random2);
-			   Random random3 = new Random();
-			   int one3 = showRandomInteger(2,8,random3);
-			   Random random4 = new Random();
-			   int one4 = showRandomInteger(15,35,random4);
-			   Random random5 = new Random();
-			   int one5 = showRandomInteger(15,60,random5);
-			
-			   qry = "INSERT INTO room_price Values("+count+","+one+","+one1+","+one2+","+
-					one3+","+one4+","+one5+");";
-			   Statement stmt = Front.connection.createStatement();
-			   stmt.setQueryTimeout(30);
-			   stmt.executeUpdate(qry);
-			}
-				
-		}catch(Exception e2){
-			System.out.println(e2);
-		}
-	}
-	
-	// Fall sem hlustar á textaboxið í Front klasanum. Hægt er að gera jcombobox sem eins konar autocorrect 
-	// með þessu falli.
-	public static Object[] object(Boolean breyta, String word){
-
-		Object[] myObjects=null;
-		try{
-				
-			if(breyta==true){
-			qry = "Select Hotel.city from Hotel Group by city;";
-			qry2 = "Select count(city) as pi from(select Hotel.city from Hotel Group by city);";
-			}else{
-				qry="Select Hotel.city from Hotel where city LIKE '%"+ word+"%' Group by city;";
-				qry2="Select count(city) as pi from (Select Hotel.city from Hotel where city LIKE '%"+ word+"%' Group by city);";
-			}
-			
-			//System.out.println(qry + "\n" + qry2 );
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
-			PreparedStatement statement2 = Front.connection.prepareStatement(qry2);
-			statement.setQueryTimeout(30);
-			ResultSet rs = statement.executeQuery();
-			ResultSet rs2 = statement2.executeQuery();
-			String thecount = rs2.getString("pi");
-			int tmp1 = Integer.parseInt(thecount);
-			//System.out.println(" hóhó" + thecount);
-			myObjects = new Object[tmp1+1];
-			myObjects[0]="";
-			int count = 1;
-					while (rs.next()) {
-						
-						String name = rs.getString("city");
-						//System.out.println(name);
-						Object tmp = name;
-						myObjects[count] = tmp;
-						count++;
-						
-					}
-					//sqliteConnection.closeConnection(rs, statement, Front.connection);
-			
-		}catch(Exception e2){
-			System.out.println(e2);
-		}
-	return myObjects;
-	}
 	
 	//Fall til þess að eyða viðskiptavinum út úr database.
 	public static void clientDelete(String resID){
-
-
 		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			qry = "Delete from room_bookings where reservationID='" + resID +"';";
@@ -166,15 +98,13 @@ public class sqlWorkBench {
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
-		}
+	}
 	
+	// A method that inserts into roomreserved in the database. So that the program can 
+	// later see if a hotel is fully booked.
 	public static void reservedroom(int hotelid, int reservationid, String date, int roomtype){
-
-
 		try{
-			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			qry = "Insert into RoomReserved VALUES ('"+hotelid+"','"+reservationid+"','"+date+"','"+roomtype+"');";
-			System.out.println("QRY = " + qry);
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
@@ -189,12 +119,12 @@ public class sqlWorkBench {
 	//Þegar pantað er þá uppfærist fjöldi lausra herbergja.
 	public static void updateRoomBookings(String date){
 
-		helpDelete(date);
 		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			System.out.println(date+ " Hér er date-ið");
 			qry = "Delete from room_bookings where date_out<'" + date +"';";
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			Connection conn = sqliteConnection.dbConnector();
+			PreparedStatement statement = conn.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
 			
@@ -204,48 +134,9 @@ public class sqlWorkBench {
 			System.out.println(e2);
 		}
 	}
-	//Hjálpar fall fyrir updateRoombooking
-	public static void helpDelete(String date){
-		try{
-			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
-			System.out.println(date+ " Hér er date-ið");
-			
-			qry = "Select hotelid from room_bookings where date_out<'"+date+"';";
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
-			statement.setQueryTimeout(30);
-			ResultSet rs = statement.executeQuery();
-			while(rs.next()){
-				String hotelid = rs.getString("hotelid");
-				System.out.println(hotelid+ " hotelid");
-				int del = Integer.parseInt(hotelid);
-				System.out.println(del+ "Hér í updatetableafterdelete");
-				//updateTableAfterDelete(del);
-			}
-			System.out.println("Búið að uppfæra hótelherbergjafjölda");
-			
-		}catch(Exception e2){
-			System.out.println("virkaði ekki");
-		}		
-	}
 	
-	// Uppfærir töfluna eftir að það er búið að deleta.
-	public static void updateTableAfterDelete(int id){
-		try{
-					//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
-					qry = "Update room_price SET counttype3 = counttype3+1 WHERE hotelID ='"+id+"';";
-					
-					PreparedStatement statement = Front.connection.prepareStatement(qry);
-					statement.setQueryTimeout(30);
-					statement.executeUpdate();;
-					System.out.println("Herbergjum hefur fækkað í hotelid: "+ id);
-					
-				}catch(Exception e2){
-					System.out.println(e2);
-				}
-			}
-	
-	
-	
+	// A method that enables a client to login to the system and see/cancel his
+	// reservation.
 	public static void login(JTextField textField,  JPasswordField p){
 		try{
 			String id = null,reservationID = null,datein = null,dateout = null,finishedstring = null;
@@ -283,10 +174,11 @@ public class sqlWorkBench {
 		}
 	}
 
-	//Fall sem skilar fjölda viðskiptavina.
+	//A method that returns an in that is the amount of rooms taken at a certain
+	//hotel from date dateres to dateout.
 	public static int RoomsAvailable(int hotelid, String dateres, String dateout){
 		String name = "0";
-		ArrayList<String> myDays= datevinnsla(dateres,dateout); 
+		ArrayList<String> myDays= Methods.datevinnsla(dateres,dateout); 
 		for(int i = 0; i<myDays.size();i++){
 			try{
 				qry = "select datereserved, count(hotelid) as pi from roomreserved where hotelid='"+hotelid+"' and datereserved = '"+myDays.get(i)+"' group by datereserved;";
@@ -308,35 +200,8 @@ public class sqlWorkBench {
 	}
 	
 
-	public static ArrayList<String> datevinnsla(String in, String out ){
-		String tmpin = in.substring(0, 2);
-		String tmpout = out.substring(0, 2);
-		int itmp = Integer.parseInt(tmpin);
-		int itmpout = Integer.parseInt(tmpout);
-		ArrayList<String> dayList= new ArrayList<String>();
-		dayList.add(in);		
-		//System.out.println("in " + in + " out " + out);
-		while(itmp!=itmpout){
-		
-			SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy"); 
-			Date myDate;
-			
-			try {
-				myDate = format.parse(in);
-				myDate = addDays(myDate, 1);
-				String newdate = format.format(myDate);
-				tmpin = newdate.substring(0, 2);
-				itmp = Integer.parseInt(tmpin);	
-				dayList.add(newdate);
-				in = newdate;
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-		}
-			return dayList;
-	}
-	
+	// A method that adds a certain amount of days to a date. 
+	// The method adds 'days' days to the date.
     public static Date addDays(Date date, int days)
     {
         Calendar cal = Calendar.getInstance();
@@ -372,18 +237,13 @@ public class sqlWorkBench {
 	public static String HotelName(String id){
 		try{
 			qry = "select Hotel.name as pi from room_bookings, Hotel where Hotel.id = '"+ id+"';";
-			System.out.println(qry);
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			ResultSet rs = statement.executeQuery();;
-					while (rs.next()) {
-						
+					while (rs.next()) {	
 						String name = rs.getString("pi");
-						//System.out.println(name);
 						return name;
 					}
-					//sqliteConnection.closeConnection(rs, statement, Front.connection);
-			
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -441,6 +301,8 @@ public class sqlWorkBench {
 		return Front.resultHotel;
 	}
 	
+	// Method that returns int[] with information about what
+	// facilities a certain Hotel has. 1 means it has it, 0 not.
 	public static int[] price(int id){
 		int[] i= new int[6];
 		try{
@@ -464,20 +326,17 @@ public class sqlWorkBench {
 					i[2] = Integer.parseInt(type3);
 					i[3] = Integer.parseInt(counttype1);
 					i[4] = Integer.parseInt(counttype2);
-					i[5] = Integer.parseInt(counttype3);
-					//System.out.println("Kemst ég hingað?");
-					//Front.textArea.append(id + " " + name + " "  +address + " " +city + " " + URL +  "\n");
-					
+					i[5] = Integer.parseInt(counttype3);	
 				}
-				
 		}catch(Exception e){
-			System.out.println("WHÆÆÆÆ");
+			System.out.println("WHÆÆÆÆ");	
 		}
-	}catch(Exception e2){
-		System.out.println("prump");
-	}
+		}catch(Exception e2){
+			System.out.println("prump");
+		}
 		return i;
-		}
+	
+	}
 	
 }
 

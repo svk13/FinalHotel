@@ -88,8 +88,6 @@ public class Front extends JFrame {
 	 */
 	public Front() {
 
-		
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 891, 530);
 
@@ -295,7 +293,7 @@ public class Front extends JFrame {
 		btnNewButton.setEnabled(true);
 		connection = sqliteConnection.dbConnector();
 		String s = SearchTextArea.getText();
-		sqliteConnection.LeitaHotel(s);
+		sqlWorkBench.LeitaHotel(s);
 		if (resultHotel.size() == 0) {
 			JOptionPane.showMessageDialog(null,
 					"We're sorry, there were no results");
@@ -346,6 +344,8 @@ public class Front extends JFrame {
 					frame.setLocationRelativeTo(null);
 					Date datein = new Date();
 					datein.getTime();
+					String dates = convertStringToDate(datein);
+					sqlWorkBench.updateRoomBookings(dates);
 
 				} catch (Exception e) {
 					e.printStackTrace();

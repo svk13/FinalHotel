@@ -18,7 +18,12 @@ public class Hotel {
 	private int TV;
 	
 	
-
+	/* Hotel is an object that contains all the details of a 
+	 * certain hotel from the database. 
+	 * id is the hotel id.
+	 * name is the name of the hotel
+	 * address is it's address and etc.
+	 */
 	static Statement stmt = null;
 	static String tmp;
 	public Hotel(int a, String b, String c, int d, String e, String f,int g, int h, int i, int j, int k, int l){
