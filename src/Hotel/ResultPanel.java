@@ -31,22 +31,21 @@ public class ResultPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 		static String labelTextaddress;
 	    static String labelTextname;
-		static int labelTextid;
-	    static int labelTextpostcode;
-	    static int wifiteljari;
-	    static int freewifiteljari;
 	    static String labelTextcity;
 	    static String url;
 	    static String price;
 	    static JScrollPane j; 
-
+		static int labelTextid;
+	    static int labelTextpostcode;
+	    static int wifiteljari;
+	    static int freewifiteljari;
+	    static int numberOfLabels1;
 	    static BookingInfo bookinginfo;
 	    static JPanel panel_1;
-	    int numberOfLabels = Front.resultHotel.size();
-	    //final JScrollPane scrollPane;
 	    static JPanel panel;
+	    
+	    int numberOfLabels = Front.resultHotel.size();
 	    int count = 0;
-	    static int numberOfLabels1;
 	    static ArrayList<Hotel> newList;
 	    ArrayList<Hotel> hotelList;
 	
@@ -350,39 +349,27 @@ public class ResultPanel extends JPanel {
 				hotelList=newList;
 			    if (item.toString().equals("Prices from")) {
 			    	panel_1.removeAll();
-					Collections.sort(hotelList, new MyComparator2());
-					for(int i =0; i<hotelList.size();i++){
-						int[] a = hotelList.get(i).getPrice();
-					}
+					Collections.sort(hotelList, new Methods.MyComparator2());
 					updateUIid(hotelList);
 					repaint();
 					updateUI();
 			    } else if(item.toString().equals("Prices to")) {
 			    	panel_1.removeAll();
-					Collections.sort(hotelList, new MyComparator());
-					for(int i =0; i<hotelList.size();i++){
-						int[] a = hotelList.get(i).getPrice();
-					}
+					Collections.sort(hotelList, new Methods.MyComparator());
 					updateUIid(hotelList);
 					repaint();
 					updateUI();
 			    }
 			    else if(item.toString().equals("A-Z")) {
 			    	panel_1.removeAll();
-					Collections.sort(hotelList, new MyComparator3());
-					for(int i =0; i<hotelList.size();i++){
-						int[] a = hotelList.get(i).getPrice();
-					}
+					Collections.sort(hotelList, new Methods.MyComparator3());
 					updateUIid(hotelList);
 					repaint();
 					updateUI();
 			    }
 			    else if(item.toString().equals("Z-A")) {
 			    	panel_1.removeAll();
-					Collections.sort(hotelList, new MyComparator4());
-					for(int i =0; i<hotelList.size();i++){
-						int[] a = hotelList.get(i).getPrice();
-					}
+					Collections.sort(hotelList, new Methods.MyComparator4());
 					updateUIid(hotelList);
 					repaint();
 					updateUI();
@@ -412,67 +399,6 @@ public class ResultPanel extends JPanel {
 			resultpane.setBounds(40, 50+((index)*240), 630, 230);
 			panel_1.add(resultpane);
 			
-		}
-	}
-
-	class MyComparator implements Comparator<Hotel> {
-			@Override
-			public int compare(Hotel o1, Hotel o2) {
-				int[] a = o1.getPrice();
-				int[] b = o2.getPrice();
-			    if (a[2] > b[2]) {
-			        return -1;
-			    } else if (a[2]<b[2]) {
-			        return 1;
-			    }
-			    return 0;
-			    }
-			}
-	class MyComparator2 implements Comparator<Hotel> {
-		@Override
-		public int compare(Hotel o1, Hotel o2) {
-			int[] a = o1.getPrice();
-			int[] b = o2.getPrice();
-		    if (a[2] < b[2]) {
-		        return -1;
-		    } else if (a[2]>b[2]) {
-		        return 1;
-		    }
-		    return 0;
-		    }
-		}
-	class MyComparator3 implements Comparator<Hotel> {
-		@Override
-		public int compare(Hotel o1, Hotel o2) {
-			String a = o1.getName();
-			String b = o2.getName();
-		    if (a.compareTo(b) < 0) {
-		        return -1;
-		    } else if (a.compareTo(b)>0) {
-		        return 1;
-		    }
-		    return 0;
-		    }
-		}
-	class MyComparator4 implements Comparator<Hotel> {
-		@Override
-		public int compare(Hotel o1, Hotel o2) {
-			String a = o1.getName();
-			String b = o2.getName();
-		    if (a.compareTo(b) > 0) {
-		        return -1;
-		    } else if (a.compareTo(b)<0) {
-		        return 1;
-		    }
-		    return 0;
-		    }
-		}
-	private void internetURL(String urlid) {
-		String tmp = urlid.substring(0,urlid.length());
-		try {
-		    Desktop.getDesktop().browse(new URL("http://"+tmp).toURI());
-		} catch (Exception e) {
-			System.out.println(e);
 		}
 	}
 }

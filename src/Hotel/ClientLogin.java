@@ -20,8 +20,8 @@ import java.awt.event.ActionEvent;
 
 public class ClientLogin extends JDialog {
 
-	/**
-	 * 
+	/* 
+	 * A JDialog for a client login
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();

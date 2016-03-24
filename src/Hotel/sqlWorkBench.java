@@ -22,6 +22,27 @@ public class sqlWorkBench {
 	static String qry = "";
 	static String qry2="";
 	
+	/* Usage:
+ 	 * Pre:
+ 	 * Post:
+	 */
+	public static void makebooking(int hotelID, int reservationID, String dateins, String dateouts,int nrOfRooms,String clientid,String client_passw){
+		
+		try{	
+			
+			String qry = "INSERT INTO Room_Bookings Values("+hotelID+","+reservationID+",'"+dateins+"','"+dateouts+"',"+
+					nrOfRooms+",'"+clientid+"','"+client_passw+"');";
+			System.out.println(qry);
+			
+			Statement stmt = Front.connection.createStatement();
+			stmt.setQueryTimeout(30);
+			stmt.executeUpdate(qry);
+				
+					//sqliteConnection.closeConnection(rs, statement, Front.connection)
+		}catch(Exception e2){
+			System.out.println(e2);
+		}
+	}
 	
 	/*
 	 * Fall til þess að búa til random tölur. Notaði það til að henda inn í databaseinn. 
@@ -385,7 +406,12 @@ public class sqlWorkBench {
 		return returnedString;
 	}
 	
-	
+	/* Usage: detailedSearch(hotelList, var); 
+	 * Pre: hotelList is an ArrayList<Hotel> and var is an integer.
+	 * Post: The method returns a new ArrayList. It contains the 
+	 * 		 Hotels from hotelList that have specific facilities
+	 *  	 that the client is looking for. i.e. wifi, gym, etc.
+	 */
 	public static ArrayList<Hotel> detailedSearch(ArrayList<Hotel> hotelList, int var){
 	
 		ArrayList<Hotel> hoteltmp = new ArrayList<Hotel>();
@@ -405,14 +431,13 @@ public class sqlWorkBench {
 			}else{
 				facilities=tmp.getSmoke();
 			}
-			//System.out.println(tmp+" "+ wifi + " " + i);
 			if(facilities==1){
 				hoteltmp.add(tmp);
 				System.out.println("Búið að adda");
 			}
 		}
 		Front.resultHotel = hoteltmp;
-		//System.out.println(Front.resultHotel.size() + " er stærðin");
+		
 		return Front.resultHotel;
 	}
 	
@@ -420,19 +445,12 @@ public class sqlWorkBench {
 		int[] i= new int[6];
 		try{
 		int Hotelid = id;
-		//System.out.println(Hotelid);
-		
 		String qry = "Select * from Room_price where hotelid="+Hotelid+";";
-			
-		//System.out.println("Kemst ég hingað? " + qry);
-		
+
 		try{
 		PreparedStatement statement = Front.connection.prepareStatement(qry);
-		//System.out.println(statement + " Hér ertu  inní price í sqlworkbench" );
-		//System.out.println("Kemst ég hingað? " + statement);
 		ResultSet rs = statement.executeQuery();
-		
-		//System.out.println("Kemst ég hingað?");				
+				
 				while (rs.next()) {
 					
 					String type1=rs.getString("type1");
