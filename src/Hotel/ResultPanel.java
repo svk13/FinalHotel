@@ -394,11 +394,17 @@ public class ResultPanel extends JPanel {
 
 		updateUIid(hotelList);
 		setVisible(true);
-		
+		toTop();
 	}
 	
-
-	
+    private static void toTop(){
+    	javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			   public void run() { 
+			       j.getVerticalScrollBar().setValue(0);
+			   }
+			});
+    }
+	 
 	public static void updateUIid(ArrayList<Hotel> hotelListtmp){
 		int numberOfLabels = hotelListtmp.size();
 
@@ -409,5 +415,6 @@ public class ResultPanel extends JPanel {
 			panel_1.add(resultpane);
 			
 		}
+		toTop();
 	}
 }
