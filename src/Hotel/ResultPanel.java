@@ -103,7 +103,7 @@ public class ResultPanel extends JPanel {
 		final JPanel panel_2 = new JPanel();
 		panel_2.setAlignmentX(Component.LEFT_ALIGNMENT);
 		panel_2.setMaximumSize(new Dimension(150, 32767));
-		panel_2.setBackground(Color.BLUE);
+		panel_2.setBackground(Color.ORANGE);
 		add(panel_2, BorderLayout.WEST);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{150, 0};
@@ -113,7 +113,7 @@ public class ResultPanel extends JPanel {
 		panel_2.setLayout(gbl_panel_2);
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Wifi");
-		chckbxNewCheckBox.setBackground(Color.BLUE);
+		chckbxNewCheckBox.setBackground(Color.ORANGE);
 		chckbxNewCheckBox.setBounds(10, 10, 43, 23);
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -191,7 +191,7 @@ public class ResultPanel extends JPanel {
 				}
 			}
 		});
-		chckbxFreeWifi.setBackground(Color.BLUE);
+		chckbxFreeWifi.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_chckbxFreeWifi = new GridBagConstraints();
 		gbc_chckbxFreeWifi.fill = GridBagConstraints.BOTH;
 		gbc_chckbxFreeWifi.insets = new Insets(0, 0, 5, 0);
@@ -232,7 +232,7 @@ public class ResultPanel extends JPanel {
 				}
 			}
 		});
-		chckbxSwimmingPool.setBackground(Color.BLUE);
+		chckbxSwimmingPool.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_chckbxSwimmingPool = new GridBagConstraints();
 		gbc_chckbxSwimmingPool.fill = GridBagConstraints.BOTH;
 		gbc_chckbxSwimmingPool.insets = new Insets(0, 0, 5, 0);
@@ -273,7 +273,7 @@ public class ResultPanel extends JPanel {
 				}
 			}
 		});
-		chckbxGym.setBackground(Color.BLUE);
+		chckbxGym.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_chckbxGym = new GridBagConstraints();
 		gbc_chckbxGym.fill = GridBagConstraints.BOTH;
 		gbc_chckbxGym.insets = new Insets(0, 0, 5, 0);
@@ -314,7 +314,7 @@ public class ResultPanel extends JPanel {
 				}
 			}
 		});
-		chckbxTv.setBackground(Color.BLUE);
+		chckbxTv.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_chckbxTv = new GridBagConstraints();
 		gbc_chckbxTv.fill = GridBagConstraints.BOTH;
 		gbc_chckbxTv.insets = new Insets(0, 0, 5, 0);
@@ -355,7 +355,7 @@ public class ResultPanel extends JPanel {
 				}
 			}
 		});
-		chckbxSmokingArea.setBackground(Color.BLUE);
+		chckbxSmokingArea.setBackground(Color.ORANGE);
 		GridBagConstraints gbc_chckbxSmokingArea = new GridBagConstraints();
 		gbc_chckbxSmokingArea.insets = new Insets(0, 0, 5, 0);
 		gbc_chckbxSmokingArea.fill = GridBagConstraints.BOTH;
@@ -436,7 +436,7 @@ public class ResultPanel extends JPanel {
 				bookinginfo.setDateInS(dateInString);
 				System.out.println(datein + " datein");
 				Date dateplus1 = Methods.addDays(datein, 1);
-				//dateChooser_1.setDate(dateplus1);
+				dateChooser_1.setDate(dateplus1);
 				dateChooser_1.getJCalendar().setMinSelectableDate(dateplus1);
 			}
 		});

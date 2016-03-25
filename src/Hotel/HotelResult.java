@@ -33,6 +33,7 @@ public class HotelResult extends JPanel {
 	 * Create the panel.
 	 */
 	public HotelResult(final Hotel hotel,  BookingInfo bookinginfo) {
+		setBackground(Color.WHITE);
 		setSize(new Dimension(601, 230));
 		setMinimumSize(new Dimension(630, 230));
 		setMaximumSize(new Dimension(630, 230));
@@ -105,7 +106,7 @@ public class HotelResult extends JPanel {
 		String info = Methods.info(wifi, FreeWifi, smoke, swim, gym,tv);
 		JTextArea lblNewLabel_5 = new JTextArea(info);
 		lblNewLabel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Facilities", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 255, 0)));
-		lblNewLabel_5.setBackground(SystemColor.control);
+		lblNewLabel_5.setBackground(Color.WHITE);
 		lblNewLabel_5.setEditable(false);
 		lblNewLabel_5.setBounds(279, 103, 135, 116);
 		add(lblNewLabel_5);

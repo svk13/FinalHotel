@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
 
 public class BookingConfirmation extends JPanel {
 	/** BookingConfirmation is a Jpanel that lets the user
@@ -192,6 +193,11 @@ public class BookingConfirmation extends JPanel {
 		textArea_1.setBackground(SystemColor.controlHighlight);
 		textArea_1.setBounds(191, 241, 59, 61);
 		add(textArea_1);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setIcon(new ImageIcon("src/Myndir/mynd.jpg"));
+		lblNewLabel_7.setBounds(0, 0, Front.width, Front.height);
+		add(lblNewLabel_7);
 		
 
 	}
