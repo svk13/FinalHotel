@@ -2,46 +2,31 @@ package Hotel;
 
 
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.SpinnerNumberModel;
-
 import java.util.*;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
-
 import javax.swing.JCheckBox;
-
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
 import java.awt.BorderLayout;
-
 import javax.swing.JComboBox;
-
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-
 import com.toedter.calendar.JDateChooser;
-
 import javax.swing.JLabel;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
-
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-
 public class ResultPanel extends JPanel {
 	 	/**
 	 * 
@@ -52,7 +37,7 @@ public class ResultPanel extends JPanel {
 	    static String labelTextcity;
 	    static String url;
 	    static String price;
-	    static JScrollPane j; 
+	    static JScrollPane scrollpane; 
 		static int labelTextid;
 	    static int labelTextpostcode;
 	    static int wifiteljari;
@@ -93,11 +78,11 @@ public class ResultPanel extends JPanel {
 		add(panel_1);
 		panel_1.setLayout(new GridLayout(numberOfLabels1, 1, 100, 0));
 		System.out.println("SIBBIIIIIIII" + numberOfLabels1);
-		j = new JScrollPane(panel_1);
-		j.setBounds(0, 0, Front.width, Front.height);
-		j.getVerticalScrollBar().setUnitIncrement(16);
+		scrollpane = new JScrollPane(panel_1);
+		scrollpane.setBounds(0, 0, Front.width, Front.height);
+		scrollpane.getVerticalScrollBar().setUnitIncrement(16);
 		
-		add(j);
+		add(scrollpane);
 	
 		
 		final JPanel panel_2 = new JPanel();
@@ -552,7 +537,7 @@ public class ResultPanel extends JPanel {
     private static void toTop(){
     	javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			   public void run() { 
-			       j.getVerticalScrollBar().setValue(0);
+			       scrollpane.getVerticalScrollBar().setValue(0);
 			   }
 			});
     }

@@ -383,6 +383,7 @@ MainPanel.requestFocusInWindow();
 		//contentPane.add(scrollPane, "2");
 		contentPane.add(resultpanel,"2");
 		cardLayout.show(contentPane, "2");
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 	}
 
@@ -414,7 +415,7 @@ MainPanel.requestFocusInWindow();
 					screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					height = screenSize.height;
 					width = screenSize.width;
-					frame.setLocationRelativeTo(null);
+					//frame.setLocationRelativeTo(null);
 					Date datein = new Date();
 					datein.getTime();
 					//String dates = convertStringToDate(datein);
