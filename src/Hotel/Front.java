@@ -194,15 +194,29 @@ public class Front extends JFrame {
 				30, 1));
 		spinner_4.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-
-				int s = (int) spinner_4.getValue();
-				nrGuests = s;
 				int rooms = (int) spinner_5.getValue();
+				int s = (int) spinner_4.getValue();
+				if(s<nrGuests){
+					if (s % 3 == 0) {
+						--rooms;
+						spinner_5.setValue(rooms);
+						nrRooms = rooms;
+						spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
+								30, 1));
+					}
+					nrGuests = s;
+					nrRooms = rooms;
+				}
+				else{
+				nrGuests = s;
 				nrRooms = rooms;
 				if (s % 3 == 1 && s > 3) {
 					++rooms;
 					spinner_5.setValue(rooms);
 					nrRooms = rooms;
+					spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
+							30, 1));
+				}
 				}
 				// System.out.println(s);
 			}
@@ -243,7 +257,7 @@ public class Front extends JFrame {
 		DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
 		DateChooserIn.setDate(new Date());
 		DateChooserIn.addPropertyChangeListener(new PropertyChangeListener() {
-			private Date datein;
+			//private Date datein;
 
 			public void propertyChange(PropertyChangeEvent arg0) {
 
@@ -261,7 +275,7 @@ public class Front extends JFrame {
 		DateChooserOut = new JDateChooser();
 		DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
 		DateChooserOut.addPropertyChangeListener(new PropertyChangeListener() {
-			private Date dateout;
+			//private Date dateout;
 
 			public void propertyChange(PropertyChangeEvent evt) {
 				dateout = DateChooserOut.getDate();

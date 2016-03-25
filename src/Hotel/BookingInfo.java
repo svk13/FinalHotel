@@ -26,6 +26,7 @@ public class BookingInfo {
 		DateOutS=dateouts;
 		NrGuests = nrofguests;
 		NrRooms = nrofrooms;
+		System.out.println(DateInS + DateOutS + " hqhhhahah " + DateIn + " dateout svo" + DateOut);
 	}
 	
 	/* Usage: .getDateIn();
@@ -76,7 +77,22 @@ public class BookingInfo {
 	 *  	 this booking to i
 	 */
 	void setNumberOfRooms(int i){
+		NrRooms=i;
+	}
+	void setNumberOfGuests(int i){
 		NrGuests=i;
 	}
-
+	void setDateIn(Date date){
+		DateIn = date;
+	}
+	void setDateOut(Date date){
+		DateOut = date;
+	}
+	void setDateInS(String date){
+		DateInS = date;
+	}
+	void setDateOutS(String date){
+		DateOutS = date;
+	}
+	
 }

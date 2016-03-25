@@ -315,7 +315,6 @@ public class sqlWorkBench {
 			}
 			if(facilities==1){
 				hoteltmp.add(tmp);
-				System.out.println("Búið að adda");
 			}
 		}
 		Front.resultHotel = hoteltmp;
