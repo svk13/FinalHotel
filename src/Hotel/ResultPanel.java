@@ -78,7 +78,7 @@ public class ResultPanel extends JPanel {
 		panel_1.setPreferredSize(new Dimension(1000,(hotelList1.size()*240)));
 		add(panel_1);
 		panel_1.setLayout(new GridLayout(numberOfLabels1, 1, 100, 0));
-		System.out.println("SIBBIIIIIIII" + numberOfLabels1);
+		
 		scrollpane = new JScrollPane(panel_1);
 		scrollpane.setBounds(0, 0, Front.width, Front.height);
 		scrollpane.getVerticalScrollBar().setUnitIncrement(16);
@@ -422,7 +422,6 @@ public class ResultPanel extends JPanel {
 				dateInString = Front.convertStringToDate(datein);
 				bookinginfo.setDateIn(datein);
 				bookinginfo.setDateInS(dateInString);
-				System.out.println(datein + " datein");
 				Date dateplus1 = Methods.addDays(datein, 1);
 				dateChooser_1.setDate(dateplus1);
 				dateChooser_1.getJCalendar().setMinSelectableDate(dateplus1);

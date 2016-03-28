@@ -59,7 +59,17 @@ public class BookingConfirmation extends JPanel {
 	 */
 	public BookingConfirmation(String a, final BookingInfo bookinginfo, final Hotel hotel ){
 		setBackground(Color.ORANGE);
+		setSize(1000,1000);
 		setLayout(null);
+		
+		HotelResult myHotel = new HotelResult(hotel,bookinginfo);
+		//my.setBounds(24, 306, 339, 20);
+		myHotel.setBounds(15, 74, 800, 250);
+		myHotel.setBackground(Color.ORANGE);
+		myHotel.lblNewLabel_5.setBackground(Color.ORANGE);
+		myHotel.button.setVisible(false);
+		myHotel.setVisible(true);
+		add(myHotel);
 		
 		this.bookinginfo=bookinginfo;
 		this.hotel=hotel;
@@ -67,63 +77,63 @@ public class BookingConfirmation extends JPanel {
 		DateOutS = bookinginfo.getDateOutString();
 		numberofrooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
-		fname.setBounds(112, 86, 86, 20);
+		fname.setBounds(117, 377, 86, 20);
 		add(fname);
 		fname.setColumns(10);
 		
 		lname = new JTextField();
-		lname.setBounds(112, 117, 86, 20);
+		lname.setBounds(117, 408, 86, 20);
 		add(lname);
 		lname.setColumns(10);
 		
 		emailtxt = new JTextField();
-		emailtxt.setBounds(112, 148, 86, 20);
+		emailtxt.setBounds(117, 439, 86, 20);
 		add(emailtxt);
 		emailtxt.setColumns(10);
 		
 		special = new JTextField();
-		special.setBounds(112, 179, 251, 20);
+		special.setBounds(117, 470, 251, 20);
 		add(special);
 		special.setColumns(10);
 		special.setText(a);
 		
 		credit = new JTextField();
-		credit.setBounds(112, 210, 121, 20);
+		credit.setBounds(117, 501, 121, 20);
 		add(credit);
 		credit.setColumns(10);
 		
 		textField_5 = new JTextField();
-		textField_5.setBounds(277, 210, 86, 20);
+		textField_5.setBounds(282, 501, 86, 20);
 		add(textField_5);
 		textField_5.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("First name");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(37, 89, 65, 14);
+		lblNewLabel.setBounds(42, 380, 65, 14);
 		add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Last name");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setBounds(37, 120, 65, 14);
+		lblNewLabel_1.setBounds(42, 411, 65, 14);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Email");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2.setBounds(56, 151, 46, 14);
+		lblNewLabel_2.setBounds(61, 442, 46, 14);
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Special requests");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_3.setBounds(24, 182, 78, 14);
+		lblNewLabel_3.setBounds(29, 473, 78, 14);
 		add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Credit card info");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_4.setBounds(10, 213, 92, 14);
+		lblNewLabel_4.setBounds(15, 504, 92, 14);
 		add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("CVC");
-		lblNewLabel_5.setBounds(243, 213, 46, 14);
+		lblNewLabel_5.setBounds(248, 504, 46, 14);
 		add(lblNewLabel_5);
 		
 		JLabel lblBookingConfirmation = new JLabel("Booking Confirmation");
@@ -166,17 +176,17 @@ public class BookingConfirmation extends JPanel {
 			}
 		});
 		
-		btnNewButton.setBounds(277, 241, 86, 23);
+		btnNewButton.setBounds(282, 532, 86, 23);
 		add(btnNewButton);
 
 		JLabel lblNewLabel_6 = new JLabel(DateInS);
 		lblNewLabel_6.setBorder(new TitledBorder(null, "Date In", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
-		lblNewLabel_6.setBounds(208, 89, 155, 37);
+		lblNewLabel_6.setBounds(213, 380, 155, 37);
 		add(lblNewLabel_6);
 		
 		JLabel label = new JLabel(DateOutS);
 		label.setBorder(new TitledBorder(null, "Date Out", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
-		label.setBounds(208, 140, 155, 37);
+		label.setBounds(213, 431, 155, 37);
 		add(label);
 		int r = bookinginfo.getNumberOfRooms();
 		int[] p=hotel.getPrice();
@@ -187,7 +197,7 @@ public class BookingConfirmation extends JPanel {
 		JTextArea textArea = new JTextArea(bill);
 		textArea.setEditable(false);
 		textArea.setBackground(Color.ORANGE);
-		textArea.setBounds(37, 240, 155, 62);
+		textArea.setBounds(42, 531, 155, 62);
 		add(textArea);
 		
 		// prices shows the price of the room for a specific Hotel
@@ -195,13 +205,10 @@ public class BookingConfirmation extends JPanel {
 		JTextArea textArea_1 = new JTextArea(prices);
 		textArea_1.setEditable(false);
 		textArea_1.setBackground(Color.ORANGE);
-		textArea_1.setBounds(191, 241, 59, 61);
+		textArea_1.setBounds(196, 532, 59, 61);
 		add(textArea_1);
 		
-		JLabel lblNewLabel_7 = new JLabel("");
-		lblNewLabel_7.setIcon(new ImageIcon("src/Myndir/mynd.jpg"));
-		lblNewLabel_7.setBounds(0, 0, Front.width, Front.height);
-		add(lblNewLabel_7);
+		
 		
 		Front.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}

@@ -77,11 +77,11 @@ public class Front extends JFrame {
 	static boolean somethingWritten = false;
 	
 	Date innritundags = null;
-	JButton btnNewButton_1;
+	static JButton btnNewButton_1;
 	
 	final JDateChooser DateChooserIn;
 	final JDateChooser DateChooserOut;
-	int whatpage = 1;
+	static int whatpage = 1;
 	private AbstractButton btnNewButton;
 
 
@@ -106,6 +106,9 @@ public class Front extends JFrame {
 				System.out.println(whatpage);
 				if (whatpage == 1)
 					btnNewButton.setEnabled(false);
+				if(whatpage!=3){
+					btnNewButton_1.setEnabled(true);
+				}
 				String s = Integer.toString(whatpage);
 				cardLayout.show(contentPane, s);
 			}
@@ -121,9 +124,14 @@ public class Front extends JFrame {
 		btnNewButton_1.setEnabled(false);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				whatpage += 1;
+				System.out.println(whatpage);
 				if (whatpage != 1)
 					btnNewButton.setEnabled(true);
+				if(whatpage==3){
+					btnNewButton_1.setEnabled(false);
+				}
 				String s = Integer.toString(whatpage);
 				cardLayout.show(contentPane, s);
 			}

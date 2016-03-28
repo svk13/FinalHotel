@@ -41,6 +41,8 @@ public class HotelResult extends JPanel {
     private BookingInfo bookinginfo1;
     private int numberofrooms;
     private int roomsavailable;
+    static JButton button; 
+    static JTextArea lblNewLabel_5;
 	/**
 	 * Create the panel.
 	 */
@@ -116,7 +118,7 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel_4.gridy = 1;
 		add(lblNewLabel_4, gbc_lblNewLabel_4);
 		String info = Methods.info(wifi, FreeWifi, smoke, swim, gym,tv);
-		JTextArea lblNewLabel_5 = new JTextArea(info);
+		lblNewLabel_5 = new JTextArea(info);
 		lblNewLabel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Facilities", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 255, 0)));
 		lblNewLabel_5.setBackground(Color.WHITE);
 		lblNewLabel_5.setEditable(false);
@@ -174,7 +176,7 @@ public class HotelResult extends JPanel {
 		gbc_lblPrice.gridy = 3;
 		add(lblPrice, gbc_lblPrice);
 		
-		JButton button = new JButton("Choose room");
+		button = new JButton("Choose room");
 
 		button.setForeground(Color.BLUE);
 		button.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -186,7 +188,9 @@ public class HotelResult extends JPanel {
 				}else{
 					BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);
 					Front.contentPane.add(book, "3");
-					Front.cardLayout.show(Front.contentPane, "3");					
+					Front.cardLayout.show(Front.contentPane, "3");	
+					Front.whatpage=3;
+					Front.btnNewButton_1.setEnabled(false);
 				}
 
 			}
@@ -218,7 +222,6 @@ public class HotelResult extends JPanel {
 			label.setText("");
 		}
 		else if(roomsavailable<numberofrooms){
-			System.out.println("YEEEEEHAAA");
 			lblNumberOfRooms.setBounds(429,123,300,14);
 			lblNumberOfRooms.setText("Sorry, we only have "+ roomsavailable+" rooms available");
 			label.setText("");
