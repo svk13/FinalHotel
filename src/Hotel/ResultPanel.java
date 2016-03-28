@@ -50,6 +50,7 @@ public class ResultPanel extends JPanel {
 	    Date dateout;
 	    String dateOutString;
 	    String dateInString;
+	    static ArrayList<HotelResult> resultList= new ArrayList<HotelResult>();
 	    final JDateChooser dateChooser_1;
 	    int numberOfLabels = Front.resultHotel.size();
 	    int count = 0;
@@ -96,6 +97,8 @@ public class ResultPanel extends JPanel {
 		gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0};
 		panel_2.setLayout(gbl_panel_2);
+		
+		
 		
 		final JCheckBox chckbxNewCheckBox = new JCheckBox("Wifi");
 		chckbxNewCheckBox.setBackground(Color.ORANGE);
@@ -493,7 +496,7 @@ public class ResultPanel extends JPanel {
 				else{
 				bookinginfo.setNumberOfGuests(s);
 				
-				if (s % 3 == 1 && s > 3) {
+				if (s % 3 == 1 && s > 3 && (s/3) >= rooms) {
 					++rooms;
 					spinner_1.setValue(rooms);
 					bookinginfo.setNumberOfRooms(rooms);
@@ -501,6 +504,8 @@ public class ResultPanel extends JPanel {
 							30, 1));
 				}
 				}
+				panel_1.removeAll();
+				updateUIid(newList);
 			}
 		});
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
@@ -544,10 +549,11 @@ public class ResultPanel extends JPanel {
 	 
 	public static void updateUIid(ArrayList<Hotel> hotelListtmp){
 		int numberOfLabels = hotelListtmp.size();
-
+		resultList.clear();
 		for (int index=0; index<numberOfLabels; index++) {
 			Hotel Hotel = hotelListtmp.get(index);
 			HotelResult resultpane = new HotelResult(Hotel, bookinginfo);
+			resultList.add(resultpane);
 			resultpane.setBounds(40, 50+((index)*240), 630, 230);
 			panel_1.add(resultpane);
 			

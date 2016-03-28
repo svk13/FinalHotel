@@ -1,6 +1,7 @@
 package Hotel;
 
 import javax.mail.MessagingException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -57,6 +58,7 @@ public class BookingConfirmation extends JPanel {
 	 * Create the panel.
 	 */
 	public BookingConfirmation(String a, final BookingInfo bookinginfo, final Hotel hotel ){
+		setBackground(Color.ORANGE);
 		setLayout(null);
 		
 		this.bookinginfo=bookinginfo;
@@ -183,14 +185,16 @@ public class BookingConfirmation extends JPanel {
 		
 		// 
 		JTextArea textArea = new JTextArea(bill);
-		textArea.setBackground(SystemColor.controlHighlight);
+		textArea.setEditable(false);
+		textArea.setBackground(Color.ORANGE);
 		textArea.setBounds(37, 240, 155, 62);
 		add(textArea);
 		
 		// prices shows the price of the room for a specific Hotel
 		String prices=  bookinginfo.getNumberOfGuests()+"\n"+ bookinginfo.getNumberOfRooms()+"\n"+totalprice;
 		JTextArea textArea_1 = new JTextArea(prices);
-		textArea_1.setBackground(SystemColor.controlHighlight);
+		textArea_1.setEditable(false);
+		textArea_1.setBackground(Color.ORANGE);
 		textArea_1.setBounds(191, 241, 59, 61);
 		add(textArea_1);
 		
@@ -199,7 +203,7 @@ public class BookingConfirmation extends JPanel {
 		lblNewLabel_7.setBounds(0, 0, Front.width, Front.height);
 		add(lblNewLabel_7);
 		
-
+		Front.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 	
 	/* Usage: datevinnsla(in,out);

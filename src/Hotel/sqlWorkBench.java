@@ -76,7 +76,7 @@ public class sqlWorkBench {
 			Statement stmt = Front.connection.createStatement();
 			stmt.setQueryTimeout(30);
 			stmt.executeUpdate(qry);
-				
+			stmt.close();
 					//sqliteConnection.closeConnection(rs, statement, Front.connection)
 		}catch(Exception e2){
 			System.out.println(e2);
@@ -94,7 +94,7 @@ public class sqlWorkBench {
 			statement.executeUpdate();
 			
 			System.out.println("Búið að deleta bókunum");
-			
+			statement.close();
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -110,7 +110,7 @@ public class sqlWorkBench {
 			statement.executeUpdate();
 			
 			System.out.println("Búið að uppfæra");
-			
+			statement.close();
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -156,6 +156,7 @@ public class sqlWorkBench {
 				String dateout = rs.getString("date_out");
 				
 			}
+			rs.close();
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
 			

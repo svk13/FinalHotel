@@ -337,7 +337,7 @@ MainPanel.requestFocusInWindow();
 						else{
 						nrGuests = s;
 						nrRooms = rooms;
-						if (s % 3 == 1 && s > 3) {
+						if (s % 3 == 1 && s > 3 && (s/3) >= rooms) {
 							++rooms;
 							spinner_5.setValue(rooms);
 							nrRooms = rooms;
