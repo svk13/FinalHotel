@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 import javax.swing.AbstractButton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -49,7 +48,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-
 /*
  * Ég var að reyna að skipuleggja þetta á eftirfarandi hátt:
  *		
@@ -66,7 +64,6 @@ import java.awt.Insets;
 
 public class Front extends JFrame {
 
-	
 	private static final long serialVersionUID = 1L;
 	public static Connection connection = null;
 	public static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
@@ -77,28 +74,26 @@ public class Front extends JFrame {
 	private int nrGuests = 1;
 	private Date dateout;
 	private Date datein;
-	
+
 	static Dimension screenSize;
 	static JScrollPane scrollPane;
 	static ResultPanel resultpanel;
 	static Front frame;
 	static JPanel contentPane;
-	static CardLayout cardLayout = new CardLayout();	
+	static CardLayout cardLayout = new CardLayout();
 	static JComboBox<Object> SearchSuggestion;
 	static String word = "";
 	static int height;
 	static int width;
 	static boolean somethingWritten = false;
-	
+
 	Date innritundags = null;
 	static JButton forwardTakki;
-	
+
 	final JDateChooser DateChooserIn;
 	final JDateChooser DateChooserOut;
 	static int whatpage = 1;
 	static JButton backTakki;
-
-
 
 	/**
 	 * Create the frame.
@@ -111,9 +106,7 @@ public class Front extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		
-		
-//Back Takki
+		// Back Takki
 		backTakki = new JButton("Back");
 		backTakki.setEnabled(false);
 		backTakki.addActionListener(new ActionListener() {
@@ -123,7 +116,7 @@ public class Front extends JFrame {
 				System.out.println(whatpage);
 				if (whatpage == 1)
 					backTakki.setEnabled(false);
-				if(whatpage!=3){
+				if (whatpage != 3) {
 					forwardTakki.setEnabled(true);
 				}
 				String s = Integer.toString(whatpage);
@@ -131,32 +124,26 @@ public class Front extends JFrame {
 			}
 		});
 		menuBar.add(backTakki);
-//-------------------------------------------------------------------------------------------------
-		
-		
-		
-		
-		//dno
+		// -------------------------------------------------------------------------------------------------
+
+		// dno
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(cardLayout);
 		Icon warnIcon = new ImageIcon("Myndir/backward.png");
 
-		
-		
-		
-//Forward takki
+		// Forward takki
 		forwardTakki = new JButton("Forward");
 		forwardTakki.setEnabled(false);
 		forwardTakki.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				whatpage += 1;
 				System.out.println(whatpage);
 				if (whatpage != 1)
 					backTakki.setEnabled(true);
-				if(whatpage==3){
+				if (whatpage == 3) {
 					forwardTakki.setEnabled(false);
 				}
 				String s = Integer.toString(whatpage);
@@ -164,112 +151,111 @@ public class Front extends JFrame {
 			}
 		});
 		menuBar.add(forwardTakki);
-//-------------------------------------------------------------------------------------------------
-		
+		// -------------------------------------------------------------------------------------------------
+
 		JPanel MainPanel = new JPanel();
 		MainPanel.setBackground(Color.ORANGE);
 		contentPane.add(MainPanel, "1");
 		GridBagLayout gbl_MainPanel = new GridBagLayout();
-		gbl_MainPanel.columnWidths = new int[]{195, 72, 103, 227, 46, 147, 46, 0};
-		gbl_MainPanel.rowHeights = new int[]{14, 151, 47, 23, 20, 14, 20, 0};
-		gbl_MainPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_MainPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_MainPanel.columnWidths = new int[] { 195, 72, 103, 227, 46, 147,
+				46, 0 };
+		gbl_MainPanel.rowHeights = new int[] { 14, 151, 47, 23, 20, 14, 20, 0 };
+		gbl_MainPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 1.0, Double.MIN_VALUE };
+		gbl_MainPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, Double.MIN_VALUE };
 		MainPanel.setLayout(gbl_MainPanel);
-				
-		
-		
-// Log-in hnappur
-						JLabel logIn_Label = new JLabel("Log In");
-						logIn_Label.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent arg0) {
-								LogIn log = new LogIn();
-								log.setVisible(true);
-							}
-						});
 
-						logIn_Label.setForeground(SystemColor.textHighlight);
-						GridBagConstraints gbc_logIn_Label = new GridBagConstraints();
-						gbc_logIn_Label.anchor = GridBagConstraints.EAST;
-						gbc_logIn_Label.fill = GridBagConstraints.VERTICAL;
-						gbc_logIn_Label.insets = new Insets(0, 0, 5, 0);
-						gbc_logIn_Label.gridx = 6;
-						gbc_logIn_Label.gridy = 0;
-						MainPanel.add(logIn_Label, gbc_logIn_Label);
-//-------------------------------------------------------------------------------------------------
-						
-						SearchTextArea = new JTextField();
-						SearchTextArea.setFont(new Font("Tahoma", Font.ITALIC, 14));
-						SearchTextArea.setText("t.d. land, sta\u00F0ur, h\u00F3tel...");
-						
-								SearchTextArea.addKeyListener(new KeyAdapter() {
-									@Override
-									public void keyPressed(KeyEvent arg0) {
-										if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-											search();
-											whatpage = 2;
-										}
-									}
-								});
-								
-										SearchTextArea.addMouseListener(new MouseAdapter() {
-											@Override
-											public void mousePressed(MouseEvent arg0) {
-												SearchTextArea.setText("");
-												SearchTextArea.setFont(new Font("Tahoma", Font.BOLD, 14));
-												somethingWritten = true;
-												word = "";
-								
-											}
-										});
-										
-												GridBagConstraints gbc_SearchTextArea = new GridBagConstraints();
-												gbc_SearchTextArea.fill = GridBagConstraints.BOTH;
-												gbc_SearchTextArea.insets = new Insets(0, 0, 5, 5);
-												gbc_SearchTextArea.gridwidth = 3;
-												gbc_SearchTextArea.gridx = 1;
-												gbc_SearchTextArea.gridy = 2;
-												MainPanel.add(SearchTextArea, gbc_SearchTextArea);
-												SearchTextArea.setColumns(10);
-												
-														SearchTextArea.setFocusable(true);
-						
-								final JButton ExecuteSearch = new JButton("");
-								ExecuteSearch.addMouseListener(new MouseAdapter() {
-									@Override
-									public void mousePressed(MouseEvent e) {
-										ExecuteSearch.setBorder(new BevelBorder(BevelBorder.LOWERED,
-												null, null, null, null));
-										// sqlWorkBench.insertIntoFacilities();
-									}
-								});
-								ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
-										null, null));
-								ExecuteSearch.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
+		// Log-in hnappur
+		JLabel logIn_Label = new JLabel("Log In");
+		logIn_Label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				LogIn log = new LogIn();
+				log.setVisible(true);
+			}
+		});
 
-										ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED,
-												null, null, null, null));
-										
-										search();
-										whatpage = 2;
-										setVisible(true);
-										
-									}
-								});
-								
-										ExecuteSearch.setIcon(new ImageIcon("src/Myndir/Search.png"));
-										GridBagConstraints gbc_ExecuteSearch = new GridBagConstraints();
-										gbc_ExecuteSearch.fill = GridBagConstraints.BOTH;
-										gbc_ExecuteSearch.insets = new Insets(0, 0, 5, 5);
-										gbc_ExecuteSearch.gridx = 4;
-										gbc_ExecuteSearch.gridy = 2;
-										MainPanel.add(ExecuteSearch, gbc_ExecuteSearch);										
-//-------------------------------------------------------------------------------------------------
-						
-										
-										
-// Static TextaDisplay - "Check in Date"
+		logIn_Label.setForeground(SystemColor.textHighlight);
+		GridBagConstraints gbc_logIn_Label = new GridBagConstraints();
+		gbc_logIn_Label.anchor = GridBagConstraints.EAST;
+		gbc_logIn_Label.fill = GridBagConstraints.VERTICAL;
+		gbc_logIn_Label.insets = new Insets(0, 0, 5, 0);
+		gbc_logIn_Label.gridx = 6;
+		gbc_logIn_Label.gridy = 0;
+		MainPanel.add(logIn_Label, gbc_logIn_Label);
+		// -------------------------------------------------------------------------------------------------
+
+		SearchTextArea = new JTextField();
+		SearchTextArea.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		SearchTextArea.setText("t.d. land, sta\u00F0ur, h\u00F3tel...");
+
+		SearchTextArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					search();
+					whatpage = 2;
+				}
+			}
+		});
+
+		SearchTextArea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				SearchTextArea.setText("");
+				SearchTextArea.setFont(new Font("Tahoma", Font.BOLD, 14));
+				somethingWritten = true;
+				word = "";
+
+			}
+		});
+
+		GridBagConstraints gbc_SearchTextArea = new GridBagConstraints();
+		gbc_SearchTextArea.fill = GridBagConstraints.BOTH;
+		gbc_SearchTextArea.insets = new Insets(0, 0, 5, 5);
+		gbc_SearchTextArea.gridwidth = 3;
+		gbc_SearchTextArea.gridx = 1;
+		gbc_SearchTextArea.gridy = 2;
+		MainPanel.add(SearchTextArea, gbc_SearchTextArea);
+		SearchTextArea.setColumns(10);
+
+		SearchTextArea.setFocusable(true);
+
+		final JButton ExecuteSearch = new JButton("");
+		ExecuteSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.LOWERED,
+						null, null, null, null));
+				// sqlWorkBench.insertIntoFacilities();
+			}
+		});
+		ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
+				null, null));
+		ExecuteSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED,
+						null, null, null, null));
+
+				search();
+				whatpage = 2;
+				setVisible(true);
+
+			}
+		});
+
+		ExecuteSearch.setIcon(new ImageIcon("src/Myndir/Search.png"));
+		GridBagConstraints gbc_ExecuteSearch = new GridBagConstraints();
+		gbc_ExecuteSearch.fill = GridBagConstraints.BOTH;
+		gbc_ExecuteSearch.insets = new Insets(0, 0, 5, 5);
+		gbc_ExecuteSearch.gridx = 4;
+		gbc_ExecuteSearch.gridy = 2;
+		MainPanel.add(ExecuteSearch, gbc_ExecuteSearch);
+		// -------------------------------------------------------------------------------------------------
+
+		// Static TextaDisplay - "Check in Date"
 		JLabel checkInDate = new JLabel("Check in date");
 		GridBagConstraints gbc_checkInDate = new GridBagConstraints();
 		gbc_checkInDate.anchor = GridBagConstraints.WEST;
@@ -279,10 +265,9 @@ public class Front extends JFrame {
 		gbc_checkInDate.gridx = 1;
 		gbc_checkInDate.gridy = 3;
 		MainPanel.add(checkInDate, gbc_checkInDate);
-//-------------------------------------------------------------------------------------------------
-		
-		
-// Static TextaDisplay - "Check out"	
+		// -------------------------------------------------------------------------------------------------
+
+		// Static TextaDisplay - "Check out"
 		JLabel checkOutDate = new JLabel("Check out date");
 		GridBagConstraints gbc_checkOutDate = new GridBagConstraints();
 		gbc_checkOutDate.anchor = GridBagConstraints.WEST;
@@ -291,87 +276,74 @@ public class Front extends JFrame {
 		gbc_checkOutDate.gridx = 3;
 		gbc_checkOutDate.gridy = 3;
 		MainPanel.add(checkOutDate, gbc_checkOutDate);
-//-------------------------------------------------------------------------------------------------
-				
-		
-		
-//	
-	DateChooserOut = new JDateChooser();
-	DateChooserOut.addPropertyChangeListener(new PropertyChangeListener() {
-		//private Date dateout;
-	
-		public void propertyChange(PropertyChangeEvent evt) {
-			dateout = DateChooserOut.getDate();
-			dateOutString = convertStringToDate(dateout);
-	
-		}
-	});
-//-------------------------------------------------------------------------------------------------
-						
-								DateChooserIn = new JDateChooser();
-								DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
-								DateChooserIn.setDate(new Date());
-								DateChooserIn.addPropertyChangeListener(new PropertyChangeListener() {
-									//private Date datein;
+		// -------------------------------------------------------------------------------------------------
 
-									public void propertyChange(PropertyChangeEvent arg0) {
+		//
+		DateChooserOut = new JDateChooser();
+		DateChooserOut.addPropertyChangeListener(new PropertyChangeListener() {
+			// private Date dateout;
 
-										datein = DateChooserIn.getDate();
-										dateInString = convertStringToDate(datein);
-										Date dateplus1 = Methods.addDays(datein, 1);
-										DateChooserOut.setDate(dateplus1);
-										DateChooserOut.getJCalendar().setMinSelectableDate(dateplus1);
-									}
-								});
-								
-								
-								
-								GridBagConstraints gbc_DateChooserIn = new GridBagConstraints();
-								gbc_DateChooserIn.fill = GridBagConstraints.BOTH;
-								gbc_DateChooserIn.insets = new Insets(0, 0, 5, 5);
-								gbc_DateChooserIn.gridwidth = 2;
-								gbc_DateChooserIn.gridx = 1;
-								gbc_DateChooserIn.gridy = 4;
-								MainPanel.add(DateChooserIn, gbc_DateChooserIn);
-								DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
-						GridBagConstraints gbc_DateChooserOut = new GridBagConstraints();
-						gbc_DateChooserOut.fill = GridBagConstraints.BOTH;
-						gbc_DateChooserOut.insets = new Insets(0, 0, 5, 5);
-						gbc_DateChooserOut.gridx = 3;
-						gbc_DateChooserOut.gridy = 4;
-						MainPanel.add(DateChooserOut, gbc_DateChooserOut);
-				
-//-------------------------------------------------------------------------------------------------		
-						
-						
-						
-// Static TextaDisplay - "Guests"
+			public void propertyChange(PropertyChangeEvent evt) {
+				dateout = DateChooserOut.getDate();
+				dateOutString = convertStringToDate(dateout);
+
+			}
+		});
+		// -------------------------------------------------------------------------------------------------
+
+		DateChooserIn = new JDateChooser();
+		DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
+		DateChooserIn.setDate(new Date());
+		DateChooserIn.addPropertyChangeListener(new PropertyChangeListener() {
+			// private Date datein;
+
+			public void propertyChange(PropertyChangeEvent arg0) {
+
+				datein = DateChooserIn.getDate();
+				dateInString = convertStringToDate(datein);
+				Date dateplus1 = Methods.addDays(datein, 1);
+				DateChooserOut.setDate(dateplus1);
+				DateChooserOut.getJCalendar().setMinSelectableDate(dateplus1);
+			}
+		});
+
+		GridBagConstraints gbc_DateChooserIn = new GridBagConstraints();
+		gbc_DateChooserIn.fill = GridBagConstraints.BOTH;
+		gbc_DateChooserIn.insets = new Insets(0, 0, 5, 5);
+		gbc_DateChooserIn.gridwidth = 2;
+		gbc_DateChooserIn.gridx = 1;
+		gbc_DateChooserIn.gridy = 4;
+		MainPanel.add(DateChooserIn, gbc_DateChooserIn);
+		DateChooserIn.getJCalendar().setMinSelectableDate(new Date());
+		GridBagConstraints gbc_DateChooserOut = new GridBagConstraints();
+		gbc_DateChooserOut.fill = GridBagConstraints.BOTH;
+		gbc_DateChooserOut.insets = new Insets(0, 0, 5, 5);
+		gbc_DateChooserOut.gridx = 3;
+		gbc_DateChooserOut.gridy = 4;
+		MainPanel.add(DateChooserOut, gbc_DateChooserOut);
+
+		// -------------------------------------------------------------------------------------------------
+
+		// Static TextaDisplay - "Guests"
 		JLabel guest_Label = new JLabel("Guests");
 		GridBagConstraints gbc_guest_Label = new GridBagConstraints();
-			gbc_guest_Label.fill = GridBagConstraints.BOTH;
-			gbc_guest_Label.insets = new Insets(0, 0, 5, 5);
-			gbc_guest_Label.gridx = 1;
-			gbc_guest_Label.gridy = 5;
+		gbc_guest_Label.fill = GridBagConstraints.BOTH;
+		gbc_guest_Label.insets = new Insets(0, 0, 5, 5);
+		gbc_guest_Label.gridx = 1;
+		gbc_guest_Label.gridy = 5;
 		MainPanel.add(guest_Label, gbc_guest_Label);
-//-------------------------------------------------------------------------------------------------
-		
-		
-		
-// Static TextaDisplay - "Number of rooms"
+		// -------------------------------------------------------------------------------------------------
+
+		// Static TextaDisplay - "Number of rooms"
 		JLabel lblBrn = new JLabel("Number of rooms");
 		GridBagConstraints gbc_lblBrn = new GridBagConstraints();
-			gbc_lblBrn.fill = GridBagConstraints.BOTH;
-			gbc_lblBrn.insets = new Insets(0, 0, 5, 5);
-			gbc_lblBrn.gridx = 2;
-			gbc_lblBrn.gridy = 5;
+		gbc_lblBrn.fill = GridBagConstraints.BOTH;
+		gbc_lblBrn.insets = new Insets(0, 0, 5, 5);
+		gbc_lblBrn.gridx = 2;
+		gbc_lblBrn.gridy = 5;
 		MainPanel.add(lblBrn, gbc_lblBrn);
-//-------------------------------------------------------------------------------------------------		
-				
-				
-		
-		
-				
-				
+		// -------------------------------------------------------------------------------------------------
+
 		cardLayout.show(contentPane, "1");
 		final JSpinner spinner_5 = new JSpinner(new SpinnerNumberModel(1, 1,
 				30, 1));
@@ -388,49 +360,47 @@ public class Front extends JFrame {
 		gbc_spinner_5.gridx = 2;
 		gbc_spinner_5.gridy = 6;
 		MainPanel.add(spinner_5, gbc_spinner_5);
-MainPanel.requestFocusInWindow();
-				final JSpinner spinner_4 = new JSpinner(new SpinnerNumberModel(1, 1,
-						30, 1));
-				spinner_4.addChangeListener(new ChangeListener() {
-					public void stateChanged(ChangeEvent arg0) {
-						int rooms = (int) spinner_5.getValue();
-						int s = (int) spinner_4.getValue();
-						if(s<nrGuests){
-							if (s % 3 == 0) {
-								--rooms;
-								spinner_5.setValue(rooms);
-								nrRooms = rooms;
-								spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
-										30, 1));
-							}
-							nrGuests = s;
-							nrRooms = rooms;
-						}
-						else{
-						nrGuests = s;
+		MainPanel.requestFocusInWindow();
+		final JSpinner spinner_4 = new JSpinner(new SpinnerNumberModel(1, 1,
+				30, 1));
+		spinner_4.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				int rooms = (int) spinner_5.getValue();
+				int s = (int) spinner_4.getValue();
+				if (s < nrGuests) {
+					if (s % 3 == 0) {
+						--rooms;
+						spinner_5.setValue(rooms);
 						nrRooms = rooms;
-						if (s % 3 == 1 && s > 3 && (s/3) >= rooms) {
-							++rooms;
-							spinner_5.setValue(rooms);
-							nrRooms = rooms;
-							spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
-									30, 1));
-						}
-						}
-						// System.out.println(s);
+						spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
+								30, 1));
 					}
-				});
-				GridBagConstraints gbc_spinner_4 = new GridBagConstraints();
-				gbc_spinner_4.anchor = GridBagConstraints.WEST;
-				gbc_spinner_4.fill = GridBagConstraints.VERTICAL;
-				gbc_spinner_4.insets = new Insets(0, 0, 0, 5);
-				gbc_spinner_4.gridx = 1;
-				gbc_spinner_4.gridy = 6;
-				MainPanel.add(spinner_4, gbc_spinner_4);		
+					nrGuests = s;
+					nrRooms = rooms;
+				} else {
+					nrGuests = s;
+					nrRooms = rooms;
+					if (s % 3 == 1 && s > 3 && (s / 3) >= rooms) {
+						++rooms;
+						spinner_5.setValue(rooms);
+						nrRooms = rooms;
+						spinner_5.setModel(new SpinnerNumberModel(rooms, rooms,
+								30, 1));
+					}
+				}
+				// System.out.println(s);
+			}
+		});
+		GridBagConstraints gbc_spinner_4 = new GridBagConstraints();
+		gbc_spinner_4.anchor = GridBagConstraints.WEST;
+		gbc_spinner_4.fill = GridBagConstraints.VERTICAL;
+		gbc_spinner_4.insets = new Insets(0, 0, 0, 5);
+		gbc_spinner_4.gridx = 1;
+		gbc_spinner_4.gridy = 6;
+		MainPanel.add(spinner_4, gbc_spinner_4);
 
 		MainPanel.setFocusable(true);
-		
-				
+
 	}
 
 	public void search() {
@@ -443,17 +413,17 @@ MainPanel.requestFocusInWindow();
 					"We're sorry, there were no results");
 			return;
 		}
-		//scrollPane = new JScrollPane();
+		// scrollPane = new JScrollPane();
 		BookingInfo bookinginfo = new BookingInfo(datein, dateout,
 				dateInString, dateOutString, nrGuests, nrRooms);
 		resultpanel = new ResultPanel(resultHotel, bookinginfo);
 		frame.setLocationRelativeTo(null);
-		//scrollPane.setViewportView(resultpanel);
-		//scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		//getContentPane().add(scrollPane);
-		//scrollPane.getVerticalScrollBar().setLocation(0, 0);
-		//contentPane.add(scrollPane, "2");
-		contentPane.add(resultpanel,"2");
+		// scrollPane.setViewportView(resultpanel);
+		// scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		// getContentPane().add(scrollPane);
+		// scrollPane.getVerticalScrollBar().setLocation(0, 0);
+		// contentPane.add(scrollPane, "2");
+		contentPane.add(resultpanel, "2");
 		cardLayout.show(contentPane, "2");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -473,6 +443,7 @@ MainPanel.requestFocusInWindow();
 		}
 		return dateString;
 	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -487,11 +458,11 @@ MainPanel.requestFocusInWindow();
 					screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					height = screenSize.height;
 					width = screenSize.width;
-					//frame.setLocationRelativeTo(null);
+					// frame.setLocationRelativeTo(null);
 					Date datein = new Date();
 					datein.getTime();
-					//String dates = convertStringToDate(datein);
-					//sqlWorkBench.updateRoomBookings(dates);
+					// String dates = convertStringToDate(datein);
+					// sqlWorkBench.updateRoomBookings(dates);
 
 				} catch (Exception e) {
 					e.printStackTrace();
