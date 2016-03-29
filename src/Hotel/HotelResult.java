@@ -201,7 +201,7 @@ public class HotelResult extends JPanel {
 					Front.contentPane.add(book, "3");
 					Front.cardLayout.show(Front.contentPane, "3");	
 					Front.whatpage=3;
-					Front.btnNewButton_1.setEnabled(false);
+					Front.backTakki_1.setEnabled(false);
 				}
 
 			}

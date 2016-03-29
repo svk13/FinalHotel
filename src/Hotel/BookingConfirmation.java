@@ -146,8 +146,8 @@ public class BookingConfirmation extends JPanel {
 		 * Post: This button confirms the booking for the 
 		 * 		 client. 
 		 */ 
-		JButton btnNewButton = new JButton("Confirm");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton backTakki = new JButton("Confirm");
+		backTakki.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Front.frame.setCursor(waitCursor);
 				
@@ -176,8 +176,8 @@ public class BookingConfirmation extends JPanel {
 			}
 		});
 		
-		btnNewButton.setBounds(282, 532, 86, 23);
-		add(btnNewButton);
+		backTakki.setBounds(282, 532, 86, 23);
+		add(backTakki);
 
 		JLabel lblNewLabel_6 = new JLabel(DateInS);
 		lblNewLabel_6.setBorder(new TitledBorder(null, "Date In", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
