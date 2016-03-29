@@ -1,6 +1,6 @@
 package Hotel;
 
-//change2
+//Commit kl 21:40
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
