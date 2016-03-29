@@ -1,0 +1,57 @@
+package HotelVerkefni;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+
+public class HotelInfoPanel extends JPanel {
+
+	private String name;
+	private String city;
+	private int postcode;
+	/**
+	 * Create the panel.
+	 */
+	public HotelInfoPanel(Hotel hotel) {
+		setLayout(null);
+		
+		name = hotel.getName();
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(10, 11, 308, 164);
+		
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\User\\workspace\\ThrounHugbunadar\\src\\Myndir\\hilton.jpg"));
+		add(lblNewLabel);
+		
+		JLabel mynd1 = new JLabel(name);
+		mynd1.setBounds(10, 186, 86, 65);
+		add(mynd1);
+		
+		JLabel mynd2 = new JLabel("New label");
+		mynd2.setBounds(106, 186, 86, 65);
+		add(mynd2);
+		
+		JLabel mynd3 = new JLabel("New label");
+		mynd3.setBounds(202, 186, 86, 65);
+		add(mynd3);
+		
+		JLabel Info = new JLabel("New label");
+		Info.setBounds(324, 70, 182, 84);
+		add(Info);
+		
+		JLabel namelabel = new JLabel("nameLabel");
+		namelabel.setBounds(328, 11, 191, 48);
+		add(namelabel);
+		
+		JLabel facilities = new JLabel("New label");
+		facilities.setBounds(328, 165, 178, 86);
+		add(facilities);
+		
+		JButton btnOrderRoom = new JButton("Order room");
+		btnOrderRoom.setBounds(430, 319, 89, 23);
+		add(btnOrderRoom);
+
+	}
+
+}

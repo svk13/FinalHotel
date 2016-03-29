@@ -1,0 +1,324 @@
+package HotelVerkefni;
+
+
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.Rectangle;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
+
+import javax.print.attribute.AttributeSet;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.CardLayout;
+
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.border.BevelBorder;
+import javax.swing.text.JTextComponent;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Font;
+
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JDateChooser;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.SystemColor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
+public class Front extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	static JPanel contentPane;
+	static CardLayout cardLayout = new CardLayout();
+	static Connection connection = null;
+	static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
+	static ArrayList<String> resultHotel2 = new ArrayList<String>();
+	private JTextField SearchTextArea;
+	static boolean somethingWritten=false;
+	Date innritundags=null;
+	static JComboBox<Object> SearchSuggestion;
+	//static String s1 = "";
+	static String word=""; 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+
+					Front frame = new Front();
+					frame.setVisible(true);
+					frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+					Rectangle e = frame.getBounds();
+					System.out.println(e);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	
+	/**
+	 * Create the frame.
+	 */
+	public Front() {
+		
+		connection = sqliteConnection.dbConnector();
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 891, 530);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(cardLayout);
+		
+		JPanel MainPanel = new JPanel();
+		MainPanel.setBackground(SystemColor.desktop);
+		contentPane.add(MainPanel, "1");
+
+		MainPanel.setLayout(null);
+		
+		
+		SearchTextArea =  new JTextField();
+		SearchTextArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				int i = arg0.getKeyCode();
+				if(arg0.getKeyCode()==KeyEvent.VK_ENTER){
+					search();
+				}
+				if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE)
+				{
+					word = word.substring(0,word.length()-1);
+					System.out.println(word);
+				}
+				if(arg0.getKeyCode()!=16 && i<96 && i>60){
+					SearchSuggestion.removeAllItems();					
+					word += arg0.getKeyChar();
+					//txtLeitaAH.setText("");
+					
+					System.out.println(word);
+					Object[] newobj = sqlWorkBench.object(false,word);
+					for(int index =0; index<newobj.length; index++ )
+					SearchSuggestion.addItem(newobj[index]);
+					SearchSuggestion.showPopup();
+					SearchTextArea.setText(word.substring(0,word.length()-1));
+				}
+			}
+		});
+		SearchTextArea.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		SearchTextArea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				SearchTextArea.setText("");
+				SearchTextArea.setFont(new Font("Tahoma", Font.BOLD, 14));
+				somethingWritten=true;
+				System.out.println("Leitabox clickd");
+				word="";
+			
+				SearchSuggestion.removeAllItems();
+			}
+		});
+		SearchTextArea.setText("t.d. land, sta\u00F0ur, h\u00F3tel...");
+		SearchTextArea.setBounds(146, 240, 403, 47);
+		MainPanel.add(SearchTextArea);
+		SearchTextArea.setColumns(10);
+		cardLayout.show(contentPane, "1");
+		
+		SpinnerModel spinnerModelDay = new SpinnerNumberModel(1,1,31,1);
+		SpinnerModel spinnerModelDay2 = new SpinnerNumberModel(1,1,31,1);
+		JSpinner spinner = new JSpinner(spinnerModelDay);
+		spinner.setBounds(160, 322, 71, 20);
+		MainPanel.add(spinner);
+		
+		JLabel lblNewLabel = new JLabel("Innritunardagur");
+		lblNewLabel.setBounds(160, 296, 103, 23);
+		MainPanel.add(lblNewLabel);
+		
+		JLabel lbltritunardagur = new JLabel("\u00DAtritunardagur");
+		lbltritunardagur.setBounds(347, 296, 103, 23);
+		MainPanel.add(lbltritunardagur);
+		
+		JSpinner spinner_2 = new JSpinner(spinnerModelDay2);
+		spinner_2.setBounds(460, 322, 71, 20);
+		MainPanel.add(spinner_2);
+		
+		JLabel lblGestir = new JLabel("Gestir:");
+		lblGestir.setBounds(114, 368, 46, 14);
+		MainPanel.add(lblGestir);
+		
+		JLabel lblNewLabel_1 = new JLabel("Fullor\u00F0nir");
+		lblNewLabel_1.setBounds(160, 353, 71, 14);
+		MainPanel.add(lblNewLabel_1);
+		
+		JLabel lblBrn = new JLabel("B\u00F6rn");
+		lblBrn.setBounds(241, 353, 71, 14);
+		MainPanel.add(lblBrn);
+		
+		JSpinner spinner_4 = new JSpinner();
+		spinner_4.setBounds(160, 368, 71, 20);
+		MainPanel.add(spinner_4);
+		
+		JSpinner spinner_5 = new JSpinner();
+		spinner_5.setBounds(241, 368, 71, 20);
+		MainPanel.add(spinner_5);
+		
+
+		
+		
+		final JButton ExecuteSearch = new JButton("");
+		ExecuteSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+				//sqlWorkBench.insertIntoFacilities();
+			}
+		});
+		ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		ExecuteSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//cardLayout.show(contentPane, "2");
+				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+					search();
+			}
+		});
+		ExecuteSearch.setIcon(new ImageIcon("C:\\Users\\User\\Desktop\\Search.png"));
+		ExecuteSearch.setBounds(567, 240, 46, 47);
+		MainPanel.add(ExecuteSearch);
+		
+		
+		
+		final JDateChooser dateChooser = new JDateChooser();
+		dateChooser.getCalendarButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		dateChooser.setBounds(52, 322, 98, 20);
+		MainPanel.add(dateChooser);
+		
+		final JMonthChooser monthChooser_1 = new JMonthChooser();
+		monthChooser_1.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				int i = monthChooser_1.getMonth();
+				System.out.println(i);
+			}
+		});
+		monthChooser_1.setBounds(239, 322, 98, 20);
+		MainPanel.add(monthChooser_1);
+		
+		JMonthChooser monthChooser = new JMonthChooser();
+		monthChooser.setBounds(541, 322, 121, 20);
+		MainPanel.add(monthChooser);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(347, 322, 103, 20);
+		MainPanel.add(dateChooser_1);
+	
+		MainPanel.setFocusable(true);
+		MainPanel.requestFocusInWindow();
+		
+		Object[] a = sqlWorkBench.object(true,""); 
+		SearchSuggestion = new JComboBox(a);
+		SearchSuggestion.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String state = (String) e.getItem();
+				System.out.println(" State " + state);
+				//word = state;
+				//txtLeitaAH.setText(state);
+				//state="";
+				
+				somethingWritten=true;
+			}
+		});
+		SearchSuggestion.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				System.out.println("combobox clicked");
+			}
+		});
+	
+		SearchSuggestion.setBounds(146, 240, 420, 47);
+		SearchSuggestion.setEditable(true);
+		JTextComponent editor = (JTextComponent) SearchSuggestion.getEditor().getEditorComponent();
+		MainPanel.add(SearchSuggestion);
+		
+		
+		SearchTextArea.setFocusable(true);
+		
+		BookingConfirmation bookingPanel = new BookingConfirmation("");
+		contentPane.add(bookingPanel, "2");
+		
+		
+		
+
+		
+		JButton btnNewButton = new JButton("panel2");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(contentPane, "1");
+				
+				try{
+					Statement statement = connection.createStatement();
+					statement.setQueryTimeout(30);
+					ResultSet rs = statement.executeQuery("SELECT Teams.name,code "
+							+ "FROM Teams,Groups WHERE groupId=Groups.id AND Groups.name='C';");
+							while (rs.next()) {
+							System.out.println(rs.getString("code")
+							+ " " + rs.getString("name"));
+							}
+				}catch(Exception e2){
+					
+				}
+				
+			}
+		});
+	}
+	
+	public void search(){
+		String s = SearchTextArea.getText();
+		System.out.println("Hér er textinn "  + s);
+		sqliteConnection.LeitaHotel(s);
+		ResultPanel resultpanel = new ResultPanel(resultHotel);
+		contentPane.add(resultpanel, "3");
+		cardLayout.show(contentPane, "3");
+	}
+	public void insertString(int offs, String str, AttributeSet a) {
+        // reject the insert but print a message on the console
+        System.out.println("insert " + str + " at " + offs);
+    }
+	
+	public static String dateToString( Date date )
+    {
+        StringBuilder b = new StringBuilder();
+        Formatter f = new Formatter(b);
+        Calendar c = Calendar.getInstance();
+       c.setTime(date);
+        f.format ( "%04d%02d%02d"
+                 , c.get(Calendar.YEAR)
+                 , c.get(Calendar.MONTH)
+                 , c.get(Calendar.DAY_OF_MONTH)
+                 );
+        System.out.println(b.toString());
+        return b.toString();
+    }
+}

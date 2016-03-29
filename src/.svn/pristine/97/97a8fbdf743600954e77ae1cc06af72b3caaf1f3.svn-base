@@ -1,0 +1,178 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+
+drop table if exists Hotel;
+drop table if exists Reservation;
+drop table if exists Room_Bookings;
+drop table if exists HotelFacilities;
+drop table if exists reserved_room;
+drop table if exists Room_price;
+drop table if exists room_type;
+drop table if exists room;
+drop table if exists occupied_room;
+drop table if exists guest; 
+drop table if exists hosted_at;
+
+
+CREATE TABLE Hotel(
+    id int primary key,
+	name varchar(20),
+	address varchar(20),
+	postcode int,
+	city varchar(20),
+	URL varchar(40)
+    );
+INSERT INTO "Hotel" VALUES(1,'Hotel Hilton','Suðurlandsbraut 14',105,'Reykjavik','www.hilton.is');
+INSERT INTO "Hotel" VALUES(2,'Black Pearl','Laugavegur 100',101,'Reykjavik','www.blackpearl.is');
+INSERT INTO "Hotel" VALUES(3,'Reykjavik Residence Hotel','Laugavegur 10',101,'Reykjavik','www.reykjavikresidencehotel.is');
+INSERT INTO "Hotel" VALUES(4,'Reykjavik4you','Hverfisgata 20',101,'Reykjavik','www.reykjavik4you.is');
+INSERT INTO "Hotel" VALUES(5,'Alda Hotel','Gata 14',105,'Reykjavik','www.alda.is');
+INSERT INTO "Hotel" VALUES(6,'Hotel Berg','Gata 6',111,'Reykjavik','www.hotelberg.is');
+INSERT INTO "Hotel" VALUES(7,'Fosshótel Austfjörðum','Gata 7',700,'Fáskrúðsfirði','www..is');
+INSERT INTO "Hotel" VALUES(8,'Kvosin Downtown Hotel','Gata 8',101,'Reykjavik','www.kvosin.is');
+INSERT INTO "Hotel" VALUES(9,'Castle House Luxury Apartmens','Gata 9',105,'Reykjavik','www.castlehouse.is');
+INSERT INTO "Hotel" VALUES(10,'Hotel Rangá','Gata 10',630,'Hella','www.ranga.is');
+INSERT INTO "Hotel" VALUES(11,'Reykjavik Residence Suites','Gata 11',101,'Reykjavik','www.reykjavikresidencesuites.is');
+INSERT INTO "Hotel" VALUES(12, '101 Hotel', 'Hverfisgata 10', 101, 'Reykjavík', 'www.101Hotel.is');
+INSERT INTO "Hotel" VALUES(13,'4th Floor Hotel', 'Laugavegur 101' , 101, 'Reykjavík', 'www.4thfloorhotel.is');
+INSERT INTO "Hotel" VALUES(14,'Arctic Comfort Hotel', 'Síðumúli 19', 108, 'Reykjavík','www.arcticcomforthotel.is');
+INSERT INTO "Hotel" VALUES(15,'Best Western Hotel Reykjavik', 'Rauðararstíg 37', 105, 'Reykjavík','www.westernhotel.is');
+INSERT INTO "Hotel" VALUES(16,'City Center Hotel', 'Austurstræti 6', 101 ,'Reykjavík', 'www.citycenterhotel.is');
+INSERT INTO "Hotel" VALUES(17,'Fosshotel Baron', 'Baronsstígur 2', 101, 'Reykjavík', 'www.baronhotel.is');
+INSERT INTO "Hotel" VALUES(18, 'Fosshotel Lind', 'Rauðarárstígur 28', 105, 'Reykjavík', 'www.fosshotel.is');
+INSERT INTO "Hotel" VALUES(19, 'Grand Hotel Reykjavik', 'Sigtún 38' , 105, 'Reykjavík', 'www.grandhotel.is');
+INSERT INTO "Hotel" VALUES(20,'Hilton Reykjavik Nordica', 'Suðurlandsbraut 2', 108 ,'Reykjavík', 'www.hiltonhotel.is');
+INSERT INTO "Hotel" VALUES(21,'Hotel Leifur Eiriksson', 'Skólavörðustígur 45', 101, 'Reykjavík','www.hotelleifureiriksson.is');
+INSERT INTO "Hotel" VALUES(22,'Hotel Odinsve Óðinstorg', 'Óðinsgata 20', 101, 'Reykjavík','www.odinsvehotel.is');
+INSERT INTO "Hotel" VALUES(23,'Hotel Reykjavik Centrum',  'Aðalstræti 16', 101, 'Reykjavík','www.reykjavikcentrum.is');
+INSERT INTO "Hotel" VALUES(24,'Hotel Smári', 'Hlíðasmári 13', 201, 'Kópavogur','www.hotelsmari.is');
+INSERT INTO "Hotel" VALUES(25,'Hotel Viking Fjorukrain/Viking Village', 'Strandgata 55', 220, 'Hafnarfjörður','www.fjorukrain.is');
+INSERT INTO "Hotel" VALUES(26,'Hotel Örkin', 'Brautarholt 29', 105, 'Reykjavík','www.hotelork.is');
+INSERT INTO "Hotel" VALUES(27,'Icelandair Hotel Reykjavik Natura','Reykjavík airport', 105, 'Reykjavik','www.icelandairhotels.is');
+INSERT INTO "Hotel" VALUES(28,'Metropolitan Hotel', 'Ránargata 4a',101, 'Reykjavík','www.metropolitanhotel.is');
+INSERT INTO "Hotel" VALUES(29,'Park Inn Island', 'Ármúli 9', 108, 'Reykjavík','www.parkinniceland.is');
+INSERT INTO "Hotel" VALUES(30,'Radisson Blu 1919 Hotel', 'Pósthússtræti 2', 101, 'Reykjavík','www.radissonblu.is');
+INSERT INTO "Hotel" VALUES(31,'Radisson Blu Saga Hotel', 'v/Hagatorg', 104, 'Reykjavík', 'www.radissonblu.is');
+
+CREATE TABLE Reservation(
+    id INT Primary key,
+    date_in date,
+	date_out date,
+	made_by varchar(20),
+	guest_id int,
+	foreign key (guest_id) references guest(id) 
+    );
+
+CREATE TABLE Room_Bookings(
+	hotelID int references Hotel(id),
+	reservationID int,
+	date_in date,
+	date_out date,
+	room_count int, /* fjöldi herbergja pr. kúnna*/
+	client_id int,
+	client_passw varchar(20)
+
+);
+
+CREATE TABLE HotelFacilities(
+	hotelID int references Hotel(id),
+	Wifi boolean,
+	FreeWifi boolean,
+	SmokingArea boolean,
+	Swimmingpool boolean,
+	Gym boolean,
+	TV boolean
+);
+INSERT INTO "HotelFacilities" VALUES(10,TRUE,TRUE,FALSE,TRUE,FALSE,TRUE);
+
+CREATE TABLE Room_price(
+	hotelID int references Hotel(id),
+	type1 int'Kr.',
+	type2 int'Kr.',
+	type3 int'Kr.',
+	counttype1 int,
+	counttype2 int,
+	counttype3 int,
+	check (counttype1>=0),
+	check (counttype2>=0),
+	check (counttype3>=0)
+);	
+INSERT INTO "Room_price" VALUES(1, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(2, 15000, 12000, 9000, 5,50,100);
+INSERT INTO "Room_price" VALUES(3, 35000, 20000, 15000, 5,50,100);
+INSERT INTO "Room_price" VALUES(4, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(5, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(7, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(8, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(9, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(10, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(11, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(12, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(13, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(14, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(15, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(16, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(17, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(18, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(19, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(20, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(21, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(22, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(23, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(24, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(25, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(26, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(27, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(28, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(29, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(30, 50000, 40000, 30000, 5,50,100);
+INSERT INTO "Room_price" VALUES(31, 50000, 40000, 30000, 5,50,100);
+
+/*	
+CREATE TABLE reserved_room(
+    id int primary key,
+	number_of_rooms int,
+	room_type_id int ,
+	reservation_id int,
+	status varchat(20),
+	foreign key(room_type_id) references room_type(id),
+	foreign key(reservation_id) references Reservation(id)
+    );
+CREATE TABLE room_type(
+    id INT primary key, 
+	description varchar(80),
+	max_capacity int	
+    );
+CREATE TABLE room(
+    id INT,
+	roomnr varchar(10),
+	name varchar(40),
+	status varchar(10),
+	smoke boolean,
+	room_type_id int,
+	foreign key(room_type_id) references room_type(id)
+    );
+CREATE TABLE occupied_room(
+	id int primary key,
+	check_in timestamp,
+	chech_out timestamp,
+	room_id int,
+	reservation_id int,
+	foreign key(room_id) references hosted_at(id),
+	foreign key(reservation_id) references reservation(id)    	
+    );
+CREATE TABLE guest(
+    id	int primary key,
+	first_name varchar(50),
+	last_name varchar(50),
+	member_since date
+    );
+CREATE TABLE hosted_at(
+	id int primary key,
+	guest_id int ,
+	occupied_room_id int, 
+	foreign key(guest_id) references guest(id),
+	foreign key(occupied_room_id) references reserved_room(id)
+    );
+	*/
+COMMIT;

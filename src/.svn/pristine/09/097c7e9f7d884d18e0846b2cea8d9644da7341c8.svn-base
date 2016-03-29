@@ -1,0 +1,167 @@
+package HotelVerkefni;
+
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+
+public class sqlWorkBench {
+
+	static String qry = "";
+	static String qry2="";
+	
+	public static void insertIntoFacilities(){
+		try{
+			
+			
+			
+			for(int count=1; count<=31;count++){
+				
+				int r1=0;
+				int[] rnd = new int[6];
+				for(int i=0;i<6;i++){
+				
+					if(Math.random()<0.5) r1=0;
+					else r1=1;
+				rnd[i]=r1;
+					
+				}
+			qry = "INSERT INTO HotelFacilities Values("+count+","+rnd[0]+","+rnd[1]+","+rnd[2]+","+rnd[3]+","+rnd[4]+","+rnd[5]+");";
+			System.out.println(qry);
+			
+			Statement stmt = Front.connection.createStatement();
+			stmt.setQueryTimeout(30);
+			stmt.executeUpdate(qry);
+
+			}
+				
+					//sqliteConnection.closeConnection(rs, statement, Front.connection);
+			
+		}catch(Exception e2){
+			System.out.println(e2);
+		}
+	}
+	
+	public static Object[] object(Boolean breyta, String word){
+
+		Object[] myObjects=null;
+		try{
+				
+			if(breyta==true){
+			qry = "Select Hotel.city from Hotel Group by city;";
+			qry2 = "Select count(city) as pi from(select Hotel.city from Hotel Group by city);";
+			}else{
+				qry="Select Hotel.city from Hotel where city LIKE '%"+ word+"%' Group by city;";
+				qry2="Select count(city) as pi from (Select Hotel.city from Hotel where city LIKE '%"+ word+"%' Group by city);";
+			}
+			
+			//System.out.println(qry + "\n" + qry2 );
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			PreparedStatement statement2 = Front.connection.prepareStatement(qry2);
+			statement.setQueryTimeout(30);
+			ResultSet rs = statement.executeQuery();
+			ResultSet rs2 = statement2.executeQuery();
+			String thecount = rs2.getString("pi");
+			int tmp1 = Integer.parseInt(thecount);
+			//System.out.println(" hóhó" + thecount);
+			myObjects = new Object[tmp1+1];
+			myObjects[0]="";
+			int count = 1;
+					while (rs.next()) {
+						
+						String name = rs.getString("city");
+						//System.out.println(name);
+						Object tmp = name;
+						myObjects[count] = tmp;
+						count++;
+						
+					}
+					//sqliteConnection.closeConnection(rs, statement, Front.connection);
+			
+		}catch(Exception e2){
+			System.out.println(e2);
+		}
+	return myObjects;
+	}
+	
+	public static String priceSearch(){
+		
+		String returnedString="";
+		for(int i = 0; i<Front.resultHotel.size()-1;i++){
+			Hotel tmp = Front.resultHotel.get(i);
+			int[] pricesandcount = tmp.getPrice();
+			for(int j = 0; j<6;j++){
+					returnedString += pricesandcount[j]; 
+				}
+			
+		}
+	
+		return returnedString;
+	}
+	
+	public static ArrayList<Hotel> detailedSearch(int b, String strengur){
+	
+		ArrayList<Hotel> hoteltmp = new ArrayList<Hotel>();
+		for(int i = 0; i<Front.resultHotel.size()-1;i++){
+			Hotel tmp = Front.resultHotel.get(i);
+			int wifi = tmp.getWifi();
+			System.out.println(tmp+" "+ wifi + " " + i);
+			if(wifi==1){
+				hoteltmp.add(tmp);
+				System.out.println("Búið að adda");
+			}
+		}
+		Front.resultHotel = hoteltmp;
+		System.out.println(Front.resultHotel.size() + " er stærðin");
+		return Front.resultHotel;
+	}
+	
+	public static int[] price(int id){
+		int[] i= new int[6];
+		try{
+		int Hotelid = id;
+		System.out.println(Hotelid);
+		
+		String qry = "Select * from Room_price where hotelid="+Hotelid+";";
+			
+		System.out.println("Kemst ég hingað? " + qry);
+		
+		try{
+		PreparedStatement statement = Front.connection.prepareStatement(qry);
+		System.out.println(statement);
+		//System.out.println("Kemst ég hingað? " + statement);
+		ResultSet rs = statement.executeQuery();
+		
+		System.out.println("Kemst ég hingað?");				
+				while (rs.next()) {
+					
+					String type1=rs.getString("type1");
+					String type2=rs.getString("type2");
+					String type3=rs.getString("type3");
+					String counttype1=rs.getString("counttype1");
+					String counttype2=rs.getString("counttype2");
+					String counttype3=rs.getString("counttype3");
+					i[0] = Integer.parseInt(type1);
+					i[1] = Integer.parseInt(type2);
+					i[2] = Integer.parseInt(type3);
+					i[3] = Integer.parseInt(counttype1);
+					i[4] = Integer.parseInt(counttype2);
+					i[5] = Integer.parseInt(counttype3);
+					System.out.println("Kemst ég hingað?");
+					//Front.textArea.append(id + " " + name + " "  +address + " " +city + " " + URL +  "\n");
+					
+				}
+				
+		}catch(Exception e){
+			System.out.println("WHÆÆÆÆ");
+		}
+	}catch(Exception e2){
+		System.out.println("prump");
+	}
+		return i;
+		}
+	
+}
+

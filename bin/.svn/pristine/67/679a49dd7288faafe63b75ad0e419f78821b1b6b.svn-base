@@ -1,0 +1,9 @@
+package HotelVerkefni;
+
+public class Room_price {
+	
+	public Room_price(int[] a, int id){
+		
+	}
+
+}

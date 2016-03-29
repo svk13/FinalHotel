@@ -1,0 +1,208 @@
+package HotelVerkefni;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
+import java.net.URL;
+import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JCheckBox;
+import javax.swing.JScrollBar;
+
+import com.sun.media.sound.Toolkit;
+
+
+public class ResultPanel extends JPanel {
+
+	 	static String labelTextaddress;
+	    static String labelTextname;
+		static int labelTextid;
+	    static int labelTextpostcode;
+	    static int wifiteljari;
+	    static int freewifiteljari;
+	    static String labelTextcity;
+	    static String url;
+	    static String price;
+	    int numberOfLabels = Front.resultHotel.size();
+	
+		JLabel[] labels = new JLabel[numberOfLabels];
+		JButton[] buttons = new JButton[numberOfLabels];
+		JLabel[] labelurls = new JLabel[numberOfLabels];
+	/**
+	 * Create the panel.
+	 */
+	public ResultPanel(ArrayList<Hotel> hotelList) {
+		setLayout(null);
+		
+		JLabel lblJlabelarnir = new JLabel("Here are your results");
+		lblJlabelarnir.setFont(new Font("Calibri", Font.BOLD, 22));
+		lblJlabelarnir.setBounds(394, 33, 309, 35);
+		add(lblJlabelarnir);
+		
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		int width = gd.getDisplayMode().getWidth();
+		int height = gd.getDisplayMode().getHeight();
+		
+		System.out.println(width + "   " + height);
+		
+		final JCheckBox chckbxNewCheckBox = new JCheckBox("Wifi");
+		chckbxNewCheckBox.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				wifiteljari++;
+				if(wifiteljari%2==1)
+					sqlWorkBench.detailedSearch(1, "Wifi");
+				else{
+					sqlWorkBench.detailedSearch(0, "Wifi");
+				}
+				deleteAll();
+				updateUIid();
+				
+			}
+			
+		});
+
+		chckbxNewCheckBox.setBounds(809, 165, 97, 23);
+		add(chckbxNewCheckBox);
+		
+		JCheckBox chckbxFreewifi = new JCheckBox("FreeWifi");
+		chckbxFreewifi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				freewifiteljari++;
+				if(freewifiteljari%2==1)
+					sqlWorkBench.detailedSearch(1, "Freewifi");
+				else{
+					sqlWorkBench.detailedSearch(0, "Freewifi");
+				}
+				deleteAll();
+				updateUIid();
+			}
+		});
+		chckbxFreewifi.setBounds(809, 191, 97, 23);
+		add(chckbxFreewifi);
+		
+		JCheckBox chckbxTv = new JCheckBox("TV");
+		chckbxTv.setBounds(809, 217, 97, 23);
+		add(chckbxTv);
+		
+		JCheckBox chckbxGym = new JCheckBox("Gym");
+		chckbxGym.setBounds(809, 243, 97, 23);
+		add(chckbxGym);
+		
+		JCheckBox chckbxSwimmingPool = new JCheckBox("Swimming pool");
+		chckbxSwimmingPool.setBounds(809, 269, 97, 23);
+		add(chckbxSwimmingPool);
+		
+		JCheckBox chckbxSmokingArea = new JCheckBox("Smoking area");
+		chckbxSmokingArea.setBounds(809, 295, 97, 23);
+		add(chckbxSmokingArea);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				HotelInfoPanel info = new HotelInfoPanel(Front.resultHotel.get(0));
+				Front.contentPane.add(info, "4");
+				Front.cardLayout.show(Front.contentPane, "4");
+			}
+		});
+		btnNewButton_1.setBounds(821, 439, 89, 23);
+		add(btnNewButton_1);
+
+		updateUIid();
+		
+	}
+	
+	static int dimension=100;
+	private void updateUIid(){
+
+		
+		int numberOfLabels = Front.resultHotel.size();
+		System.out.println(numberOfLabels + " numberoflabels");
+		labels = new JLabel[numberOfLabels];
+		buttons = new JButton[numberOfLabels];
+		labelurls = new JLabel[numberOfLabels];
+		
+		for (int index=0; index<numberOfLabels; index++) {
+			Hotel Hotel = Front.resultHotel.get(index);
+			labelTextaddress = Hotel.getAddress();
+		    labelTextname = Hotel.getName();
+			labelTextid = Hotel.getID();
+		    labelTextpostcode = Hotel.getID();
+		    labelTextcity = Hotel.getCity();
+		    url = Hotel.getURL();
+		    //price = sqlWorkBench.priceSearch();
+		    
+		    final String labelText = labelTextid + " " + labelTextname + " " + labelTextpostcode + " " + labelTextcity;
+	
+		    
+		    final JLabel label = new JLabel(labelText);
+		    label.setBounds(40, 50+((index+1)*50), 720, 35);
+		    
+		 
+		    final JLabel labelurl = new JLabel(url);
+		    labelurl.setBounds(350, 50+((index+1)*50), 100, 23);
+		    
+		    JButton btnNewButton = new JButton("Check out");
+			btnNewButton.setBounds(500, 55+((index+1)*50), 110, 23);
+			
+			add(labelurl);
+			add(btnNewButton);
+		    add(label);
+		    
+		    labels[index] = label; // save the label if you need to access it later
+		    buttons[index] = btnNewButton;
+		    labelurls[index] = labelurl;
+		    buttons[index].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					BookingConfirmation confirm = new BookingConfirmation(labelText);
+					Front.contentPane.add(confirm, "3");
+					Front.cardLayout.show(Front.contentPane, "3");
+				}
+			});
+		    labelurls[index].addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					System.out.println("Virkar; " + url);
+					internetURL(url);
+				}
+			});
+		    
+		    
+		}
+	}
+	
+	public void deleteAll() {
+		for(int i =0; i<labels.length;i++){
+			remove(labels[i]);
+			remove(buttons[i]);
+			remove(labelurls[i]);
+		}
+		repaint();
+	}
+	private void internetURL(String urlid) {
+		String tmp = urlid.substring(0,urlid.length());
+		
+		
+		try {
+		    Desktop.getDesktop().browse(new URL("http://"+tmp).toURI());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
