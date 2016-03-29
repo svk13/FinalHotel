@@ -76,11 +76,11 @@ public class HotelResult extends JPanel {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{259, 79, 46, 137, 124, 0};
 		gridBagLayout.rowHeights = new int[]{41, 29, 34, 14, 41, 20, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel lblNewLabel = new JLabel("");
+		final JLabel lblNewLabel = new JLabel("");
 		
 		lblNewLabel.setIcon(new ImageIcon("src/Myndir/"+tmp2+".jpg"));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -92,6 +92,7 @@ public class HotelResult extends JPanel {
 		add(lblNewLabel, gbc_lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel(name);
+		
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 22));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.fill = GridBagConstraints.BOTH;
@@ -100,6 +101,15 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel_1.gridx = 1;
 		gbc_lblNewLabel_1.gridy = 0;
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
+				lblNewLabel.setBackground(Color.BLUE);
+				repaint();
+				System.out.println("I'm here again");
+			}
+		});
 		
 		JLabel lblNewLabel_2 = new JLabel(city);
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 13));
@@ -123,7 +133,8 @@ public class HotelResult extends JPanel {
 		lblNewLabel_5.setBackground(Color.WHITE);
 		lblNewLabel_5.setEditable(false);
 		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.fill = GridBagConstraints.BOTH;
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_5.fill = GridBagConstraints.VERTICAL;
 		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_5.gridheight = 3;
 		gbc_lblNewLabel_5.gridwidth = 2;
