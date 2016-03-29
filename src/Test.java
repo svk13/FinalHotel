@@ -38,7 +38,7 @@ public class Test {
 	@Before
 	public void setUp2() {
 		Front.connection = sqliteConnection.dbConnector();
-		sqliteConnection.LeitaHotel("");
+		sqlWorkBench.LeitaHotel("");
 		//Hotel newHotel = new Hotel(32, "The name", "The address", 32, "The city" , "www.theurrl.com",1, 1, 1, 1, 1, 1);
 		thehotel = Front.resultHotel.get(0);
 		
