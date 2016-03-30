@@ -107,7 +107,8 @@ public class HotelResult extends JPanel {
 				lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 				lblNewLabel.setBackground(Color.BLUE);
 				repaint();
-				System.out.println("I'm here again");
+				
+				System.out.println("I'm here again"  + this);
 			}
 		});
 		
