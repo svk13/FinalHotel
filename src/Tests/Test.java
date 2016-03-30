@@ -9,7 +9,7 @@ import Hotel.Hotel;
 import Hotel.sqlWorkBench;
 import Hotel.sqliteConnection;
 
-
+//Komment
 public class Test {
 
 	String hotel=null;
