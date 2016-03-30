@@ -1,5 +1,7 @@
 package Hotel;
 
+// comment kl 15.44
+
 import javax.mail.MessagingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
