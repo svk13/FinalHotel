@@ -1,6 +1,6 @@
 package Hotel;
 
-// comment kl 15.44
+// Hlynur kl. 13.04 31.3
 
 import javax.mail.MessagingException;
 import javax.swing.JFrame;
