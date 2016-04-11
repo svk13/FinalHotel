@@ -44,7 +44,7 @@ public class GoogleMail {
      */
     public static void send(final String username, final String password, String recipientEmail, String ccEmail, String title, String message) 
     			throws AddressException, MessagingException {
-        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
         // Get a Properties object

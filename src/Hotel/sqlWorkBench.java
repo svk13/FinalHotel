@@ -21,43 +21,53 @@ public class sqlWorkBench {
 
 	static String qry = "";
 	static String qry2="";
-	static ResultSet rs;
+	static ResultSet HotelResultSet;
 
 	// A method that searches for a hotel with the information in the textarea in the Front class.
-	public static void LeitaHotel(String tmp){
+	public static ArrayList<Hotel> LeitaHotel(String tmp){
+		ArrayList<Hotel> theList = new ArrayList<Hotel>();
+		Connection c = sqliteConnection.dbConnector();
 		try{
 			
-			if(Front.somethingWritten==false) { 
-				qry = "Select * from Hotel, hotelfacilities where hotel.id=hotelfacilities.hotelid;";
-			}else{
-				qry = "Select * from Hotel,hotelfacilities where Hotel.id=Hotelfacilities.hotelid AND ( Hotel.name LIKE'%"+tmp+"%' OR Hotel.city LIKE'"+tmp+"%' OR Hotel.postcode LIKE'"+tmp+"%' OR Hotel.address LIKE'"+tmp+"%');";
-			}
+				qry = "Select * from Hotel,hotelfacilities, room_price where Hotel.id=Hotelfacilities.hotelid AND Hotel.id = Room_price.Hotelid AND ( Hotel.name LIKE'%"+tmp+"%' OR Hotel.city LIKE'"
+						+tmp+"%' OR Hotel.postcode LIKE'"+tmp+"%' OR Hotel.address LIKE'"+tmp+"%');";
 			
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			System.out.println("QRY = " + qry);
+			PreparedStatement statement = c.prepareStatement(qry);
 			statement.setQueryTimeout(30);
-			rs = statement.executeQuery();
+			HotelResultSet = statement.executeQuery();
 			
-			while (rs.next()) {
-				int id = Integer.parseInt(rs.getString("id"));
-				String name = rs.getString("name");
-				String address = rs.getString("address");
-				int postcode = Integer.parseInt(rs.getString("postcode"));
-				String city = rs.getString("city");
-				String URL = rs.getString("URL");
-				int wifi = Integer.parseInt(rs.getString("Wifi"));
-				int FreeWifi = Integer.parseInt(rs.getString("FreeWifi"));
-				int Smokearea = Integer.parseInt(rs.getString("SmokingArea"));
-				int SPool = Integer.parseInt(rs.getString("Swimmingpool"));
-				int Gym = Integer.parseInt(rs.getString("Gym"));
-				int TV = Integer.parseInt(rs.getString("TV"));
+			while (HotelResultSet.next()) {
+
+				String name = HotelResultSet.getString("name");
+				String address = HotelResultSet.getString("address");
+				String city = HotelResultSet.getString("city");
+				String URL = HotelResultSet.getString("URL");
+				int id = Integer.parseInt(HotelResultSet.getString("id"));
+				int postcode = Integer.parseInt(HotelResultSet.getString("postcode"));
+				int wifi = Integer.parseInt(HotelResultSet.getString("Wifi"));
+				int FreeWifi = Integer.parseInt(HotelResultSet.getString("FreeWifi"));
+				int Smokearea = Integer.parseInt(HotelResultSet.getString("SmokingArea"));
+				int SPool = Integer.parseInt(HotelResultSet.getString("Swimmingpool"));
+				int Gym = Integer.parseInt(HotelResultSet.getString("Gym"));
+				int TV = Integer.parseInt(HotelResultSet.getString("TV"));
+				
 				Hotel hotelTmp = new Hotel(id, name, address, postcode, city, URL,wifi,FreeWifi,Smokearea,SPool,Gym,TV);
-				Front.resultHotel.add(hotelTmp);
+				hotelTmp.setPriceOfRoomType1(Integer.parseInt(HotelResultSet.getString("type1")));
+				hotelTmp.setPriceOfRoomType2(Integer.parseInt(HotelResultSet.getString("type2")));
+				hotelTmp.setPriceOfRoomType3(Integer.parseInt(HotelResultSet.getString("type3")));
+				hotelTmp.setRoomType1Count(Integer.parseInt(HotelResultSet.getString("counttype1")));
+				hotelTmp.setRoomType2Count(Integer.parseInt(HotelResultSet.getString("counttype2")));
+				hotelTmp.setRoomType3Count(Integer.parseInt(HotelResultSet.getString("counttype3")));
+				theList.add(hotelTmp);
 		
 			}
 			
 		}catch(Exception e2){
 			System.out.println(e2);
+			
 		}
+		return theList;
 		
 	}
 	
@@ -71,13 +81,12 @@ public class sqlWorkBench {
 			
 			String qry = "INSERT INTO Room_Bookings Values("+hotelID+","+reservationID+",'"+dateins+"','"+dateouts+"',"+
 					nrOfRooms+",'"+clientid+"','"+client_passw+"');";
-			System.out.println(qry);
 			
 			Statement stmt = Front.connection.createStatement();
 			stmt.setQueryTimeout(30);
 			stmt.executeUpdate(qry);
 			stmt.close();
-					//sqliteConnection.closeConnection(rs, statement, Front.connection)
+					
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -232,7 +241,27 @@ public class sqlWorkBench {
 	}
 	
 
-
+	//Fall sem skilar fjölda viðskiptavina.
+		public static void clientIDs(){
+			try{
+				qry = "select client_id as pi from room_bookings;";
+				
+				PreparedStatement statement = Front.connection.prepareStatement(qry);
+				statement.setQueryTimeout(30);
+				ResultSet rs = statement.executeQuery();;
+						while (rs.next()) {
+							
+							String name = rs.getString("pi");
+							//System.out.println(name);
+							System.out.println(name);
+						}
+						//sqliteConnection.closeConnection(rs, statement, Front.connection);
+				
+			}catch(Exception e2){
+				System.out.println(e2);
+			}
+			
+		}
 	
 	//Fall sem skilar fjölda viðskiptavina.
 	public static int NrOfClients(){
@@ -270,7 +299,7 @@ public class sqlWorkBench {
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
-		return "Unknown Hotel";
+		throw new IllegalArgumentException("Error: Does not exist in database.");
 	}
 	
 	//Fall sem leitar að verði eftir hótelherbergi.
@@ -331,28 +360,28 @@ public class sqlWorkBench {
 		int Hotelid = id;
 		String qry = "Select * from Room_price where hotelid="+Hotelid+";";
 
-		try{
-		PreparedStatement statement = Front.connection.prepareStatement(qry);
-		ResultSet rs = statement.executeQuery();
-				
-				while (rs.next()) {
+			try{
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			ResultSet rs = statement.executeQuery();
 					
-					String type1=rs.getString("type1");
-					String type2=rs.getString("type2");
-					String type3=rs.getString("type3");
-					String counttype1=rs.getString("counttype1");
-					String counttype2=rs.getString("counttype2");
-					String counttype3=rs.getString("counttype3");
-					i[0] = Integer.parseInt(type1);
-					i[1] = Integer.parseInt(type2);
-					i[2] = Integer.parseInt(type3);
-					i[3] = Integer.parseInt(counttype1);
-					i[4] = Integer.parseInt(counttype2);
-					i[5] = Integer.parseInt(counttype3);	
-				}
-		}catch(Exception e){
-			System.out.println("WHÆÆÆÆ");	
-		}
+					while (rs.next()) {
+						
+						String type1=rs.getString("type1");
+						String type2=rs.getString("type2");
+						String type3=rs.getString("type3");
+						String counttype1=rs.getString("counttype1");
+						String counttype2=rs.getString("counttype2");
+						String counttype3=rs.getString("counttype3");
+						i[0] = Integer.parseInt(type1);
+						i[1] = Integer.parseInt(type2);
+						i[2] = Integer.parseInt(type3);
+						i[3] = Integer.parseInt(counttype1);
+						i[4] = Integer.parseInt(counttype2);
+						i[5] = Integer.parseInt(counttype3);	
+					}
+			}catch(Exception e){
+				System.out.println("WHÆÆÆÆ");	
+			}
 		}catch(Exception e2){
 			System.out.println("prump");
 		}

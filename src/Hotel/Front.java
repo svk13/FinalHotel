@@ -253,7 +253,7 @@ public class Front extends JFrame {
 
 				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED,
 						null, null, null, null));
-
+				
 				search();
 				whatpage = 2;
 				setVisible(true);
@@ -433,7 +433,10 @@ public class Front extends JFrame {
 		backTakki.setEnabled(true);
 		connection = sqliteConnection.dbConnector();
 		String s = SearchTextArea.getText();
-		sqlWorkBench.LeitaHotel(s);
+		if(somethingWritten==false)
+			s="";
+		System.out.println(s);
+		resultHotel = SearchControl.LeitaHotel(s, dateInString, dateOutString);
 		if (resultHotel.size() == 0) {
 			JOptionPane.showMessageDialog(null,
 					"We're sorry, there were no results");
@@ -455,6 +458,7 @@ public class Front extends JFrame {
 		contentPane.add(resultpanel, "2");
 		cardLayout.show(contentPane, "2");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		sqlWorkBench.clientIDs();
 	}
 
 	public static String convertStringToDate(Date indate) {

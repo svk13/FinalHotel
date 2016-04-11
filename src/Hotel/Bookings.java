@@ -24,7 +24,7 @@ public class Bookings {
 		nrOfRooms=nrRoom;
 		clientid=client;
 		client_passw=passw;
-		sqlWorkBench.makebooking(hotelID, reservationID, dateins, dateouts, nrOfRooms,clientid,client_passw);
+		
 	}
 	
 }

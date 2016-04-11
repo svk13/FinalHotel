@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 
-public class sqliteConnection {
+public class sqliteConnection implements dbConnection {
 	
 	static ResultSet rs;
 	static Connection conn=null;

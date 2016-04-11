@@ -152,7 +152,7 @@ public class HotelResult extends JPanel {
 		gbc_lblNumberOfRooms.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfRooms.gridx = 3;
 		gbc_lblNumberOfRooms.gridy = 2;
-		roomsavailable = price[5]-sqlWorkBench.RoomsAvailable(hotel.getID(), DateInS,DateOutS);
+		roomsavailable = hotel.getRoomType3Count();
 		add(lblNumberOfRooms, gbc_lblNumberOfRooms);
 		JLabel label = new JLabel("" +roomsavailable);
 		

@@ -165,6 +165,7 @@ public class BookingConfirmation extends JPanel {
 				datevinnsla(DateInS, DateOutS);
 				
 				Bookings book = new Bookings(hotel.getID(), resid, DateInS,DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
+				sqlWorkBench.makebooking(hotel.getID(), resid, DateInS, DateOutS, bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
 				String message = "Thank you " + fname.getText() + " " + lname.getText() + ", \nfor booking your hotel using our services. \nYour username is: "+ ClientID + " and password: "+ clientpassword +"\n \np.s. your hotel has been informed of your special request that is: " + special.getText();
 				try {
 					GoogleMail.send(username, password, recipientEmail, title, message);

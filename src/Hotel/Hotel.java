@@ -16,6 +16,13 @@ public class Hotel {
 	private int SPool;
 	private int Gym;
 	private int TV;
+	private int roomPrice1;
+	private int roomPrice2;
+	private int roomPrice3;
+	private int roomCount1;
+	private int roomCount2;
+	private int roomCount3;
+	
 	
 	
 	/* Hotel is an object that contains all the details of a 
@@ -59,7 +66,7 @@ public class Hotel {
 		return postcode;
 	}
 	
-	String getCity(){
+	public String getCity(){
 		return city;
 	}
 	
@@ -92,6 +99,60 @@ public class Hotel {
 		return TV;
 	}
 
+	int getPriceOfRoomType1(){
+		
+		return roomPrice1;
+	}
+	
+	int getPriceOfRoomType2(){
+		
+		return roomPrice2;
+	}
+	
+	int getPriceOfRoomType3(){
+		
+		return roomPrice3;
+	}
+	int getRoomType1Count(){
+		
+		return roomCount1;
+	}
+	int getRoomType2Count(){
+		
+		return roomCount2;
+	}
+	int getRoomType3Count(){
+		System.out.println(roomCount3+ " fjöldi herbergja");
+		return roomCount3;
+	}
+	
+	
+	void setPriceOfRoomType1(int x){
+		
+		roomPrice1=x;
+	}
+	
+	void setPriceOfRoomType2(int x){
+		
+		roomPrice2=x;
+	}
+	
+	void setPriceOfRoomType3(int x){
+		
+		roomPrice3=x;
+	}
+	void setRoomType1Count(int x){
+		
+		roomCount1 = x;
+	}
+	void setRoomType2Count(int x){
+		
+		roomCount2 = x;
+	}
+	void setRoomType3Count(int x){
+		
+		roomCount3 = x;
+	}
 	
 	int[] getPrice(){
 		int ID = this.getID();
