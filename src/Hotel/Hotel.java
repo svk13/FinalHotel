@@ -156,7 +156,7 @@ public class Hotel {
 	}
 	
 	int getOrderPriceRoomType1(int nrClients, int nrRooms){
-		if(nrClients == nrRooms){
+		if(nrClients == nrRooms && nrClients >1){
 			OrderPrice = (int) (nrClients*nrRooms*roomPrice1*0.8);
 		}else{
 			OrderPrice=nrClients*nrRooms*roomPrice1;
@@ -164,7 +164,7 @@ public class Hotel {
 		return OrderPrice;
 	}
 	int getOrderPriceRoomType2(int nrClients, int nrRooms){
-		if(nrClients == nrRooms){
+		if(nrClients == nrRooms && nrClients >1){
 			OrderPrice = (int) (nrClients*nrRooms*roomPrice2*0.8);
 		}else{
 			OrderPrice=nrClients*nrRooms*roomPrice2;
@@ -172,7 +172,7 @@ public class Hotel {
 		return OrderPrice;
 	}
 	int getOrderPriceRoomType3(int nrClients, int nrRooms){
-		if(nrClients == nrRooms){
+		if(nrClients == nrRooms && nrClients >1){
 			OrderPrice = (int) (nrClients*nrRooms*roomPrice3*0.8);
 		}else{
 			OrderPrice=nrClients*nrRooms*roomPrice3;

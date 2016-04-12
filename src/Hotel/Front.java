@@ -83,6 +83,7 @@ public class Front extends JFrame {
 	static String word = "";
 	static int height;
 	static int width;
+	static int howManyDays;
 	static boolean somethingWritten = false;
 	static BookingInfo bookinginfo;
 
@@ -113,7 +114,7 @@ public class Front extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				whatpage -= 1;
 				forwardTakki.setEnabled(true);
-				System.out.println(whatpage);
+			
 				if (whatpage == 1)
 					backTakki.setEnabled(false); // Hægt að setja þetta í fall?
 				if (whatpage != 3) {
@@ -141,7 +142,7 @@ public class Front extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				whatpage += 1;
-				System.out.println(whatpage);
+				
 				if (whatpage != 1)
 					backTakki.setEnabled(true); // Hægt að setja þetta í fall?
 				if (whatpage == 3) {
@@ -332,6 +333,8 @@ public class Front extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				dateout = DateChooserOut.getDate();
 				dateOutString = convertStringToDate(dateout);
+				System.out.println(Methods.howManyDays(dateInString, dateOutString) + " ok");
+				howManyDays = Methods.howManyDays(dateInString, dateOutString);
 
 			}
 		});
@@ -436,7 +439,7 @@ public class Front extends JFrame {
 		String s = SearchTextArea.getText();
 		if(somethingWritten==false)
 			s="";
-		System.out.println(s);
+		
 		resultHotel = SearchControl.LeitaHotel(s, dateInString, dateOutString);
 		if (resultHotel.size() == 0) {
 			JOptionPane.showMessageDialog(null,
@@ -451,11 +454,6 @@ public class Front extends JFrame {
 				dateInString, dateOutString, nrGuests, nrRooms);
 		resultpanel = new ResultPanel(resultHotel, bookinginfo);
 		frame.setLocationRelativeTo(null);
-		// scrollPane.setViewportView(resultpanel);
-		// scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		// getContentPane().add(scrollPane);
-		// scrollPane.getVerticalScrollBar().setLocation(0, 0);
-		// contentPane.add(scrollPane, "2");
 		contentPane.add(resultpanel, "2");
 		cardLayout.show(contentPane, "2");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

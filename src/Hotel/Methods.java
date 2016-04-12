@@ -112,6 +112,34 @@ public class Methods {
 		}
 			return dayList;
 	}
+	
+	public static int howManyDays(String in, String out ){
+		String tmpin = in.substring(0, 2);
+		String tmpout = out.substring(0, 2);
+		int itmp = Integer.parseInt(tmpin);
+		int itmpout = Integer.parseInt(tmpout);
+		int count = 0;
+		//System.out.println("in " + in + " out " + out);
+		while(itmp!=itmpout){
+		
+			SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy"); 
+			Date myDate;
+			
+			try {
+				myDate = format.parse(in);
+				myDate = addDays(myDate, 1);
+				String newdate = format.format(myDate);
+				tmpin = newdate.substring(0, 2);
+				itmp = Integer.parseInt(tmpin);	
+				in = newdate;
+				count++;
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+			return count;
+	}
 
 	// A method that adds a certain amount of days to a date. 
 	// The method adds 'days' days to the date.
