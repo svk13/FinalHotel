@@ -84,6 +84,7 @@ public class Front extends JFrame {
 	static int height;
 	static int width;
 	static boolean somethingWritten = false;
+	static BookingInfo bookinginfo;
 
 	Date innritundags = null;
 	static JButton forwardTakki;
@@ -443,7 +444,7 @@ public class Front extends JFrame {
 			return;
 		}
 		// scrollPane = new JScrollPane();
-		BookingInfo bookinginfo = new BookingInfo(datein, dateout, // Henda
+		bookinginfo = new BookingInfo(datein, dateout, // Henda
 																	// þessu
 																	// öllu í
 																	// fall?
@@ -458,7 +459,7 @@ public class Front extends JFrame {
 		contentPane.add(resultpanel, "2");
 		cardLayout.show(contentPane, "2");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		sqlWorkBench.clientIDs();
+		
 	}
 
 	public static String convertStringToDate(Date indate) {

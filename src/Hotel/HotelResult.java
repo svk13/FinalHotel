@@ -67,7 +67,7 @@ public class HotelResult extends JPanel {
 		DateOutS = bookinginfo.getDateOutString();
 		bookinginfo1 = bookinginfo;
 		
-		int[] price = hotel.getPrice();
+		int price = hotel.getPriceOfRoomType3();
 		setBounds(0,0,630,230);
 		setSize(630,230);
 		int tmp = hotel.getID();
@@ -177,7 +177,7 @@ public class HotelResult extends JPanel {
 		gbc_lblPricesFrom.gridy = 3;
 		add(lblPricesFrom, gbc_lblPricesFrom);
 		
-		JLabel lblPrice = new JLabel(price[2]+"");
+		JLabel lblPrice = new JLabel(hotel.getPriceOfRoomType3()+"");
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblPrice.setForeground(Color.BLUE);
 		GridBagConstraints gbc_lblPrice = new GridBagConstraints();
@@ -195,7 +195,7 @@ public class HotelResult extends JPanel {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(bookinginfo.getNumberOfRooms()>roomsavailable){
-					System.out.println("Rooms available are " + roomsavailable + " bookinginfo rooms are" + bookinginfo.getNumberOfRooms());
+					//System.out.println("Rooms available are " + roomsavailable + " bookinginfo rooms are" + bookinginfo.getNumberOfRooms());
 					JOptionPane.showMessageDialog(null, "Sorry, we don't have enough rooms available for you.\nPlease change your booking information");
 				}else{
 					BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);

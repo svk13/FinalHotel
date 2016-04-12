@@ -26,14 +26,14 @@ public class sqlWorkBench {
 	// A method that searches for a hotel with the information in the textarea in the Front class.
 	public static ArrayList<Hotel> LeitaHotel(String tmp){
 		ArrayList<Hotel> theList = new ArrayList<Hotel>();
-		Connection c = sqliteConnection.dbConnector();
+		
 		try{
 			
 				qry = "Select * from Hotel,hotelfacilities, room_price where Hotel.id=Hotelfacilities.hotelid AND Hotel.id = Room_price.Hotelid AND ( Hotel.name LIKE'%"+tmp+"%' OR Hotel.city LIKE'"
 						+tmp+"%' OR Hotel.postcode LIKE'"+tmp+"%' OR Hotel.address LIKE'"+tmp+"%');";
 			
 			System.out.println("QRY = " + qry);
-			PreparedStatement statement = c.prepareStatement(qry);
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			HotelResultSet = statement.executeQuery();
 			
@@ -96,6 +96,7 @@ public class sqlWorkBench {
 	//Fall til þess að eyða viðskiptavinum út úr database.
 	public static void clientDelete(String resID){
 		try{
+		
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			qry = "Delete from room_bookings where reservationID='" + resID +"';";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
@@ -104,6 +105,7 @@ public class sqlWorkBench {
 			
 			System.out.println("Búið að deleta bókunum");
 			statement.close();
+			
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -113,13 +115,15 @@ public class sqlWorkBench {
 	// later see if a hotel is fully booked.
 	public static void reservedroom(int hotelid, int reservationid, String date, int roomtype){
 		try{
+			
 			qry = "Insert into RoomReserved VALUES ('"+hotelid+"','"+reservationid+"','"+date+"','"+roomtype+"');";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
 			
-			System.out.println("Búið að uppfæra");
+			
 			statement.close();
+			
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
@@ -152,12 +156,12 @@ public class sqlWorkBench {
 
 		try{
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
-			System.out.println(date+ " Hér er date-ið");
+			
 			qry = "Delete from room_bookings where date_out<'" + date +"';";
 			qry2 = "Select * from room_bookings whete date_out='" + date +"';"; 
-			Connection conn = sqliteConnection.dbConnector();
-			PreparedStatement statement = conn.prepareStatement(qry);
-			PreparedStatement statement2 = conn.prepareStatement(qry2);
+		
+			PreparedStatement statement = Front.connection.prepareStatement(qry);
+			PreparedStatement statement2 = Front.connection.prepareStatement(qry2);
 			
 			ResultSet rs =statement2.executeQuery();
 			while(rs.next()){
@@ -168,8 +172,7 @@ public class sqlWorkBench {
 			rs.close();
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
-			
-			System.out.println("Búið að deleta bókunum");
+			Front.connection.clearWarnings();
 			
 		}catch(Exception e2){
 			System.out.println(e2);
@@ -180,6 +183,7 @@ public class sqlWorkBench {
 	// reservation.
 	public static void login(JTextField textField,  JPasswordField p){
 		try{
+			;
 			String id = null,reservationID = null,datein = null,dateout = null,finishedstring = null;
 			qry = "select * from room_bookings where client_id=? AND client_passw = ?;";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
@@ -208,7 +212,8 @@ public class sqlWorkBench {
 			}else{
 				JOptionPane.showMessageDialog(null, "Incorrect username or password");
 			}
-					//sqliteConnection.closeConnection(rs, statement, Front.connection);
+					//sqliteConnection.closeConnection(rs, statement, Front.connection.);
+			
 			
 		}catch(Exception e2){
 			System.out.println(e2);
@@ -222,6 +227,7 @@ public class sqlWorkBench {
 		ArrayList<String> myDays= Methods.datevinnsla(dateres,dateout); 
 		for(int i = 0; i<myDays.size();i++){
 			try{
+				
 				qry = "select datereserved, count(hotelid) as pi from roomreserved where hotelid='"+hotelid+"' and datereserved = '"+myDays.get(i)+"' group by datereserved;";
 				PreparedStatement statement = Front.connection.prepareStatement(qry);
 				statement.setQueryTimeout(30);
@@ -244,6 +250,7 @@ public class sqlWorkBench {
 	//Fall sem skilar fjölda viðskiptavina.
 		public static void clientIDs(){
 			try{
+				;
 				qry = "select client_id as pi from room_bookings;";
 				
 				PreparedStatement statement = Front.connection.prepareStatement(qry);
@@ -255,7 +262,7 @@ public class sqlWorkBench {
 							//System.out.println(name);
 							System.out.println(name);
 						}
-						//sqliteConnection.closeConnection(rs, statement, Front.connection);
+						//sqliteConnection.closeConnection(rs, statement, Front.connection.);
 				
 			}catch(Exception e2){
 				System.out.println(e2);
@@ -266,6 +273,7 @@ public class sqlWorkBench {
 	//Fall sem skilar fjölda viðskiptavina.
 	public static int NrOfClients(){
 		try{
+			
 			qry = "select count(client_id) as pi from room_bookings;";
 			
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
@@ -277,7 +285,7 @@ public class sqlWorkBench {
 						//System.out.println(name);
 						return Integer.parseInt(name);
 					}
-					//sqliteConnection.closeConnection(rs, statement, Front.connection);
+					//sqliteConnection.closeConnection(rs, statement, Front.connection.);
 			
 		}catch(Exception e2){
 			System.out.println(e2);
@@ -288,6 +296,7 @@ public class sqlWorkBench {
 	//Fall sem skilar nafni Hótels.
 	public static String HotelName(String id){
 		try{
+	
 			qry = "select Hotel.name as pi from room_bookings, Hotel where Hotel.id = '"+ id+"';";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
@@ -296,33 +305,19 @@ public class sqlWorkBench {
 						String name = rs.getString("pi");
 						return name;
 					}
+					
 		}catch(Exception e2){
 			System.out.println(e2);
 		}
 		throw new IllegalArgumentException("Error: Does not exist in database.");
 	}
 	
-	//Fall sem leitar að verði eftir hótelherbergi.
-	public static String priceSearch(){
-		
-		String returnedString="";
-		for(int i = 0; i<Front.resultHotel.size()-1;i++){
-			Hotel tmp = Front.resultHotel.get(i);
-			int[] pricesandcount = tmp.getPrice();
-			for(int j = 0; j<6;j++){
-					returnedString += pricesandcount[j]; 
-				}
-			
-		}
-	
-		return returnedString;
-	}
 	
 	/* Usage: detailedSearch(hotelList, var); 
 	 * Pre: hotelList is an ArrayList<Hotel> and var is an integer.
 	 * Post: The method returns a new ArrayList. It contains the 
 	 * 		 Hotels from hotelList that have specific facilities
-	 *  	 that the client is looking for. i.e. wifi, gym, etc.
+	 *  	 that the client is looking for. i.e. wifi, gym, etFront.connection.
 	 */
 	public static ArrayList<Hotel> detailedSearch(ArrayList<Hotel> hotelList, int var){
 	
@@ -361,6 +356,7 @@ public class sqlWorkBench {
 		String qry = "Select * from Room_price where hotelid="+Hotelid+";";
 
 			try{
+				Connection c = sqliteConnection.dbConnector();
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			ResultSet rs = statement.executeQuery();
 					
@@ -379,6 +375,7 @@ public class sqlWorkBench {
 						i[4] = Integer.parseInt(counttype2);
 						i[5] = Integer.parseInt(counttype3);	
 					}
+					
 			}catch(Exception e){
 				System.out.println("WHÆÆÆÆ");	
 			}

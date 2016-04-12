@@ -14,11 +14,11 @@ public class Methods {
 	static class MyComparator implements Comparator<Hotel> {
 		@Override
 		public int compare(Hotel o1, Hotel o2) {
-			int[] a = o1.getPrice();
-			int[] b = o2.getPrice();
-		    if (a[2] > b[2]) {
+			int a = o1.getPriceOfRoomType3();
+			int b = o2.getPriceOfRoomType3();
+		    if (a > b) {
 		        return -1;
-		    } else if (a[2]<b[2]) {
+		    } else if (a<b) {
 		        return 1;
 		    }
 		    return 0;
@@ -27,11 +27,11 @@ public class Methods {
 	static class MyComparator2 implements Comparator<Hotel> {
 		@Override
 		public int compare(Hotel o1, Hotel o2) {
-			int[] a = o1.getPrice();
-			int[] b = o2.getPrice();
-		    if (a[2] < b[2]) {
+			int a = o1.getPriceOfRoomType3();
+			int b = o2.getPriceOfRoomType3();
+		    if (a < b) {
 		        return -1;
-		    } else if (a[2]>b[2]) {
+		    } else if (a>b) {
 		        return 1;
 		    }
 		    return 0;

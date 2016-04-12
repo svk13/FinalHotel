@@ -22,6 +22,7 @@ public class Hotel {
 	private int roomCount1;
 	private int roomCount2;
 	private int roomCount3;
+	private int OrderPrice;
 	
 	
 	
@@ -122,7 +123,7 @@ public class Hotel {
 		return roomCount2;
 	}
 	int getRoomType3Count(){
-		System.out.println(roomCount3+ " fjöldi herbergja");
+	
 		return roomCount3;
 	}
 	
@@ -154,14 +155,35 @@ public class Hotel {
 		roomCount3 = x;
 	}
 	
-	int[] getPrice(){
-		int ID = this.getID();
-		int[] i = new int[6];
-			i =	sqlWorkBench.price(ID);
-		return i;
+	int getOrderPriceRoomType1(int nrClients, int nrRooms){
+		if(nrClients == nrRooms){
+			OrderPrice = (int) (nrClients*nrRooms*roomPrice1*0.8);
+		}else{
+			OrderPrice=nrClients*nrRooms*roomPrice1;
+		}
+		return OrderPrice;
+	}
+	int getOrderPriceRoomType2(int nrClients, int nrRooms){
+		if(nrClients == nrRooms){
+			OrderPrice = (int) (nrClients*nrRooms*roomPrice2*0.8);
+		}else{
+			OrderPrice=nrClients*nrRooms*roomPrice2;
+		}
+		return OrderPrice;
+	}
+	int getOrderPriceRoomType3(int nrClients, int nrRooms){
+		if(nrClients == nrRooms){
+			OrderPrice = (int) (nrClients*nrRooms*roomPrice3*0.8);
+		}else{
+			OrderPrice=nrClients*nrRooms*roomPrice3;
+		}
+		return OrderPrice;
 	}
 	
-	 	
-
+	int getOrderPrice(){
+		return OrderPrice;
+	}
+	
+	
 
 }

@@ -10,6 +10,7 @@ public class BookingInfo {
     private String DateOutS;
     private int NrGuests;
     private int NrRooms;
+    private int howManyDays;
 	
     /* BookingInfo is a class that is created in Front 
      * when the client searches for hotels. DateIn and DateOut
@@ -26,6 +27,7 @@ public class BookingInfo {
 		DateOutS=dateouts;
 		NrGuests = nrofguests;
 		NrRooms = nrofrooms;
+		
 		System.out.println(DateInS + DateOutS + " hqhhhahah " + DateIn + " dateout svo" + DateOut);
 	}
 	
@@ -64,6 +66,14 @@ public class BookingInfo {
 	int getNumberOfRooms(){
 		return NrRooms;
 	}
+	int howManyDays(){
+		return howManyDays;
+	}
+	void sethowManyDays(int x){
+		System.out.println(x + " howmanydays");
+		howManyDays = x;
+	}
+	
 	/* Usage: .getNumberOfGuests();
 	 * Pre: 
 	 * Post: returns NrGuests

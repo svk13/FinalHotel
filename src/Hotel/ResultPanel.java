@@ -532,7 +532,7 @@ public class ResultPanel extends JPanel {
 
 		//int numberOfLabels = Front.resultHotel.size();
 
-		System.out.println("Bók: " + bookinginfo.getNumberOfGuests() + " he: "+ bookinginfo.getNumberOfRooms());
+		
 		updateUIid(hotelList);
 		setVisible(true);
 		toTop();

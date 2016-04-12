@@ -6,7 +6,7 @@ import javax.swing.*;
 
 
 
-public class sqliteConnection implements dbConnection {
+public class sqliteConnection{
 	
 	static ResultSet rs;
 	static Connection conn=null;
@@ -17,7 +17,7 @@ public class sqliteConnection implements dbConnection {
 			
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:src/Database/Hotel.db");
-			//JOptionPane.showMessageDialog(null, "Tengingin tókst");
+			JOptionPane.showMessageDialog(null, "Tengingin tókst");
 			
 			return conn;
 		}catch(Exception e){
