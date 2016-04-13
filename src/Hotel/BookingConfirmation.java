@@ -73,7 +73,7 @@ public class BookingConfirmation extends JPanel {
 		setSize(1000, 1000);
 		setLayout(null);
 
-		HotelResult myHotel = new HotelResult(hotel, bookinginfo);
+		final HotelResult myHotel = new HotelResult(hotel, bookinginfo);
 		// my.setBounds(24, 306, 339, 20);
 		myHotel.setBounds(0, 74, 1000, 250);
 		myHotel.setBackground(Color.ORANGE);
@@ -86,7 +86,7 @@ public class BookingConfirmation extends JPanel {
 		this.hotel = hotel;
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
-		 System.out.println(DateOutS  + " hmmmmmmmmmmmmmmmmmmmm....");
+		 
 		nrRooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
 		fname.setBackground(Color.ORANGE);
@@ -159,7 +159,10 @@ public class BookingConfirmation extends JPanel {
 				int nrclients = sqlWorkBench.NrOfClients();
 				String ClientID = fname.getText() + nrclients;
 				resid = (int) (Math.random() * 100000);
-
+				System.out.println(hotel.getID()+ resid+
+						DateInS+ DateOutS+ bookinginfo.getNumberOfRooms()+
+						ClientID
+						+clientpassword+"   "+roomType);
 				FinaliseBooking.updateAllTheDataBase(hotel.getID(), resid,
 						DateInS, DateOutS, bookinginfo.getNumberOfRooms(),
 						ClientID, clientpassword, roomType);
@@ -249,6 +252,18 @@ public class BookingConfirmation extends JPanel {
 							+ "\n----------------------\n"
 							+ finalPrice+" ISK";
 			    	textArea_1.setText(prices);
+			    	int noRooms = hotel.getRoomType2Count();
+			    	if(noRooms<bookinginfo.getNumberOfRooms()){
+			    		HotelResult.RoomsLabel.setText("");
+			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
+				    	
+						HotelResult.lblPrice.setText("");
+			    	}else{
+			    	HotelResult.RoomsLabel.setText(noRooms+"");
+			    	double totalPrice = hotel.getPriceOfRoomType2();
+					String newPrice  = String.format("%,.2f", totalPrice);
+					HotelResult.lblPrice.setText(newPrice+" ISK");
+					}
 			    	roomType = 2;
 					repaint();
 					updateUI();
@@ -262,6 +277,17 @@ public class BookingConfirmation extends JPanel {
 							+ "\n----------------------\n"
 							+ finalPrice+" ISK";
 			    	textArea_1.setText(prices);
+			    	int noRooms = hotel.getRoomType1Count();
+			    	if(noRooms<bookinginfo.getNumberOfRooms()){
+			    		HotelResult.RoomsLabel.setText("");
+			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
+						HotelResult.lblPrice.setText("");
+			    	}else{
+			    	HotelResult.RoomsLabel.setText(noRooms+"");
+			    	double totalPrice = hotel.getPriceOfRoomType1();
+					String newPrice  = String.format("%,.2f", totalPrice);
+					HotelResult.lblPrice.setText(newPrice+" ISK");
+					}
 			    	roomType=1;
 					repaint();
 					updateUI();
@@ -275,6 +301,18 @@ public class BookingConfirmation extends JPanel {
 							+ "\n----------------------\n"
 							+ finalPrice+" ISK";
 			    	textArea_1.setText(prices);
+			    	int noRooms = hotel.getRoomType3Count();
+			    	if(noRooms<bookinginfo.getNumberOfRooms()){
+			    		HotelResult.RoomsLabel.setText("");
+			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
+				    	
+						HotelResult.lblPrice.setText("");
+			    	}else{
+			    	HotelResult.RoomsLabel.setText(noRooms+"");
+			    	double totalPrice = hotel.getPriceOfRoomType3();
+					String newPrice  = String.format("%,.2f", totalPrice);
+					HotelResult.lblPrice.setText(newPrice+ " ISK");
+					}
 			    	roomType=3;
 					repaint();
 					updateUI();

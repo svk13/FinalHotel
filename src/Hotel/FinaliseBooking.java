@@ -53,7 +53,7 @@ public class FinaliseBooking {
 			Statement stmt = Front.connection.createStatement();
 			stmt.setQueryTimeout(5);
 			stmt.executeUpdate(qry);
-			stmt.close();
+			
 		
 	
 			//Uppfæri í leiðinni RoomReserved töfluna þ.a. herbergi eru 
@@ -63,7 +63,7 @@ public class FinaliseBooking {
 			
 			
 			stmt.close();
-			
+			Front.connection.close();
 			
 		}catch(Exception e2){
 			System.out.println(e2+" eða er villan hér ?");

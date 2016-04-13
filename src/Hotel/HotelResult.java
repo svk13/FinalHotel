@@ -43,6 +43,9 @@ public class HotelResult extends JPanel {
     private int roomsavailable;
     static JButton button; 
     static JTextArea lblNewLabel_5;
+    static JLabel RoomsLabel;
+    static JLabel lblPrice;
+    static JLabel lblNumberOfRooms; 
 	/**
 	 * Create the panel.
 	 */
@@ -143,7 +146,7 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel_5.gridy = 2;
 		add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
-		JLabel lblNumberOfRooms = new JLabel("Number of rooms available");
+		lblNumberOfRooms = new JLabel("Number of rooms available");
 		lblNumberOfRooms.setBackground(Color.BLUE);
 		lblNumberOfRooms.setForeground(Color.BLUE);
 		lblNumberOfRooms.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -154,16 +157,16 @@ public class HotelResult extends JPanel {
 		gbc_lblNumberOfRooms.gridy = 2;
 		roomsavailable = hotel.getRoomType3Count();
 		add(lblNumberOfRooms, gbc_lblNumberOfRooms);
-		JLabel label = new JLabel("" +roomsavailable);
+		RoomsLabel = new JLabel("" +roomsavailable);
 		
 		
-		label.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		RoomsLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_label.insets = new Insets(0, 0, 5, 0);
 		gbc_label.gridx = 4;
 		gbc_label.gridy = 2;
-		add(label, gbc_label);
+		add(RoomsLabel, gbc_label);
 		
 		JLabel lblPricesFrom = new JLabel("Prices from");
 		lblPricesFrom.setBackground(Color.BLUE);
@@ -179,7 +182,7 @@ public class HotelResult extends JPanel {
 		
 		double totalPrice = hotel.getPriceOfRoomType3();
 		String finalPrice  = String.format("%,.2f", totalPrice);
-		JLabel lblPrice = new JLabel(finalPrice+" ISK");
+		lblPrice = new JLabel(finalPrice+" ISK");
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblPrice.setForeground(Color.BLUE);
 		GridBagConstraints gbc_lblPrice = new GridBagConstraints();
@@ -219,13 +222,13 @@ public class HotelResult extends JPanel {
 		add(button, gbc_button);
 		
 		if(roomsavailable<15 && roomsavailable>0){ 
-			label.setForeground(Color.RED);
+			RoomsLabel.setForeground(Color.RED);
 			System.out.println(roomsavailable + " roomsavailable");
 			lblNumberOfRooms.setForeground(Color.RED);
 			setBorder(new TitledBorder(null, "Only a few rooms left", TitledBorder.LEADING, TitledBorder.TOP, null, Color.ORANGE));
 		} 
 		else{
-			label.setForeground(Color.BLUE);
+			RoomsLabel.setForeground(Color.BLUE);
 			lblNumberOfRooms.setForeground(Color.BLUE);
 			
 		}
@@ -236,12 +239,12 @@ public class HotelResult extends JPanel {
 			lblNumberOfRooms.setText("Sorry, we're fully booked");
 			lblNumberOfRooms.setBackground(Color.RED);
 			lblNumberOfRooms.setForeground(Color.RED);
-			label.setText("");
+			RoomsLabel.setText("");
 		}
 		else if(roomsavailable<numberofrooms){
 			lblNumberOfRooms.setBounds(429,123,300,14);
 			lblNumberOfRooms.setText("Sorry, we only have "+ roomsavailable+" rooms available");
-			label.setText("");
+			RoomsLabel.setText("");
 			button.setEnabled(false);
 		} 
 	}
