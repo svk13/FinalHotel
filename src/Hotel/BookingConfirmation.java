@@ -77,7 +77,7 @@ public class BookingConfirmation extends JPanel {
 
 		final HotelResult myHotel = new HotelResult(hotel, bookinginfo);
 		// my.setBounds(24, 306, 339, 20);
-		myHotel.setBounds(10, 74, 1089, 250);
+		myHotel.setBounds(10, 69, 1089, 250);
 		myHotel.setBackground(Color.WHITE);
 		
 		myHotel.button.setVisible(false);
