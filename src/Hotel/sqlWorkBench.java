@@ -194,7 +194,7 @@ public class sqlWorkBench {
 	public static ArrayList<Hotel> detailedSearch(ArrayList<Hotel> hotelList, int var){
 	
 		ArrayList<Hotel> hoteltmp = new ArrayList<Hotel>();
-		for(int i = 0; i<hotelList.size()-1;i++){
+		for(int i = 0; i<hotelList.size();i++){
 			int facilities;
 			Hotel tmp = hotelList.get(i);
 			if(var==0){ 
@@ -218,45 +218,7 @@ public class sqlWorkBench {
 		
 		return Front.resultHotel;
 	}
-	
-	// Method that returns int[] with information about what
-	// facilities a certain Hotel has. 1 means it has it, 0 not.
-	public static int[] price(int id){
-		int[] i= new int[6];
-		try{
-		int Hotelid = id;
-		String qry = "Select * from Room_price where hotelid="+Hotelid+";";
 
-			try{
-				Connection c = sqliteConnection.dbConnector();
-			PreparedStatement statement = Front.connection.prepareStatement(qry);
-			ResultSet rs = statement.executeQuery();
-					
-					while (rs.next()) {
-						
-						String type1=rs.getString("type1");
-						String type2=rs.getString("type2");
-						String type3=rs.getString("type3");
-						String counttype1=rs.getString("counttype1");
-						String counttype2=rs.getString("counttype2");
-						String counttype3=rs.getString("counttype3");
-						i[0] = Integer.parseInt(type1);
-						i[1] = Integer.parseInt(type2);
-						i[2] = Integer.parseInt(type3);
-						i[3] = Integer.parseInt(counttype1);
-						i[4] = Integer.parseInt(counttype2);
-						i[5] = Integer.parseInt(counttype3);	
-					}
-					
-			}catch(Exception e){
-				System.out.println(e);	
-			}
-		}catch(Exception e2){
-			System.out.println("prump");
-		}
-		return i;
-	
-	}
 	
 }
 

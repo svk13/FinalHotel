@@ -312,6 +312,7 @@ public class Front extends JFrame {
 																// klasi?
 				DateChooserOut.setDate(dateplus1);
 				DateChooserOut.getJCalendar().setMinSelectableDate(dateplus1);
+				howManyDays = Methods.howManyDays(dateInString, dateOutString);
 			}
 		});
 
@@ -333,7 +334,7 @@ public class Front extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				dateout = DateChooserOut.getDate();
 				dateOutString = convertStringToDate(dateout);
-				System.out.println(Methods.howManyDays(dateInString, dateOutString) + " ok");
+				
 				howManyDays = Methods.howManyDays(dateInString, dateOutString);
 
 			}

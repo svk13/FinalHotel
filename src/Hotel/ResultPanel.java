@@ -27,6 +27,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JButton;
 public class ResultPanel extends JPanel {
 	 	/**
 	 * 
@@ -51,7 +52,7 @@ public class ResultPanel extends JPanel {
 	    String dateOutString;
 	    String dateInString;
 	    static ArrayList<HotelResult> resultList= new ArrayList<HotelResult>();
-	    final JDateChooser dateChooser_1;
+	    final JDateChooser DateOutChooser;
 	    int numberOfLabels = Front.resultHotel.size();
 	    int count = 0;
 	    static ArrayList<Hotel> newList;
@@ -60,16 +61,18 @@ public class ResultPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ResultPanel(final ArrayList<Hotel> hotelList1, final BookingInfo bookinginfo) {
+	public ResultPanel(final ArrayList<Hotel> hotelList1, final BookingInfo bookinginfo1) {
 		//setMinimumSize(new Dimension(1000, 50000));
 		numberOfLabels1 = Front.resultHotel.size();
-		this.bookinginfo = bookinginfo;
+		bookinginfo = bookinginfo1;
 		newList = hotelList1;
 		hotelList=hotelList1;
 		final int[] details = {0,0,0,0,0,0};
 		setLayout(new BorderLayout(0, 0));
 		this.datein = bookinginfo.getDateIn();
 		this.dateout = bookinginfo.getDateout();
+		dateInString = bookinginfo.getDateInString();
+		dateOutString = bookinginfo.getDateOutString();
 		
 		
 		panel_1 = new JPanel();
@@ -423,27 +426,29 @@ public class ResultPanel extends JPanel {
 				bookinginfo.setDateIn(datein);
 				bookinginfo.setDateInS(dateInString);
 				Date dateplus1 = Methods.addDays(datein, 1);
-				dateChooser_1.setDate(dateplus1);
-				dateChooser_1.getJCalendar().setMinSelectableDate(dateplus1);
+				Front.howManyDays = Methods.howManyDays(dateInString, dateOutString);
+				DateOutChooser.getJCalendar().setMinSelectableDate(dateplus1);
 			}
 		});
 		
-		dateChooser_1 = new JDateChooser();
-		dateChooser_1.addPropertyChangeListener(new PropertyChangeListener() {
+		DateOutChooser = new JDateChooser();
+		DateOutChooser.setDate(dateout);
+		DateOutChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				dateout = dateChooser_1.getDate();
+				dateout = DateOutChooser.getDate();
 				dateOutString = Front.convertStringToDate(dateout);
 				bookinginfo.setDateOutS(dateOutString);
 				bookinginfo.setDateOut(dateout);
+				Front.howManyDays = Methods.howManyDays(dateInString, dateOutString);
 			}
 		});
-		dateChooser_1.setDate(dateout);
-		GridBagConstraints gbc_dateChooser_1 = new GridBagConstraints();
-		gbc_dateChooser_1.fill = GridBagConstraints.BOTH;
-		gbc_dateChooser_1.insets = new Insets(0, 0, 5, 0);
-		gbc_dateChooser_1.gridx = 0;
-		gbc_dateChooser_1.gridy = 10;
-		panel_2.add(dateChooser_1, gbc_dateChooser_1);
+		
+		GridBagConstraints gbc_DateOutChooser = new GridBagConstraints();
+		gbc_DateOutChooser.fill = GridBagConstraints.BOTH;
+		gbc_DateOutChooser.insets = new Insets(0, 0, 5, 0);
+		gbc_DateOutChooser.gridx = 0;
+		gbc_DateOutChooser.gridy = 10;
+		panel_2.add(DateOutChooser, gbc_DateOutChooser);
 		
 
 
@@ -524,10 +529,38 @@ public class ResultPanel extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("Number of guests");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel_1.fill = GridBagConstraints.VERTICAL;
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 11;
 		panel_2.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		JButton btnClearSearch = new JButton("Clear Search");
+		btnClearSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				chckbxTv.setSelected(false);
+				chckbxNewCheckBox.setSelected(false);
+				chckbxFreeWifi.setSelected(false);
+				chckbxSmokingArea.setSelected(false);
+				chckbxGym.setSelected(false);
+				chckbxSwimmingPool.setSelected(false);
+				
+				newList = SearchControl.LeitaHotel("", dateInString, dateOutString);
+				panel_1.removeAll();
+				panel_1.setPreferredSize(new Dimension(1000,(newList.size()*240)));
+				panel_1.setLayout(new GridLayout(newList.size(),1,100,0));
+				updateUIid(newList);
+
+				
+				repaint();
+				updateUI();
+			}
+		});
+		GridBagConstraints gbc_btnClearSearch = new GridBagConstraints();
+		gbc_btnClearSearch.gridx = 0;
+		gbc_btnClearSearch.gridy = 16;
+		panel_2.add(btnClearSearch, gbc_btnClearSearch);
 		
 
 		//int numberOfLabels = Front.resultHotel.size();

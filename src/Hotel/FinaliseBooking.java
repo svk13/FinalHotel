@@ -48,7 +48,7 @@ public class FinaliseBooking {
 			//Bý til pöntun í databaseinu.
 			String qry = "INSERT INTO Room_Bookings Values("+hotelID+","+reservationID+",'"+datein+"','"+dateout+"',"+
 					nrOfRooms+",'"+clientid+"','"+client_passw+"');";
-			
+		
 			
 			Statement stmt = Front.connection.createStatement();
 			stmt.setQueryTimeout(5);
@@ -68,7 +68,7 @@ public class FinaliseBooking {
 		}catch(Exception e2){
 			System.out.println(e2+" eða er villan hér ?");
 		}
-		datevinnsla(hotelID, 0, datein, dateout, roomType, nrOfRooms);
+		
 	}
 
 	//-----------------------------------------------------------------------------------------
@@ -85,10 +85,9 @@ public class FinaliseBooking {
 	    
 		String tmpin = in.substring(0, 2);
 		String tmpout = out.substring(0, 2);
+		
 		int itmp = Integer.parseInt(tmpin);
 		int itmpout = Integer.parseInt(tmpout);
-		
-		updateReservedRoomTable(HotelId,resid , in, type, nrOfRooms);
 		
 		while(itmp!=itmpout){
 			
@@ -102,12 +101,12 @@ public class FinaliseBooking {
 				String newdate = format.format(myDate);
 				tmpin = newdate.substring(0, 2);
 				itmp = Integer.parseInt(tmpin);
-				in = newdate;				
+								
 				for(int i = 0; i<nrOfRooms;i++){
 					updateReservedRoomTable(HotelId,resid , in, type, nrOfRooms);
 				
 				}
-				
+				in = newdate;
 
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
@@ -125,9 +124,8 @@ public class FinaliseBooking {
 		try{
 			
 			
-			;
-			String upDateRooms = "Insert into RoomReserved VALUES ('"+hotelid+"','"+reservationid+"','"+date+"','"+roomtype+"');";
 			
+			String upDateRooms = "Insert into RoomReserved VALUES ('"+hotelid+"','"+reservationid+"','"+date+"','"+roomtype+"');";
 			PreparedStatement statement = Front.connection.prepareStatement(upDateRooms);
 			
 			

@@ -27,8 +27,7 @@ public class BookingInfo {
 		DateOutS=dateouts;
 		NrGuests = nrofguests;
 		NrRooms = nrofrooms;
-		
-		System.out.println(DateInS + DateOutS + " hqhhhahah " + DateIn + " dateout svo" + DateOut);
+	
 	}
 	
 	/* Usage: .getDateIn();
@@ -70,7 +69,7 @@ public class BookingInfo {
 		return howManyDays;
 	}
 	void sethowManyDays(int x){
-		System.out.println(x + " howmanydays");
+		
 		howManyDays = x;
 	}
 	

@@ -138,6 +138,7 @@ public class Methods {
 				e.printStackTrace();
 			}	
 		}
+		System.out.println(count);
 			return count;
 	}
 

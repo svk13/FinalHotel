@@ -86,6 +86,7 @@ public class BookingConfirmation extends JPanel {
 		this.hotel = hotel;
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
+		 System.out.println(DateOutS  + " hmmmmmmmmmmmmmmmmmmmm....");
 		nrRooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
 		fname.setBackground(Color.ORANGE);
@@ -159,14 +160,6 @@ public class BookingConfirmation extends JPanel {
 				String ClientID = fname.getText() + nrclients;
 				resid = (int) (Math.random() * 100000);
 
-				// datevinnsla(DateInS, DateOutS);
-
-				// Bookings book = new Bookings(hotel.getID(), resid,
-				// DateInS,DateOutS,
-				// bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
-				// sqlWorkBench.makebooking(hotel.getID(), resid, DateInS,
-				// DateOutS,
-				// bookinginfo.getNumberOfRooms(),ClientID,clientpassword);
 				FinaliseBooking.updateAllTheDataBase(hotel.getID(), resid,
 						DateInS, DateOutS, bookinginfo.getNumberOfRooms(),
 						ClientID, clientpassword, roomType);
@@ -180,6 +173,7 @@ public class BookingConfirmation extends JPanel {
 						+ clientpassword
 						+ "\n \np.s. your hotel has been informed of your special request that is: "
 						+ special.getText();
+				System.out.println("Username: " + ClientID + "\nPassword: " + clientpassword);
 				if (recipientEmail == true) {
 					try {
 						GoogleMail.send(username, password, recipientEmails,
