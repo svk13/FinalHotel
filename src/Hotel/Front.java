@@ -100,6 +100,8 @@ public class Front extends JFrame {
 	 * Create the frame.
 	 */
 	public Front() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("src/Myndir/red-capital-letter-h-key-icon-12214.png"));
+		setTitle("The Hotel Project - University of Iceland");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 891, 530);
@@ -163,11 +165,11 @@ public class Front extends JFrame {
 		GridBagLayout gbl_MainPanel = new GridBagLayout();
 		gbl_MainPanel.columnWidths = new int[] { 195, 72, 103, 227, 46, 147,
 				46, 0 };
-		gbl_MainPanel.rowHeights = new int[] { 14, 151, 47, 23, 20, 14, 20, 20, 0 };
+		gbl_MainPanel.rowHeights = new int[] { 14, 151, 47, 23, 20, 14, 20, 0 };
 		gbl_MainPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 1.0, Double.MIN_VALUE };
 		gbl_MainPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, Double.MIN_VALUE };
+				0.0, Double.MIN_VALUE };
 		MainPanel.setLayout(gbl_MainPanel);
 
 		// Log-in hnappur
@@ -179,6 +181,7 @@ public class Front extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				LogIn log = new LogIn();
 				log.setVisible(true);
+				connection = sqliteConnection.dbConnector();
 			}
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
@@ -283,10 +286,9 @@ public class Front extends JFrame {
 		MainPanel.add(ExecuteSearch, gbc_ExecuteSearch);
 		
 		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon("src/Myndir/16-hotel-logo-idea.gif"));
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridheight=6;
+		gbc_label.gridheight=5;
 		gbc_label.gridx = 5;
 		gbc_label.gridy = 2;
 		MainPanel.add(label, gbc_label);
@@ -400,10 +402,9 @@ public class Front extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_howManyRoomsSpinner = new GridBagConstraints();
-		gbc_howManyRoomsSpinner.gridheight = 2;
 		gbc_howManyRoomsSpinner.anchor = GridBagConstraints.WEST;
 		gbc_howManyRoomsSpinner.fill = GridBagConstraints.VERTICAL;
-		gbc_howManyRoomsSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_howManyRoomsSpinner.insets = new Insets(0, 0, 0, 5);
 		gbc_howManyRoomsSpinner.gridx = 2;
 		gbc_howManyRoomsSpinner.gridy = 6;
 		MainPanel.add(howManyRoomsSpinner, gbc_howManyRoomsSpinner);
@@ -445,10 +446,9 @@ public class Front extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_howManyGuestsSpinner = new GridBagConstraints();
-		gbc_howManyGuestsSpinner.gridheight = 2;
 		gbc_howManyGuestsSpinner.anchor = GridBagConstraints.WEST;
 		gbc_howManyGuestsSpinner.fill = GridBagConstraints.VERTICAL;
-		gbc_howManyGuestsSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_howManyGuestsSpinner.insets = new Insets(0, 0, 0, 5);
 		gbc_howManyGuestsSpinner.gridx = 1;
 		gbc_howManyGuestsSpinner.gridy = 6;
 		MainPanel.add(howManyGuestsSpinner, gbc_howManyGuestsSpinner);

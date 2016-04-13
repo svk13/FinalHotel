@@ -193,7 +193,8 @@ public class HotelResult extends JPanel {
 					//System.out.println("Rooms available are " + roomsavailable + " bookinginfo rooms are" + bookinginfo.getNumberOfRooms());
 					JOptionPane.showMessageDialog(null, "Sorry, we don't have enough rooms available for you.\nPlease change your booking information");
 				}else{
-					BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);
+					//BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);
+					ClientsBookingUI book = new ClientsBookingUI(hotel, bookinginfo);
 					Front.contentPane.add(book, "3");
 					Front.cardLayout.show(Front.contentPane, "3");	
 					Front.whatpage=3;
@@ -270,7 +271,7 @@ public class HotelResult extends JPanel {
 					//System.out.println("Rooms available are " + roomsavailable + " bookinginfo rooms are" + bookinginfo.getNumberOfRooms());
 					JOptionPane.showMessageDialog(null, "Sorry, we don't have enough rooms available for you.\nPlease change your booking information");
 				}else{
-					BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);
+					ClientsBookingUI book = new ClientsBookingUI(hotel, bookinginfo1);
 					Front.contentPane.add(book, "3");
 					Front.cardLayout.show(Front.contentPane, "3");	
 					Front.whatpage=3;

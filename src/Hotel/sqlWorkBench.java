@@ -90,7 +90,7 @@ public class sqlWorkBench {
 	public static void login(JTextField textField,  JPasswordField p){
 		try{
 			;
-			String id = null,reservationID = null,datein = null,dateout = null,finishedstring = null;
+			String id = null,reservationID = null,datein = null,dateout = null,finishedstring = null, client=null;
 			qry = "select * from room_bookings where client_id=? AND client_passw = ?;";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
@@ -101,6 +101,7 @@ public class sqlWorkBench {
 			while (rs.next()) {
 						count +=1;
 						id = rs.getString("hotelID");
+						client = rs.getString("client_id");
 						reservationID = rs.getString("reservationID");
 						datein = rs.getString("date_in");
 						dateout = rs.getString("date_out");
@@ -109,7 +110,7 @@ public class sqlWorkBench {
 					}
 			if(count==1){
 				String idname = HotelName(id);
-				ClientLogin log = new ClientLogin(idname, reservationID, datein, dateout);
+				ClientLogin log = new ClientLogin(idname, reservationID, datein, dateout, client);
 				log.setVisible(true);
 				//JOptionPane.showMessageDialog(null, finishedstring);
 			}else if(count>1){

@@ -66,6 +66,7 @@ public class BookingConfirmation extends JPanel {
 	private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 	private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 	private int roomType=3;
+	static JTextArea textArea_1=null;
 	/**
 	 * Create the panel.
 	 */
@@ -74,7 +75,7 @@ public class BookingConfirmation extends JPanel {
 		setBackground(Color.WHITE);
 		setSize(1109, 1000);
 		setLayout(null);
-
+		System.out.println("I'm here 2");
 		final HotelResult myHotel = new HotelResult(hotel, bookinginfo);
 		// my.setBounds(24, 306, 339, 20);
 		myHotel.setBounds(10, 69, 1089, 250);
@@ -234,7 +235,7 @@ public class BookingConfirmation extends JPanel {
 		String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
 				+ "\n----------------------\n"
 				+ finalPrice+" ISK";
-		final JTextArea textArea_1 = new JTextArea(prices);
+		textArea_1 = new JTextArea(prices);
 		textArea_1.setEditable(false);
 		textArea_1.setBackground(Color.WHITE);
 		textArea_1.setBounds(799, 487, 125, 93);
@@ -333,6 +334,15 @@ public class BookingConfirmation extends JPanel {
 		int tmp = 1;
 		Front.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		
+	}
+	
+	public static void update(int nrGuests, int finalPrice2, int nrRooms){
+		
+		String finalPrice  = String.format("%,.2f", finalPrice2);
+		String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
+				+ "\n----------------------\n"
+				+ finalPrice+" ISK";
+		textArea_1.setText(prices);
 	}
 
 	/*
