@@ -45,6 +45,7 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Cursor;
 
 /*
  * Ég var að reyna að skipuleggja þetta á eftirfarandi hátt:
@@ -171,12 +172,21 @@ public class Front extends JFrame {
 
 		// Log-in hnappur
 
-		JLabel logIn_Label = new JLabel("Log In");
+		final JLabel logIn_Label = new JLabel("Log In");
+		logIn_Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		logIn_Label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				LogIn log = new LogIn();
 				log.setVisible(true);
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				logIn_Label.setFont(new Font("Tahoma", Font.BOLD, 16));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				logIn_Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
 			}
 		});
 
@@ -240,6 +250,7 @@ public class Front extends JFrame {
 		// "LEITA" takki, takkinn sem ýtir á og þá leitast
 
 		final JButton ExecuteSearch = new JButton("");
+		ExecuteSearch.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		ExecuteSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {

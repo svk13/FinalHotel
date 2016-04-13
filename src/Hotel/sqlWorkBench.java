@@ -34,12 +34,18 @@ public class sqlWorkBench {
 		
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			qry = "Delete from room_bookings where reservationID='" + resID +"';";
+			qry2 = "Delete from roomreserved where reservationID='"+resID+"';";
 			PreparedStatement statement = Front.connection.prepareStatement(qry);
 			statement.setQueryTimeout(30);
 			statement.executeUpdate();
 			
+			PreparedStatement statement2 = Front.connection.prepareStatement(qry2);
+			statement2.setQueryTimeout(30);
+			statement2.executeUpdate();
 			
 			statement.close();
+			statement2.close();
+			System.out.println("Finished");
 			
 		}catch(Exception e2){
 			System.out.println(e2);
@@ -57,6 +63,7 @@ public class sqlWorkBench {
 			//Update room_price SET counttype2 = counttype2+1 WHERE hotelID = 31;
 			
 			qry = "Delete from room_bookings where date_out<'" + date +"';";
+			
 			qry2 = "Select * from room_bookings whete date_out='" + date +"';"; 
 		
 			PreparedStatement statement = Front.connection.prepareStatement(qry);

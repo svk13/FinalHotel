@@ -35,7 +35,9 @@ import javax.swing.UIManager;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JComboBox;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -69,19 +71,19 @@ public class BookingConfirmation extends JPanel {
 	 */
 	public BookingConfirmation(String a, final BookingInfo bookinginfo,
 			final Hotel hotel) {
-		setBackground(Color.ORANGE);
-		setSize(1000, 1000);
+		setBackground(Color.WHITE);
+		setSize(1109, 1000);
 		setLayout(null);
 
 		final HotelResult myHotel = new HotelResult(hotel, bookinginfo);
 		// my.setBounds(24, 306, 339, 20);
-		myHotel.setBounds(0, 74, 1000, 250);
-		myHotel.setBackground(Color.ORANGE);
-		myHotel.lblNewLabel_5.setBackground(Color.ORANGE);
+		myHotel.setBounds(10, 74, 1089, 250);
+		myHotel.setBackground(Color.WHITE);
+		
 		myHotel.button.setVisible(false);
 		myHotel.setVisible(true);
 		add(myHotel);
-
+		
 		this.bookinginfo = bookinginfo;
 		this.hotel = hotel;
 		DateInS = bookinginfo.getDateInString();
@@ -89,7 +91,7 @@ public class BookingConfirmation extends JPanel {
 		 
 		nrRooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
-		fname.setBackground(Color.ORANGE);
+		fname.setBackground(Color.WHITE);
 		fname.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "First name",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0,
@@ -99,7 +101,7 @@ public class BookingConfirmation extends JPanel {
 		fname.setColumns(10);
 
 		lname = new JTextField();
-		lname.setBackground(Color.ORANGE);
+		lname.setBackground(Color.WHITE);
 		lname.setBorder(new TitledBorder(UIManager
 				.getBorder("TitledBorder.border"), "Last name",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
@@ -114,7 +116,7 @@ public class BookingConfirmation extends JPanel {
 				recipientEmail=true;
 			}
 		});
-		emailtxt.setBackground(Color.ORANGE);
+		emailtxt.setBackground(Color.WHITE);
 		emailtxt.setBorder(new TitledBorder(null, "Email",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		emailtxt.setBounds(42, 487, 182, 47);
@@ -128,7 +130,7 @@ public class BookingConfirmation extends JPanel {
 				special.setText("");
 			}
 		});
-		special.setBackground(Color.ORANGE);
+		special.setBackground(Color.WHITE);
 		special.setBorder(new TitledBorder(null, "Special request",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		special.setBounds(42, 540, 277, 47);
@@ -136,10 +138,11 @@ public class BookingConfirmation extends JPanel {
 		special.setColumns(10);
 		special.setText(a);
 
-		JLabel lblBookingConfirmation = new JLabel("Booking Confirmation");
+		JLabel lblBookingConfirmation = new JLabel("Booking confirmation");
+		lblBookingConfirmation.setForeground(Color.BLUE);
 		lblBookingConfirmation.setFont(new Font("Times New Roman", Font.BOLD,
 				23));
-		lblBookingConfirmation.setBounds(112, 11, 237, 47);
+		lblBookingConfirmation.setBounds(408, 11, 237, 47);
 		add(lblBookingConfirmation);
 
 		/*
@@ -216,7 +219,7 @@ public class BookingConfirmation extends JPanel {
 		//
 		JTextArea textArea = new JTextArea(bill);
 		textArea.setEditable(false);
-		textArea.setBackground(Color.ORANGE);
+		textArea.setBackground(Color.WHITE);
 		textArea.setBounds(644, 487, 155, 94);
 		add(textArea);
 
@@ -233,7 +236,7 @@ public class BookingConfirmation extends JPanel {
 				+ finalPrice+" ISK";
 		final JTextArea textArea_1 = new JTextArea(prices);
 		textArea_1.setEditable(false);
-		textArea_1.setBackground(Color.ORANGE);
+		textArea_1.setBackground(Color.WHITE);
 		textArea_1.setBounds(799, 487, 125, 93);
 		add(textArea_1);
 		
@@ -321,8 +324,15 @@ public class BookingConfirmation extends JPanel {
 		});
 		comboBox.setBounds(644, 428, 155, 26);
 		add(comboBox);
-
+		
+		JLabel lblTypesOfRooms = new JLabel("Types of rooms");
+		lblTypesOfRooms.setForeground(Color.BLUE);
+		lblTypesOfRooms.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblTypesOfRooms.setBounds(644, 403, 125, 14);
+		add(lblTypesOfRooms);
+		int tmp = 1;
 		Front.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
 	}
 
 	/*

@@ -13,6 +13,7 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.MatteBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,6 +30,7 @@ import java.awt.Insets;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 
 
 public class HotelResult extends JPanel {
@@ -42,7 +44,7 @@ public class HotelResult extends JPanel {
     private int numberofrooms;
     private int roomsavailable;
     static JButton button; 
-    static JTextArea lblNewLabel_5;
+   
     static JLabel RoomsLabel;
     static JLabel lblPrice;
     static JLabel lblNumberOfRooms; 
@@ -50,8 +52,10 @@ public class HotelResult extends JPanel {
 	 * Create the panel.
 	 */
 	public HotelResult(final Hotel hotel,  final BookingInfo bookinginfo) {
-		setForeground(Color.BLUE);
 		setBackground(Color.WHITE);
+		
+		setForeground(Color.BLUE);
+		
 		setSize(new Dimension(601, 230));
 		setMinimumSize(new Dimension(630, 230));
 		setMaximumSize(new Dimension(630, 230));
@@ -94,27 +98,20 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel.gridy = 0;
 		add(lblNewLabel, gbc_lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel(name);
+		final JLabel lblNewLabel_1 = new JLabel(name);
+		lblNewLabel_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_1.setToolTipText("Click here to order your room");
 		
 		lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 22));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.fill = GridBagConstraints.BOTH;
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel_1.fill = GridBagConstraints.VERTICAL;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel_1.gridwidth = 4;
 		gbc_lblNewLabel_1.gridx = 1;
 		gbc_lblNewLabel_1.gridy = 0;
 		add(lblNewLabel_1, gbc_lblNewLabel_1);
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
-				lblNewLabel.setBackground(Color.BLUE);
-				repaint();
-				
-		
-			}
-		});
-		
+	
 		JLabel lblNewLabel_2 = new JLabel(city);
 		lblNewLabel_2.setFont(new Font("Times New Roman", Font.BOLD, 13));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
@@ -132,7 +129,15 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel_4.gridy = 1;
 		add(lblNewLabel_4, gbc_lblNewLabel_4);
 		String info = Methods.info(wifi, FreeWifi, smoke, swim, gym,tv);
-		lblNewLabel_5 = new JTextArea(info);
+		final JTextArea lblNewLabel_5 = new JTextArea(info);
+		lblNewLabel_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				setBackground(new Color(240, 248, 255));
+				lblNewLabel_5.setBackground(new Color(240, 248, 255));
+			}
+		});
+		
 		lblNewLabel_5.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Facilities", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 255, 0)));
 		lblNewLabel_5.setBackground(Color.WHITE);
 		lblNewLabel_5.setEditable(false);
@@ -145,6 +150,58 @@ public class HotelResult extends JPanel {
 		gbc_lblNewLabel_5.gridx = 1;
 		gbc_lblNewLabel_5.gridy = 2;
 		add(lblNewLabel_5, gbc_lblNewLabel_5);
+		
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				//setBorder(new MatteBorder(5, 5, 5, 5, (Color) Color.ORANGE));
+				setBackground(new Color(240, 248, 255));
+				lblNewLabel_5.setBackground(new Color(240, 248, 255));
+				
+				repaint();
+				updateUI();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				//setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+				setBackground(Color.WHITE);
+				lblNewLabel_5.setBackground(Color.WHITE);
+			}
+		});
+		
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 23));
+				lblNewLabel_1.setForeground(Color.BLUE);
+				setBackground(new Color(240, 248, 255));
+				lblNewLabel_5.setBackground(new Color(240, 248, 255));
+				//setBorder(new MatteBorder(5, 5, 5, 5, (Color) Color.ORANGE));
+				repaint();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblNewLabel_1.setFont(new Font("Times New Roman", Font.BOLD, 22));
+				lblNewLabel_1.setForeground(Color.BLACK);
+				lblNewLabel_5.setBackground(Color.WHITE);
+				setBackground(Color.WHITE);
+				repaint();
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(bookinginfo.getNumberOfRooms()>roomsavailable){
+					//System.out.println("Rooms available are " + roomsavailable + " bookinginfo rooms are" + bookinginfo.getNumberOfRooms());
+					JOptionPane.showMessageDialog(null, "Sorry, we don't have enough rooms available for you.\nPlease change your booking information");
+				}else{
+					BookingConfirmation book = new BookingConfirmation("Do you have any requests?", bookinginfo1, hotel);
+					Front.contentPane.add(book, "3");
+					Front.cardLayout.show(Front.contentPane, "3");	
+					Front.whatpage=3;
+					Front.forwardTakki.setEnabled(false);
+				}
+			}
+		});
+		
 		
 		lblNumberOfRooms = new JLabel("Number of rooms available");
 		lblNumberOfRooms.setBackground(Color.BLUE);
@@ -194,6 +251,16 @@ public class HotelResult extends JPanel {
 		add(lblPrice, gbc_lblPrice);
 		
 		button = new JButton("Choose room");
+		button.setToolTipText("Click here to order your room");
+		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				//setBorder(new MatteBorder(5, 5, 5, 5, (Color) Color.ORANGE));
+				lblNewLabel_5.setBackground(new Color(240, 248, 255));
+				setBackground(new Color(240, 248, 255));
+			}
+		});
 
 		button.setForeground(Color.BLUE);
 		button.setAlignmentX(Component.RIGHT_ALIGNMENT);

@@ -96,9 +96,9 @@ public class ResultPanel extends JPanel {
 		add(panel_2, BorderLayout.WEST);
 		GridBagLayout gbl_panel_2 = new GridBagLayout();
 		gbl_panel_2.columnWidths = new int[]{150, 0};
-		gbl_panel_2.rowHeights = new int[] {15, 15, 15, 15, 15, 15, 20, 20, 20,20,20,20,20,20,20,20, 0};
+		gbl_panel_2.rowHeights = new int[] {15, 15, 15, 15, 15, 15, 20, 20, 20,20,20,20,20,20,20,20, 20, 20, 20, 20, 20, 0};
 		gbl_panel_2.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0};
+		gbl_panel_2.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
 		panel_2.setLayout(gbl_panel_2);
 		
 		
@@ -559,7 +559,7 @@ public class ResultPanel extends JPanel {
 		});
 		GridBagConstraints gbc_btnClearSearch = new GridBagConstraints();
 		gbc_btnClearSearch.gridx = 0;
-		gbc_btnClearSearch.gridy = 16;
+		gbc_btnClearSearch.gridy = 21;
 		panel_2.add(btnClearSearch, gbc_btnClearSearch);
 		
 

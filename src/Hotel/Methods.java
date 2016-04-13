@@ -138,8 +138,7 @@ public class Methods {
 				e.printStackTrace();
 			}	
 		}
-		System.out.println(count);
-			return count;
+		return count;
 	}
 
 	// A method that adds a certain amount of days to a date. 
