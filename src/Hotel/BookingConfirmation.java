@@ -45,6 +45,8 @@ import javax.swing.JComboBox;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class BookingConfirmation extends JPanel {
 	/**
@@ -72,6 +74,7 @@ public class BookingConfirmation extends JPanel {
 	private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
 	private int roomType = 3;
 	static JTextArea textArea_1 = null;
+	private boolean deleteit=false;
 
 	/**
 	 * Create the panel.
@@ -117,10 +120,25 @@ public class BookingConfirmation extends JPanel {
 		lname.setColumns(10);
 
 		emailtxt = new JTextField();
+		emailtxt.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				int i = arg0.getKeyCode();
+				System.out.println(i);
+				if(deleteit == true){
+					emailtxt.setText("");
+					deleteit=false;
+				}
+			}
+		});
+		emailtxt.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
+		emailtxt.setText("i.e. sindri@gmail.com");
 		emailtxt.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				recipientEmail = true;
+				emailtxt.setText("");
+				emailtxt.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			}
 		});
 		emailtxt.setBackground(Color.WHITE);
@@ -183,11 +201,25 @@ public class BookingConfirmation extends JPanel {
 						+ clientpassword
 						+ "\n \np.s. your hotel has been informed of your special request that is: "
 						+ special.getText();
-				if (recipientEmail == false) {
+				if (recipientEmail == false||emailtxt.getText().length()==0) {
 					emailtxt.requestFocusInWindow();
 					JOptionPane.showMessageDialog(null,
 							"Please enter your email address");
-					
+					Highlighter highlighter = emailtxt.getHighlighter();
+					HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(
+							Color.pink);
+					String text = emailtxt.getText();
+					int p0 = 0;
+					int p1 = p0 + text.length();
+					try {
+						highlighter.addHighlight(p0, p1, painter);
+						emailtxt.setCaretPosition(text.length());
+						deleteit = true;
+						emailtxt.requestFocusInWindow();
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					Front.frame.setCursor(defaultCursor);
 					return;
 				}
