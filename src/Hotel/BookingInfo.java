@@ -86,28 +86,28 @@ public class BookingInfo {
 	 *  	 this booking to i
 	 */
 	void setNumberOfRooms(int i){
-		System.out.println(i);
+	
 		NrRooms=i;
 	}
 	void setNumberOfGuests(int i){
 		NrGuests=i;
-		System.out.println(i);
+	
 	}
 	void setDateIn(Date date){
 		DateIn = date;
-		System.out.println(date);
+	
 	}
 	void setDateOut(Date date){
 		DateOut = date;
-		System.out.println(date);
+	
 	}
 	void setDateInS(String date){
 		DateInS = date;
-		System.out.println(date);
+	
 	}
 	void setDateOutS(String date){
 		DateOutS = date;
-		System.out.println(date);
+	
 	}
 	
 }

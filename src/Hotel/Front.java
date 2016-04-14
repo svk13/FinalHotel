@@ -67,13 +67,14 @@ public class Front extends JFrame {
 	public static Connection connection = null;
 	public static ArrayList<Hotel> resultHotel = new ArrayList<Hotel>();
 	private JTextField SearchTextArea;
-	private String dateInString;
-	private String dateOutString;
+	static String dateInString;
+	static String dateOutString;
 	private int nrRooms = 1;
 	private int nrGuests = 1;
-	private Date dateout;
-	private Date datein;
+	static Date dateout;
+	static Date datein;
 
+	boolean triedOnce = true;
 	static Dimension screenSize;
 	static JScrollPane scrollPane;
 	static ResultPanel resultpanel;
@@ -100,11 +101,12 @@ public class Front extends JFrame {
 	 * Create the frame.
 	 */
 	public Front() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("src/Myndir/red-capital-letter-h-key-icon-12214.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				"src/Myndir/red-capital-letter-h-key-icon-12214.png"));
 		setTitle("The Hotel Project - University of Iceland");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 891, 530);
+		setBounds(100, 100, 940, 550);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -117,7 +119,7 @@ public class Front extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				whatpage -= 1;
 				forwardTakki.setEnabled(true);
-			
+
 				if (whatpage == 1)
 					backTakki.setEnabled(false); // Hægt að setja þetta í fall?
 				if (whatpage != 3) {
@@ -145,7 +147,7 @@ public class Front extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				whatpage += 1;
-				
+
 				if (whatpage != 1)
 					backTakki.setEnabled(true); // Hægt að setja þetta í fall?
 				if (whatpage == 3) {
@@ -163,13 +165,14 @@ public class Front extends JFrame {
 		MainPanel.setBackground(Color.ORANGE);
 		contentPane.add(MainPanel, "1");
 		GridBagLayout gbl_MainPanel = new GridBagLayout();
-		gbl_MainPanel.columnWidths = new int[] { 195, 72, 103, 227, 46, 147,
+		gbl_MainPanel.columnWidths = new int[] { 195, 72, 103, 175, 46, 147,
 				46, 0 };
-		gbl_MainPanel.rowHeights = new int[] { 14, 151, 47, 23, 20, 14, 20, 0 };
-		gbl_MainPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_MainPanel.rowHeights = new int[] { 14, 151, 47, 23, 20, 14, 20, 0,
+				0 };
+		gbl_MainPanel.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 1.0, Double.MIN_VALUE };
-		gbl_MainPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, Double.MIN_VALUE };
+		gbl_MainPanel.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 1.0, Double.MIN_VALUE };
 		MainPanel.setLayout(gbl_MainPanel);
 
 		// Log-in hnappur
@@ -183,10 +186,12 @@ public class Front extends JFrame {
 				log.setVisible(true);
 				connection = sqliteConnection.dbConnector();
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				logIn_Label.setFont(new Font("Tahoma", Font.BOLD, 16));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				logIn_Label.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -269,7 +274,7 @@ public class Front extends JFrame {
 
 				ExecuteSearch.setBorder(new BevelBorder(BevelBorder.RAISED,
 						null, null, null, null));
-				
+
 				search();
 				whatpage = 2;
 				setVisible(true);
@@ -284,13 +289,16 @@ public class Front extends JFrame {
 		gbc_ExecuteSearch.gridx = 4;
 		gbc_ExecuteSearch.gridy = 2;
 		MainPanel.add(ExecuteSearch, gbc_ExecuteSearch);
-		
+
 		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("src/Myndir/16-hotel-logo-idea.gif"));
 		GridBagConstraints gbc_label = new GridBagConstraints();
+		gbc_label.anchor = GridBagConstraints.SOUTH;
 		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridheight=5;
-		gbc_label.gridx = 5;
-		gbc_label.gridy = 2;
+		gbc_label.gridheight = 1;
+		gbc_label.gridwidth = 5;
+		gbc_label.gridx = 1;
+		gbc_label.gridy = 1;
 		MainPanel.add(label, gbc_label);
 		// -------------------------------------------------------------------------------------------------
 
@@ -356,7 +364,7 @@ public class Front extends JFrame {
 			public void propertyChange(PropertyChangeEvent evt) {
 				dateout = DateChooserOut.getDate();
 				dateOutString = convertStringToDate(dateout);
-				
+
 				howManyDays = Methods.howManyDays(dateInString, dateOutString);
 
 			}
@@ -404,7 +412,7 @@ public class Front extends JFrame {
 		GridBagConstraints gbc_howManyRoomsSpinner = new GridBagConstraints();
 		gbc_howManyRoomsSpinner.anchor = GridBagConstraints.WEST;
 		gbc_howManyRoomsSpinner.fill = GridBagConstraints.VERTICAL;
-		gbc_howManyRoomsSpinner.insets = new Insets(0, 0, 0, 5);
+		gbc_howManyRoomsSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_howManyRoomsSpinner.gridx = 2;
 		gbc_howManyRoomsSpinner.gridy = 6;
 		MainPanel.add(howManyRoomsSpinner, gbc_howManyRoomsSpinner);
@@ -448,7 +456,7 @@ public class Front extends JFrame {
 		GridBagConstraints gbc_howManyGuestsSpinner = new GridBagConstraints();
 		gbc_howManyGuestsSpinner.anchor = GridBagConstraints.WEST;
 		gbc_howManyGuestsSpinner.fill = GridBagConstraints.VERTICAL;
-		gbc_howManyGuestsSpinner.insets = new Insets(0, 0, 0, 5);
+		gbc_howManyGuestsSpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_howManyGuestsSpinner.gridx = 1;
 		gbc_howManyGuestsSpinner.gridy = 6;
 		MainPanel.add(howManyGuestsSpinner, gbc_howManyGuestsSpinner);
@@ -460,37 +468,50 @@ public class Front extends JFrame {
 		backTakki.setEnabled(true);
 		connection = sqliteConnection.dbConnector();
 		String s = SearchTextArea.getText();
-		if(somethingWritten==false)
-			s="";
+		if (somethingWritten == false)
+			s = "";
+
 		
+		// Athuga hvort að strengurinn skili niðurstöðu. Ef ekki sker ég hann
+		// í helming og prófa þann streng. Ef hún skilar ekki niðurstöðu
+		//  þá birti ég skilaboð. Annars finnur hún hótelin.
 		resultHotel = SearchControl.LeitaHotel(s, dateInString, dateOutString);
 		if (resultHotel.size() == 0) {
-			JOptionPane.showMessageDialog(null,
-					"We're sorry, there were no results");
-			return;
+			double i = SearchControl.similarity(s,
+					s.substring(0, s.length() / 2));
+			if (i >= 0.4 && triedOnce == true) {
+				triedOnce = false;
+				resultHotel = SearchControl.LeitaHotel(
+						s.substring(0, s.length() / 2), dateInString,
+						dateOutString);
+
+				if (resultHotel.size() == 0) {
+					JOptionPane.showMessageDialog(null,
+							"We're sorry, there were no results");
+					triedOnce = true;
+					return;
+				}
+
+			}
 		}
-		// scrollPane = new JScrollPane();
+		
 		bookinginfo = new BookingInfo(datein, dateout, // Henda
-																	// þessu
-																	// öllu í
-																	// fall?
+														// þessu
+														// öllu í
+														// fall?
 				dateInString, dateOutString, nrGuests, nrRooms);
 		resultpanel = new ResultPanel(resultHotel, bookinginfo);
-		frame.setLocationRelativeTo(null);
+
 		contentPane.add(resultpanel, "2");
 		cardLayout.show(contentPane, "2");
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 	}
 
 	public static String convertStringToDate(Date indate) {
 		String dateString = null;
 		SimpleDateFormat sdfr = new SimpleDateFormat("dd MMM yyyy");
-		/*
-		 * you can also use DateFormat reference instead of SimpleDateFormat
-		 * like this: DateFormat df = new SimpleDateFormat("dd/MMM/yyyy");
-		 * //Þetta þá fall í honum klasanum og kalla á þetta her?
-		 */// í main fallinu þá?
+		
 		try {
 			dateString = sdfr.format(indate);
 		} catch (Exception ex) {
@@ -513,11 +534,10 @@ public class Front extends JFrame {
 					screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					height = screenSize.height;
 					width = screenSize.width;
-					// frame.setLocationRelativeTo(null);
+					
 					Date datein = new Date();
 					datein.getTime();
-					// String dates = convertStringToDate(datein);
-					// sqlWorkBench.updateRoomBookings(dates);
+				
 
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -110,7 +110,7 @@ public class sqlWorkBench {
 					}
 			if(count==1){
 				String idname = HotelName(id);
-				ClientLogin log = new ClientLogin(idname, reservationID, datein, dateout, client);
+				ClientLogin log = new ClientLogin(idname, reservationID, datein, dateout, client, id);
 				log.setVisible(true);
 				//JOptionPane.showMessageDialog(null, finishedstring);
 			}else if(count>1){

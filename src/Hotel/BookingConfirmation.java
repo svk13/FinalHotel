@@ -3,6 +3,7 @@ package Hotel;
 // Hlynur kl. 13.04 31.3
 
 import javax.mail.MessagingException;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -18,6 +19,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -65,8 +70,9 @@ public class BookingConfirmation extends JPanel {
 	private int nrGuests;
 	private Cursor waitCursor = new Cursor(Cursor.WAIT_CURSOR);
 	private Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
-	private int roomType=3;
-	static JTextArea textArea_1=null;
+	private int roomType = 3;
+	static JTextArea textArea_1 = null;
+
 	/**
 	 * Create the panel.
 	 */
@@ -80,16 +86,16 @@ public class BookingConfirmation extends JPanel {
 		// my.setBounds(24, 306, 339, 20);
 		myHotel.setBounds(10, 69, 1089, 250);
 		myHotel.setBackground(Color.WHITE);
-		
+
 		myHotel.button.setVisible(false);
 		myHotel.setVisible(true);
 		add(myHotel);
-		
+
 		this.bookinginfo = bookinginfo;
 		this.hotel = hotel;
 		DateInS = bookinginfo.getDateInString();
 		DateOutS = bookinginfo.getDateOutString();
-		 
+
 		nrRooms = bookinginfo.getNumberOfRooms();
 		fname = new JTextField();
 		fname.setBackground(Color.WHITE);
@@ -114,7 +120,7 @@ public class BookingConfirmation extends JPanel {
 		emailtxt.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				recipientEmail=true;
+				recipientEmail = true;
 			}
 		});
 		emailtxt.setBackground(Color.WHITE);
@@ -163,13 +169,10 @@ public class BookingConfirmation extends JPanel {
 				int nrclients = sqlWorkBench.NrOfClients();
 				String ClientID = fname.getText() + nrclients;
 				resid = (int) (Math.random() * 100000);
-				System.out.println(hotel.getID()+ resid+
-						DateInS+ DateOutS+ bookinginfo.getNumberOfRooms()+
-						ClientID
-						+clientpassword+"   "+roomType);
-				FinaliseBooking.updateAllTheDataBase(hotel.getID(), resid,
-						DateInS, DateOutS, bookinginfo.getNumberOfRooms(),
-						ClientID, clientpassword, roomType);
+				System.out.println(hotel.getID() + resid + DateInS + DateOutS
+						+ bookinginfo.getNumberOfRooms() + ClientID
+						+ clientpassword + "   " + roomType);
+
 				String message = "Thank you "
 						+ fname.getText()
 						+ " "
@@ -180,17 +183,56 @@ public class BookingConfirmation extends JPanel {
 						+ clientpassword
 						+ "\n \np.s. your hotel has been informed of your special request that is: "
 						+ special.getText();
-				System.out.println("Username: " + ClientID + "\nPassword: " + clientpassword);
-				if (recipientEmail == true) {
-					try {
-						GoogleMail.send(username, password, recipientEmails,
-								title, message);
-						JOptionPane.showMessageDialog(null, "Bókun staðfest");
-					} catch (MessagingException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				if (recipientEmail == false) {
+					emailtxt.requestFocusInWindow();
+					JOptionPane.showMessageDialog(null,
+							"Please enter your email address");
+					
+					Front.frame.setCursor(defaultCursor);
+					return;
 				}
+				try {
+					GoogleMail.send(username, password, recipientEmails, title,
+							message);
+
+				} catch (MessagingException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane opt = new JOptionPane(
+							"Email address is incorrect",
+							JOptionPane.WARNING_MESSAGE,
+							JOptionPane.DEFAULT_OPTION, null, new Object[] {}); // no
+																				// buttons
+					final JDialog dlg = opt.createDialog("Email service error");
+					dlg.setVisible(true);
+					Front.frame.setCursor(defaultCursor);
+					Highlighter highlighter = emailtxt.getHighlighter();
+					HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(
+							Color.pink);
+					String text = emailtxt.getText();
+					int p0 = 0;
+					int p1 = p0 + text.length();
+					try {
+						highlighter.addHighlight(p0, p1, painter);
+						emailtxt.setCaretPosition(text.length());
+
+						emailtxt.requestFocusInWindow();
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					emailtxt.setFocusable(true);
+					return;
+
+				}
+				FinaliseBooking.updateAllTheDataBase(hotel.getID(), resid,
+						DateInS, DateOutS, bookinginfo.getNumberOfRooms(),
+						ClientID, clientpassword, roomType);
+
+				System.out.println("Username: " + ClientID + "\nPassword: "
+						+ clientpassword);
+				Front.whatpage = 1;
+				Front.backTakki.setEnabled(false);
+				JOptionPane.showMessageDialog(null, "Bókun staðfest");
 				Front.frame.setCursor(defaultCursor);
 				Front.cardLayout.show(Front.contentPane, "1");
 			}
@@ -225,123 +267,127 @@ public class BookingConfirmation extends JPanel {
 		add(textArea);
 
 		DecimalFormat twoPlaces = new DecimalFormat("0.00");
-		
+
 		nrGuests = bookinginfo.getNumberOfGuests();
 		nrRooms = bookinginfo.getNumberOfRooms();
 		totalPrice = hotel.getOrderPriceRoomType3(nrGuests, nrRooms)
 				* Front.howManyDays;
-		String finalPrice  = String.format("%,.2f", totalPrice);
+		String finalPrice = String.format("%,.2f", totalPrice);
 		// prices shows the price of the room for a specific Hotel
 		String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
-				+ "\n----------------------\n"
-				+ finalPrice+" ISK";
+				+ "\n----------------------\n" + finalPrice + " ISK";
 		textArea_1 = new JTextArea(prices);
 		textArea_1.setEditable(false);
 		textArea_1.setBackground(Color.WHITE);
 		textArea_1.setBounds(799, 487, 125, 93);
 		add(textArea_1);
-		
-		String labels[] = {"Economy suites", "Luxury suites","Presidential suites" };
+
+		String labels[] = { "Economy suites", "Luxury suites",
+				"Presidential suites" };
 		final JComboBox comboBox = new JComboBox(labels);
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				Object item = e.getItem();
-				
-			    if (item.toString().equals("Luxury suites")) {
-			    	
-			    	totalPrice = hotel.getOrderPriceRoomType2(nrGuests, nrRooms)
+
+				if (item.toString().equals("Luxury suites")) {
+
+					totalPrice = hotel
+							.getOrderPriceRoomType2(nrGuests, nrRooms)
 							* Front.howManyDays;
-			    	String finalPrice  = String.format("%,.2f", totalPrice);
-			    	String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
-							+ "\n----------------------\n"
-							+ finalPrice+" ISK";
-			    	textArea_1.setText(prices);
-			    	int noRooms = hotel.getRoomType2Count();
-			    	if(noRooms<bookinginfo.getNumberOfRooms()){
-			    		HotelResult.RoomsLabel.setText("");
-			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
-				    	
+					String finalPrice = String.format("%,.2f", totalPrice);
+					String prices = nrGuests + "\n" + nrRooms + "\n"
+							+ Front.howManyDays + "\n----------------------\n"
+							+ finalPrice + " ISK";
+					textArea_1.setText(prices);
+					int noRooms = hotel.getRoomType2Count();
+					if (noRooms < bookinginfo.getNumberOfRooms()) {
+						HotelResult.RoomsLabel.setText("");
+						HotelResult.lblNumberOfRooms
+								.setText("Sorry, these types of rooms are fully booked");
+
 						HotelResult.lblPrice.setText("");
-			    	}else{
-			    	HotelResult.RoomsLabel.setText(noRooms+"");
-			    	double totalPrice = hotel.getPriceOfRoomType2();
-					String newPrice  = String.format("%,.2f", totalPrice);
-					HotelResult.lblPrice.setText(newPrice+" ISK");
+					} else {
+						HotelResult.RoomsLabel.setText(noRooms + "");
+						double totalPrice = hotel.getPriceOfRoomType2();
+						String newPrice = String.format("%,.2f", totalPrice);
+						HotelResult.lblPrice.setText(newPrice + " ISK");
 					}
-			    	roomType = 2;
+					roomType = 2;
 					repaint();
 					updateUI();
-			    }
-			    else if (item.toString().equals("Presidential suites")) {
-			    	
-			    	totalPrice = hotel.getOrderPriceRoomType1(nrGuests, nrRooms)
+				} else if (item.toString().equals("Presidential suites")) {
+
+					totalPrice = hotel
+							.getOrderPriceRoomType1(nrGuests, nrRooms)
 							* Front.howManyDays;
-			    	String finalPrice  = String.format("%,.2f", totalPrice);
-			    	String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
-							+ "\n----------------------\n"
-							+ finalPrice+" ISK";
-			    	textArea_1.setText(prices);
-			    	int noRooms = hotel.getRoomType1Count();
-			    	if(noRooms<bookinginfo.getNumberOfRooms()){
-			    		HotelResult.RoomsLabel.setText("");
-			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
+					String finalPrice = String.format("%,.2f", totalPrice);
+					String prices = nrGuests + "\n" + nrRooms + "\n"
+							+ Front.howManyDays + "\n----------------------\n"
+							+ finalPrice + " ISK";
+					textArea_1.setText(prices);
+					int noRooms = hotel.getRoomType1Count();
+					if (noRooms < bookinginfo.getNumberOfRooms()) {
+						HotelResult.RoomsLabel.setText("");
+						HotelResult.lblNumberOfRooms
+								.setText("Sorry, these types of rooms are fully booked");
 						HotelResult.lblPrice.setText("");
-			    	}else{
-			    	HotelResult.RoomsLabel.setText(noRooms+"");
-			    	double totalPrice = hotel.getPriceOfRoomType1();
-					String newPrice  = String.format("%,.2f", totalPrice);
-					HotelResult.lblPrice.setText(newPrice+" ISK");
+					} else {
+						HotelResult.RoomsLabel.setText(noRooms + "");
+						double totalPrice = hotel.getPriceOfRoomType1();
+						String newPrice = String.format("%,.2f", totalPrice);
+						HotelResult.lblPrice.setText(newPrice + " ISK");
 					}
-			    	roomType=1;
+					roomType = 1;
 					repaint();
 					updateUI();
-			    }
-			    else if (item.toString().equals("Economy suites")) {
-			    	
-			    	totalPrice = hotel.getOrderPriceRoomType3(nrGuests, nrRooms)
+				} else if (item.toString().equals("Economy suites")) {
+
+					totalPrice = hotel
+							.getOrderPriceRoomType3(nrGuests, nrRooms)
 							* Front.howManyDays;
-			    	String finalPrice  = String.format("%,.2f", totalPrice);
-			    	String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
-							+ "\n----------------------\n"
-							+ finalPrice+" ISK";
-			    	textArea_1.setText(prices);
-			    	int noRooms = hotel.getRoomType3Count();
-			    	if(noRooms<bookinginfo.getNumberOfRooms()){
-			    		HotelResult.RoomsLabel.setText("");
-			    		HotelResult.lblNumberOfRooms.setText("Sorry, these types of rooms are fully booked");
-				    	
+					String finalPrice = String.format("%,.2f", totalPrice);
+					String prices = nrGuests + "\n" + nrRooms + "\n"
+							+ Front.howManyDays + "\n----------------------\n"
+							+ finalPrice + " ISK";
+					textArea_1.setText(prices);
+					int noRooms = hotel.getRoomType3Count();
+					if (noRooms < bookinginfo.getNumberOfRooms()) {
+						HotelResult.RoomsLabel.setText("");
+						HotelResult.lblNumberOfRooms
+								.setText("Sorry, these types of rooms are fully booked");
+
 						HotelResult.lblPrice.setText("");
-			    	}else{
-			    	HotelResult.RoomsLabel.setText(noRooms+"");
-			    	double totalPrice = hotel.getPriceOfRoomType3();
-					String newPrice  = String.format("%,.2f", totalPrice);
-					HotelResult.lblPrice.setText(newPrice+ " ISK");
+					} else {
+						HotelResult.RoomsLabel.setText(noRooms + "");
+						double totalPrice = hotel.getPriceOfRoomType3();
+						String newPrice = String.format("%,.2f", totalPrice);
+						HotelResult.lblPrice.setText(newPrice + " ISK");
 					}
-			    	roomType=3;
+					roomType = 3;
 					repaint();
 					updateUI();
-			    }
+				}
 			}
 		});
 		comboBox.setBounds(644, 428, 155, 26);
 		add(comboBox);
-		
+
 		JLabel lblTypesOfRooms = new JLabel("Types of rooms");
 		lblTypesOfRooms.setForeground(Color.BLUE);
-		lblTypesOfRooms.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblTypesOfRooms
+				.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblTypesOfRooms.setBounds(644, 403, 125, 14);
 		add(lblTypesOfRooms);
 		int tmp = 1;
 		Front.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		
+
 	}
-	
-	public static void update(int nrGuests, int finalPrice2, int nrRooms){
-		
-		String finalPrice  = String.format("%,.2f", finalPrice2);
+
+	public static void update(int nrGuests, int finalPrice2, int nrRooms) {
+
+		String finalPrice = String.format("%,.2f", finalPrice2);
 		String prices = nrGuests + "\n" + nrRooms + "\n" + Front.howManyDays
-				+ "\n----------------------\n"
-				+ finalPrice+" ISK";
+				+ "\n----------------------\n" + finalPrice + " ISK";
 		textArea_1.setText(prices);
 	}
 
